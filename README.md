@@ -1,5 +1,4 @@
 # WebDev-Journey
-# WebDev-Journey
 
 Welcome to my web development journey! 🌐 This repository contains all my projects as I learn and grow as a web developer. From simple designs to more complex applications, you can find my progress documented here.
 
