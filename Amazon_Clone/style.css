@@ -6,12 +6,12 @@
     border: none;
     outline: none;
     font-family: Arial, Helvetica, sans-serif;
+    text-decoration: none;
 }
-
 .navbar {
     height: 60px;
     width: 100%;
-    background-color: #171f2a;
+    background-color: #11161e;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -27,8 +27,9 @@
     background-size: cover;
     margin: 1px;
     padding: 1px 20px 0px 6px;
-    
+
 }
+
 amazon-logo {
     background-size: cover;
 }
@@ -46,11 +47,13 @@ amazon-logo {
     margin-left: 27px;
     font-weight: 400;
 }
+
 #location-logo {
     display: flex;
     margin-left: 10px;
-    
+
 }
+
 #india {
     padding-left: 5px;
     color: #ffffff;
@@ -83,13 +86,16 @@ amazon-logo {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
 }
+
 #dropdown:hover {
     border-right: 2px solid rgb(226, 164, 49);
 }
+
 #search-field {
     width: 90%;
 }
-#search-field input{
+
+#search-field input {
     background-color: transparent;
     font-size: 15px;
     color: #0f1111;
@@ -129,12 +135,14 @@ amazon-logo {
     width: 73.38px;
     background-color: transparent;
 }
+
 #flag {
     height: 16px;
     width: 21px;
     background-image: url("flag.png");
     background-size: cover;
 }
+
 #language-dropdown {
     background-color: transparent;
     width: 45px;
@@ -145,11 +153,12 @@ amazon-logo {
 
 /* Sign-IN  */
 .sign-in {
-    
+
     height: 50px;
     width: 131px;
     background-color: transparent;
 }
+
 #small-text {
     display: inline-block;
     margin-top: 8px;
@@ -157,6 +166,7 @@ amazon-logo {
     font-size: 12px;
     font-weight: 400;
 }
+
 #large-text {
     display: inline-block;
     font-size: 14px;
@@ -169,6 +179,7 @@ amazon-logo {
     height: 50px;
     width: 77px;
 }
+
 #return-text {
     display: inline-block;
     font-size: 12px;
@@ -176,6 +187,7 @@ amazon-logo {
     margin-left: 10px;
     font-weight: 500;
 }
+
 #orders-text {
     display: inline-block;
     font-size: 14px;
@@ -189,19 +201,93 @@ amazon-logo {
     height: 50px;
     width: 84px;
 }
+
 .cart-box i {
     margin-top: 13px;
     color: #e6e6e6;
     font-size: 23px;
 }
+
 #cart-text {
     display: inline-block;
-    margin-top: 13px ;
+    margin-top: 13px;
     font-size: 14px;
     font-weight: 700;
 }
 
 
-#logo:hover, #location:hover, .language:hover, .sign-in:hover, .returns:hover, .cart-box:hover {
+#logo:hover,
+#location:hover,    
+.language:hover,
+.sign-in:hover,
+.returns:hover,
+.cart-box:hover {
+    border-radius: 2px;
     border: 1px solid white;
 }
+
+/* Second Navbar (nav-second) */
+.nav-second {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 39px;
+    background-color: #232f3e;
+}
+
+.nav-second ul {
+    display: flex;
+    font-size: 14px;
+    color: #FFFFFF;
+    font-weight: 500;
+    list-style-type: none;
+    
+}
+.nav-second ul li {
+    margin: 5px 0 6px 0;
+    padding: 8px 9px;
+}
+.nav-second ul li:hover {
+    border: 1px solid whitesmoke;
+    border-radius: 1px;
+}
+
+
+/* Hero Image (main background)  */
+.hero-image {
+    height: 600px;
+    width: 99%;
+    background-image: url("hero_image.jpg");
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+main {
+    display: flex;
+    justify-content: center;
+}
+
+/* Front Line  */
+#front-line {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 97%;
+    color: #0F1111;
+    background-color: #F5F6F6;
+    position: absolute;
+    bottom: 300px;
+}
+#amazon-india-link {
+    padding-left: 5px;
+    color: #2162A1;
+}
+#amazon-india-link:hover {
+    color: #002e5b;
+    text-decoration: underline;
+}
+
+
+/* Shopping Item List  */
