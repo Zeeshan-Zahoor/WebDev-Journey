@@ -15,7 +15,7 @@ body {
     height: 60px;
     width: 100%;
     padding: 0 10px 0 10px;
-    background-color: #11161e;
+    background-color: #131A22;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -257,11 +257,12 @@ amazon-logo {
 }
 
 
+
+
 /* Hero Image (main background)  */
 .hero-image {
-    margin-left: 0.5rem;
-    height: 600px;
     width: 99%;
+    height: 300px;
     background-image: url("hero_image.jpg");
     background-size: cover;
     display: flex;
@@ -275,11 +276,10 @@ amazon-logo {
     align-items: center;
     justify-content: center;
     height: 40px;
-    width: 97%;
+    width: 98%;
     color: #0F1111;
     background-color: #F5F6F6;
-    position: absolute;
-    top: 22rem;
+    margin-top: 250px;
 }
 #amazon-india-link {
     padding-left: 5px;
@@ -290,6 +290,18 @@ amazon-logo {
     text-decoration: underline;
 }
 
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  
+.main {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
 
 /* Shopping Item List  */
 .container {
@@ -299,9 +311,6 @@ amazon-logo {
     height: fit-content;
     background-color: transparent;
     width: 97%;
-    margin-left: 1.45rem;
-    position: absolute;
-    top: 24.6rem;
 }
 
 #boxes {
@@ -375,3 +384,68 @@ amazon-logo {
     background-image: url("box8.jpg");
     background-size: cover;
 }
+
+
+.sign-in-bottom {
+    display: flex;
+    border-top: 0.5px solid rgba(150, 150, 150, 0.912);
+    flex-direction: column;
+    justify-content: center;
+    height: fit-content;
+    padding-bottom: 2rem;
+    margin-top: 0.5rem;
+    width: 99.5%;
+    background-color: #FFFFFF;
+    text-align: center;
+}
+.sign-in-bottom h2 {
+    padding-top: 1.5rem;
+    padding-bottom: 0.6rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    color:#0F1111;
+    font-weight: 700;
+}
+.sign-in-bottom #sign-in-link a{
+    display: inline-block;
+    padding: 0.5rem 6rem 0.5rem 6rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #0F1111;
+    background-color: rgb(255, 221, 0);
+    border: 0;
+    border-radius: 40px;
+    margin-bottom: 4px;
+}
+
+.sign-in-bottom #sign-in-link a:hover {
+    background-color: rgb(241, 210, 8);  
+}
+.sign-in-bottom #sign-in-link a:focus {
+    border: 3px solid #2162A1;
+}
+#new-customer {
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+}
+#new-customer span {
+    font-size: 11px;
+    color: #000000;
+}
+#new-customer a {
+    font-size: 11px;
+    color: #2162A1;
+    margin-left: 2px;
+    text-decoration: underline;
+}
+#new-customer a:hover {
+    color: #003161;
+}
+/* Footer */
+footer {
+    height: 200px;
+    width: 100%;
+    background: #002e5b;
+}
+
