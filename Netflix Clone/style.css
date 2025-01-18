@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: poppins;
+}
+
+body {
+
+    text-align: center;
+}
+
+.background-image {
+    height: 80vh;
+    width: 100%;
+    background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/e3e9c31f-aa15-4a8f-8059-04f01e6b8629/web/IN-en-20250113-TRIFECTA-perspective_febfa442-23d9-45f3-937e-72f8b971f7a9_large.jpg");
+    background-size: cover;
+    background-position: center center;
+
+}
+
+.background-image #layer {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.75;
+    top: 0;
+}
+
+nav {
+    position: absolute;
+    margin-left: 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 85vw;
+    z-index: 30;
+}
+
+nav .logo {
+    background-color: transparent;
+    height: 43px;
+    width: 150px;
+    background-image: url("Netflix_Logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#nav-btns {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: #FFFFFF
+}
+
+#nav-btns #language-picker {
+    color: #FFFFFF;
+    background-color: transparent;
+    border: 0.2px solid #aaaaaa;
+    box-sizing: border-box;
+    background-color: transparent;
+    padding: 5px 20px;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#nav-btns #language-picker:focus {
+    border: 3px solid #FFFFFF;
+}
+#nav-btns .btn {
+    color: #FFFFFF;
+    background-color: rgb(229, 9, 20);
+    padding: 5px 15px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+
+}
+#nav-btns .btn:hover {
+    background-color:rgb(200, 23, 32)
+}
+
+
+
+@media (max-width: 430px) {
+    #nav-btns {
+        margin-top: 2rem;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    #nav-btns #language-picker{
+        padding: 5px 3px;
+    }
+}
