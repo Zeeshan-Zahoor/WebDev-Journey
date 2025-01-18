@@ -9,10 +9,20 @@ Welcome to my web development journey! 🌐 This repository contains all my proj
 ### 1. Amazon Clone
 A basic clone of the Amazon website built using **HTML** and **CSS**. This project focuses on creating a visually appealing layout that mimics the structure of an e-commerce platform.
 
-- **Status**: Completed. 
+- **Status**: Partially Completed. 
 - **Features**: 
   - Header and Navigation Bar
   - Product Listings
+  - Footer Section
+
+
+### 2. Netflix Clone
+A basic clone of the Netflix website built using **HTML** and **CSS**. This project focuses on creating a visually appealing layout that mimics the structure of Netflix.
+
+- **Status**: Just Started. 
+- **Features**: 
+  - Navigation Bar
+  - Hero Section
   - Footer Section
 
 ---
