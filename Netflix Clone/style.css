@@ -1,31 +1,51 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins');
+
 * {
     margin: 0;
     padding: 0;
-    font-family: poppins;
+    font-family: sans-serif;
 }
 
-body {
+main {
+    position: relaitve;
+    height: 100vh;
 
-    text-align: center;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: sans-serif;
 }
 
 .background-image {
+    position: absolute;
     height: 80vh;
     width: 100%;
     background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/e3e9c31f-aa15-4a8f-8059-04f01e6b8629/web/IN-en-20250113-TRIFECTA-perspective_febfa442-23d9-45f3-937e-72f8b971f7a9_large.jpg");
     background-size: cover;
     background-position: center center;
+    z-index: -2;
 
 }
 
 .background-image #layer {
+
     position: absolute;
-    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    height: 80vh;
     width: 100%;
     background-color: black;
     opacity: 0.75;
     top: 0;
+    z-index: -1;
 }
 
 nav {
@@ -73,6 +93,7 @@ nav .logo {
 #nav-btns #language-picker:focus {
     border: 3px solid #FFFFFF;
 }
+
 #nav-btns .btn {
     color: #FFFFFF;
     background-color: rgb(229, 9, 20);
@@ -82,12 +103,91 @@ nav .logo {
     font-weight: 500;
 
 }
+
 #nav-btns .btn:hover {
-    background-color:rgb(200, 23, 32)
+    background-color: rgb(200, 23, 32)
 }
 
 
+.hero-section {
+    /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    height: 600px;
+    width: 500px;
+    text-align: center;
+    margin: 0 auto;
+    color: rgb(255, 255, 255);
+    z-index: 1;
+    transform: translateY(10%);
+}
 
+.hero-section .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#hero-heading {
+    position: relative;
+    font-size: 3.5rem;
+    color: #ffffff;
+    font-weight: bolder;
+    z-index: 30;
+
+}
+
+#hero-para {
+    color: #ffffff;
+    margin-top: 5px;
+    font-size: 1.25rem;
+    font-weight: 500px;
+}
+
+.user {
+    margin-top: 15px;
+    width: 45rem;
+
+}
+
+.user span {
+    font-size: 0.9rem;
+}
+
+.user input {
+    color: #FFFFFF;
+    margin-top: 15px;
+    padding: 16px 7rem 16px 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border: 0.2px solid rgb(179 179 179 / 50%);
+    border-radius: 3px;
+    background-color: rgb(0 0 0 / 39%);
+}
+
+.user .btn {
+    cursor: pointer;
+    margin-top: 15px;
+    padding: 7px 1rem 14px 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    border-radius: 4px;
+    background-color: rgb(229, 9, 20);
+    color: white;
+    border: none;
+
+}
+
+.user .btn:hover {
+    background-color: rgb(204, 33, 41);
+}
+
+/* Media Query for navbar  */
 @media (max-width: 430px) {
     #nav-btns {
         margin-top: 2rem;
@@ -95,7 +195,127 @@ nav .logo {
         justify-content: center;
         align-items: center;
     }
-    #nav-btns #language-picker{
+
+    #nav-btns #language-picker {
         padding: 5px 3px;
+    }
+}
+
+/* media query for the backgroud image  */
+@media (min-width: 1280px) {
+    .background-image {
+        height: 100vh;
+    }
+
+    .background-image #layer {
+        height: 100vh;
+    }
+}
+
+
+/* Media query for hero Section  */
+@media(max-width: 630px) {
+    .hero-section .hero-text #hero-heading {
+        font-size: 2rem;
+    }
+
+    .hero-section .user span {
+        font-size: 0.9rem;
+    }
+
+    .hero-section .user input {
+        padding: 8px 7rem 8px 0.5rem;
+        font-size: 1rem;
+        font-weight: 400;
+
+
+    }
+
+    .hero-section .user .btn {
+        padding: 5px 0.6rem 8px 0.6rem;
+        font-size: 1rem;
+        font-weight: 400;
+
+    }
+}
+
+@media(max-width: 550px) {
+    .hero-section .hero-text #hero-heading {
+        font-size: 1.4rem;
+    }
+
+    .hero-section .user span {
+        font-size: 0.5rem;
+    }
+
+    .hero-section .user input {
+        padding: 7px 4rem 7px 0.3rem;
+        font-size: 0.7rem;
+        font-weight: 400;
+
+
+    }
+
+    .hero-section .user .btn {
+        padding: 4px 0.4rem 6px 0.4rem;
+        font-size: 0.7rem;
+        font-weight: 400;
+
+    }
+}
+
+@media(max-width: 500px) {
+    .hero-section .hero-text {
+        width: 60vw;
+        height: fit-content;
+    }
+
+    .hero-section .hero-text #hero-heading {
+        font-size: 2rem;
+    }
+
+    .hero-section .hero-text #hero-para {
+        font-size: 13px;
+    }
+
+    body {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    nav .logo {
+        height: 50px;
+        width: 100px;
+    }
+
+    nav {
+        transform: translateX(-20%);
+        top: 10px;
+        width: 70vw;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .hero-section .user {
+        width: 150px;
+    }
+
+    .hero-section .user input,
+    .btn {
+        margin-top: -10px;
+    }
+
+    .hero-section {
+        transform: translateX(-8%);
+    }
+
+    .hero-section .user {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
