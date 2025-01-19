@@ -8,7 +8,7 @@
 }
 
 .main {
-    position: relaitve;
+    position: relative;
     height: 100vh;
 }
 
@@ -35,8 +35,8 @@ html {
 
 }
 
-.background-image #layer {
-
+#layer {
+    pointer-events: none; /* Ensures #layer does not block interactions */
     position: absolute;
     display: flex;
     height: 85vh;
@@ -56,7 +56,6 @@ nav {
     align-content: center;
     height: 80px;
     width: 85vw;
-    z-index: 30;
 }
 
 nav .logo {
@@ -84,8 +83,7 @@ nav .logo {
     background-color: transparent;
     border: 0.2px solid #aaaaaa;
     box-sizing: border-box;
-    background-color: transparent;
-    padding: 5px 20px;
+    padding: 6px 20px;
     border-radius: 3px;
     font-size: 0.8rem;
     font-weight: 500;
@@ -98,7 +96,7 @@ nav .logo {
 #nav-btns .btn {
     color: #FFFFFF;
     background-color: rgb(229, 9, 20);
-    padding: 5px 15px;
+    padding: 7px 20px;
     border-radius: 4px;
     font-size: 0.8rem;
     font-weight: 500;
@@ -116,7 +114,6 @@ nav .logo {
     margin: auto;
     text-align: center;
     color: rgb(255, 255, 255);
-    z-index: 1;
 }
 
 .hero-section .hero-text {
@@ -132,7 +129,6 @@ nav .logo {
     font-size: 3.5rem;
     color: #ffffff;
     font-weight: bolder;
-    z-index: 30;
 
 }
 
@@ -143,7 +139,7 @@ nav .logo {
     font-weight: 500px;
 }
 
-.hero-section .user {
+.user {
     margin: auto;
     margin-top: 15px;
 
@@ -154,6 +150,8 @@ nav .logo {
 }
 
 .user input {
+    position: relative;
+    z-index: 5;
     color: #FFFFFF;
     margin-top: 15px;
     padding: 16px 5rem 16px 1rem;
@@ -165,9 +163,11 @@ nav .logo {
 }
 
 .user .btn {
+    position: relative;
+    z-index: 5;
     cursor: pointer;
-    margin-top: 15px;
-    padding: 7px 1rem 14px 1rem;
+    margin-top: 16px;
+    padding: 16px 1rem 16px 1rem;
     font-size: 1.1rem;
     font-weight: 500;
     border-radius: 4px;
@@ -176,9 +176,8 @@ nav .logo {
     border: none;
 
 }
-
 .user .btn:hover {
-    background-color: rgb(204, 33, 41);
+    background-color: rgb(200, 23, 32);
 }
 
 /* Media Query for navbar  */

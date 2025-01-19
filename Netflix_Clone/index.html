@@ -5,42 +5,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Netflix</title>
+    <title>Netflix Clone</title>
 </head>
 
 <body>
-
-    <nav>
-        <div class="logo"></div>
-        <div id="nav-btns">
-            <select name="language" id="language-picker">
-                <option value="English">English</option>
-                <option value="हिन्दी">हिन्दी</option>
-            </select>
-            <div class="btn">Sign In</div>
-        </div>
-    </nav>
-
     <div class="main">
-        <div class="background-image">
-            <div id="layer"></div>
-            <div class="hero-section">
-                <div class="hero-text">
-                    <h1 id="hero-heading">Unlimited movies, TV shows and more</h1>
-                    <p id="hero-para">Starts at ₹149. Cancel at any time.</p>
-                </div>
-                <div class="user">
-                    <span>Ready to watch? Enter your email to create or restart your membership.</span> <br>
-                    <input type="email" autocomplete="email" placeholder="Email address">
-                    <button class="btn">Get Started &#10148;</button>
-                </div>
+        <div class="background-image"></div>
+        <div id="layer"></div>
+
+        <!-- Navigation -->
+        <nav>
+            <div class="logo"></div>
+            <div id="nav-btns">
+                <select id="language-picker">
+                    <option value="en">English</option>
+                    <option value="es">Español</option>
+                </select>
+                <div class="btn">Sign In</div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <div class="hero-section">
+            <div class="hero-text">
+                <h1 id="hero-heading">Unlimited movies, TV shows, and more.</h1>
+                <p id="hero-para">Watch anywhere. Cancel anytime.</p>
+            </div>
+
+            <div class="user">
+                <span>Ready to watch? Enter your email to create or restart your membership.</span>
+                <form>
+                    <input type="email" placeholder="Email address" required>
+                    <button class="btn" type="submit">Get Started &gt;</button>
+                </form>
             </div>
         </div>
     </div>
-
-    <footer>
-
-    </footer>
 </body>
 
 </html>
