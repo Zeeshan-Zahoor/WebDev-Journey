@@ -4,30 +4,33 @@
     margin: 0;
     padding: 0;
     font-family: sans-serif;
+    box-sizing: border-box;
 }
 
-main {
+.main {
     position: relaitve;
     height: 100vh;
-
 }
 
 body,
 html {
-    margin: 0;
-    padding: 0;
     width: 100%;
     height: 100%;
     font-family: sans-serif;
+    overflow-x: hidden;
 }
 
 .background-image {
     position: absolute;
-    height: 80vh;
+    top: 0;
+    height: 85vh;
     width: 100%;
     background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/e3e9c31f-aa15-4a8f-8059-04f01e6b8629/web/IN-en-20250113-TRIFECTA-perspective_febfa442-23d9-45f3-937e-72f8b971f7a9_large.jpg");
-    background-size: cover;
+    filter: contrast(1.11);
+    background-size: max(2200px, 100vw);
+    background-repeat: no-repeat;
     background-position: center center;
+    box-shadow: inset 9px 10px 20px rgba(0, 0, 0, 0.5);
     z-index: -2;
 
 }
@@ -36,14 +39,10 @@ html {
 
     position: absolute;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    height: 80vh;
+    height: 85vh;
     width: 100%;
     background-color: black;
-    opacity: 0.75;
+    opacity: 0.65;
     top: 0;
     z-index: -1;
 }
@@ -54,6 +53,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    align-content: center;
     height: 80px;
     width: 85vw;
     z-index: 30;
@@ -62,8 +62,9 @@ nav {
 nav .logo {
     background-color: transparent;
     height: 43px;
-    width: 150px;
+    width: 100px;
     background-image: url("Netflix_Logo.png");
+    filter: contrast(1.4);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
@@ -110,19 +111,12 @@ nav .logo {
 
 
 .hero-section {
-    /* position: relative; */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 0 30px;
+    transform: translateY(60%);
     margin: auto;
-    height: 600px;
-    width: 500px;
     text-align: center;
-    margin: 0 auto;
     color: rgb(255, 255, 255);
     z-index: 1;
-    transform: translateY(10%);
 }
 
 .hero-section .hero-text {
@@ -149,9 +143,9 @@ nav .logo {
     font-weight: 500px;
 }
 
-.user {
+.hero-section .user {
+    margin: auto;
     margin-top: 15px;
-    width: 45rem;
 
 }
 
@@ -162,7 +156,7 @@ nav .logo {
 .user input {
     color: #FFFFFF;
     margin-top: 15px;
-    padding: 16px 7rem 16px 1rem;
+    padding: 16px 5rem 16px 1rem;
     font-size: 1rem;
     font-weight: 700;
     border: 0.2px solid rgb(179 179 179 / 50%);
@@ -174,7 +168,7 @@ nav .logo {
     cursor: pointer;
     margin-top: 15px;
     padding: 7px 1rem 14px 1rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
     font-weight: 500;
     border-radius: 4px;
     background-color: rgb(229, 9, 20);
@@ -189,11 +183,8 @@ nav .logo {
 
 /* Media Query for navbar  */
 @media (max-width: 430px) {
-    #nav-btns {
-        margin-top: 2rem;
-        flex-direction: column-reverse;
-        justify-content: center;
-        align-items: center;
+    nav .logo {
+        background-size: 6rem;
     }
 
     #nav-btns #language-picker {
@@ -201,121 +192,15 @@ nav .logo {
     }
 }
 
-/* media query for the backgroud image  */
-@media (min-width: 1280px) {
-    .background-image {
-        height: 100vh;
-    }
-
-    .background-image #layer {
-        height: 100vh;
-    }
-}
-
-
 /* Media query for hero Section  */
-@media(max-width: 630px) {
+@media (max-width: 630px) {
     .hero-section .hero-text #hero-heading {
-        font-size: 2rem;
+        font-size: 33px;
     }
-
-    .hero-section .user span {
-        font-size: 0.9rem;
-    }
-
-    .hero-section .user input {
-        padding: 8px 7rem 8px 0.5rem;
-        font-size: 1rem;
-        font-weight: 400;
-
-
-    }
-
-    .hero-section .user .btn {
-        padding: 5px 0.6rem 8px 0.6rem;
-        font-size: 1rem;
-        font-weight: 400;
-
-    }
-}
-
-@media(max-width: 550px) {
-    .hero-section .hero-text #hero-heading {
-        font-size: 1.4rem;
-    }
-
-    .hero-section .user span {
-        font-size: 0.5rem;
-    }
-
-    .hero-section .user input {
-        padding: 7px 4rem 7px 0.3rem;
-        font-size: 0.7rem;
-        font-weight: 400;
-
-
-    }
-
-    .hero-section .user .btn {
-        padding: 4px 0.4rem 6px 0.4rem;
-        font-size: 0.7rem;
-        font-weight: 400;
-
-    }
-}
-
-@media(max-width: 500px) {
-    .hero-section .hero-text {
-        width: 60vw;
-        height: fit-content;
-    }
-
-    .hero-section .hero-text #hero-heading {
-        font-size: 2rem;
-    }
-
     .hero-section .hero-text #hero-para {
-        font-size: 13px;
+        font-size: 16px;
     }
-
-    body {
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    nav .logo {
-        height: 50px;
-        width: 100px;
-    }
-
-    nav {
-        transform: translateX(-20%);
-        top: 10px;
-        width: 70vw;
-        display: flex;
-        justify-content: space-between;
-        align-content: center;
-    }
-
-    .hero-section .user {
-        width: 150px;
-    }
-
-    .hero-section .user input,
-    .btn {
-        margin-top: -10px;
-    }
-
     .hero-section {
-        transform: translateX(-8%);
-    }
-
-    .hero-section .user {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
+        transform: translateY(60%);
     }
 }
