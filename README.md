@@ -19,11 +19,20 @@ A basic clone of the Amazon website built using **HTML** and **CSS**. This proje
 ### 2. Netflix Clone
 A basic clone of the Netflix website built using **HTML** and **CSS**. This project focuses on creating a visually appealing layout that mimics the structure of Netflix.
 
-- **Status**: Just Started. 
+- **Status**: In Progress. 
 - **Features**: 
   - Navigation Bar
   - Hero Section
   - Footer Section
+
+
+### 3. Netflix Clone
+A basic Tic Tac Toe Game built using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Tic Tac Toe Game.
+- **Status**: Just Started. 
+- **Features**: 
+  - Main Game
+  - Reset and New Game options.
+  - Pop Up message for Winner.
 
 ---
 
