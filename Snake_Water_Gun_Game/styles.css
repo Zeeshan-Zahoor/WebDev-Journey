@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: url("https://static.vecteezy.com/system/resources/previews/017/214/886/original/spring-green-fields-landscape-with-mountain-blue-sky-and-clouds-background-panorama-peaceful-rural-nature-in-springtime-with-green-grass-land-cartoon-illustration-for-spring-and-summer-banner-vector.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    z-index: -1;
+}
+.main {
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    
+
+}
+.choice-box {
+    padding-top: 3rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    height: 25vh;
+    width: 90vw;
+    border: 2px solid black;
+}
+
+.choice {
+    height: 6rem;
+    width: 6rem;
+    border: 5px solid rgba(105, 105, 105, 0.819);
+    border-radius: 50%;
+}
+
+#snake {
+    background-image: url("snake.webp");
+    background-size: contain;
+    background-position: 14px;
+    background-repeat: no-repeat;
+    background-color: white;
+}
+#water {
+    background-image: url("water.png");
+    background-color: white;
+    background-size: cover;
+}
+#gun {
+    background-image: url("gun.jpg");
+    background-size: cover;
+    background-color: white;
+}
+.choice span {
+    display: inline-block;
+    margin-top: 6.5rem;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 1.5rem;
+    
+    -webkit-text-stroke-width: 0.5px;
+    -webkit-text-stroke-color: white;
+    
+}
+
+.main p {
+    text-align: center;
+    font-size: 25px;
+    font-family: Helvetica, sans-serif;
+    font-weight: 700;
+}
+.result-box  {
+    height: 10rem;
+    width: 10rem;
+    border: 2px solid black;
+    border-radius: 50%;
+
+}
+#front-line {
+    font-weight: bolder;
+    font-size: 35px;
+}
+
+.score-board {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 40px;
+    background-color: transparent;
+}
+.score #common-score{
+    font-size: 1.3rem;
+    font-weight: 700;
+    font-family: serif;
+}
+#your-score {
+    color: rgb(0, 89, 255);
+    font-family: Impact;
+    font-size: 1.3rem;
+    font-weight: 0;
+}
+
+#computer-score {
+    color: rgb(255, 45, 45);
+    font-family: Impact;
+    font-weight: 0;
+    font-size: 1.3rem;
+}
