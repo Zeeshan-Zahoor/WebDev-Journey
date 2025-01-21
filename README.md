@@ -28,11 +28,20 @@ A basic clone of the Netflix website built using **HTML** and **CSS**. This proj
 
 ### 3. Netflix Clone
 A basic Tic Tac Toe Game built using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Tic Tac Toe Game.
-- **Status**: Just Started. 
+- **Status**: Completed. 
 - **Features**: 
   - Main Game
   - Reset and New Game options.
   - Pop Up message for Winner.
+
+
+### 3. Netflix Clone
+A basic Snake Water Gun Game built using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Snake Water Gun Game.
+- **Status**: Just Started. 
+- **Features**: 
+  - Main Game
+  - Taking User Choice
+  - Showing the Winner and Score Board.
 
 ---
 
