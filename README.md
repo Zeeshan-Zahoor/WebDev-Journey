@@ -26,7 +26,7 @@ A basic clone of the Netflix website built using **HTML** and **CSS**. This proj
   - Footer Section
 
 
-### 3. Netflix Clone
+### 3. Tic Tac Toe
 A basic Tic Tac Toe Game built using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Tic Tac Toe Game.
 - **Status**: Completed. 
 - **Features**: 
@@ -35,9 +35,9 @@ A basic Tic Tac Toe Game built using **HTML**, **CSS** and **JAVASCRIPT** . This
   - Pop Up message for Winner.
 
 
-### 3. Netflix Clone
+### 3. Snake Water Gun
 A basic Snake Water Gun Game built using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Snake Water Gun Game.
-- **Status**: Just Started. 
+- **Status**: Completed. 
 - **Features**: 
   - Main Game
   - Taking User Choice
