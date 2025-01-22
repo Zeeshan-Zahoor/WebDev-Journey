@@ -12,7 +12,9 @@
     <div class="container">
         <span id="front-line"> Welcome to <br> Snake Water Gun</span>
         <div class="main">
-            <div class="result-box"></div>
+            <div class="result-box snake-won water-won gun-won"></div>
+            <div id="computer-choice">Computer Choosed Water</div>
+            <div id="pop-up-message">You Won!</div>
             <div class="score-board">
                 <div class="score">
                     <span id="common-score">Your Score:</span>
@@ -24,13 +26,13 @@
                 </div>
             </div>
             <div class="choice-box">
-                <div class="choice" id="snake">
+                <div class="choice" id="snake" tabindex="0">
                     <span>Snake</span>
                 </div>
-                <div class="choice" id="water">
+                <div class="choice" id="water" tabindex="0">
                     <span>Water</span>
                 </div>
-                <div class="choice" id="gun">
+                <div class="choice" id="gun" tabindex="0">
                     <span>Gun</span>
                 </div>
             </div>
