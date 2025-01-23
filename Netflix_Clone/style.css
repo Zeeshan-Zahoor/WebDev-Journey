@@ -18,18 +18,21 @@ html {
     height: 100%;
     font-family: sans-serif;
     overflow-x: hidden;
+    background-color: #000;
+    position: relative;
+    z-index: -2;
 }
 
 .background-image {
     position: absolute;
     top: 0;
-    height: 85vh;
+    height: 100vh;
     width: 100%;
     background-image: url("https://assets.nflxext.com/ffe/siteui/vlv3/e3e9c31f-aa15-4a8f-8059-04f01e6b8629/web/IN-en-20250113-TRIFECTA-perspective_febfa442-23d9-45f3-937e-72f8b971f7a9_large.jpg");
     filter: contrast(1.11);
     background-size: max(2200px, 100vw);
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center top;
     box-shadow: inset 1px 9px 20px 9px rgb(0 0 0);
     z-index: -2;
 
@@ -38,12 +41,44 @@ html {
 #layer {
     position: absolute;
     display: flex;
-    height: 85vh;
+    height: 100%;
     width: 100%;
     background-color: black;
     opacity: 0.75;
     top: 0;
     z-index: -1;
+}
+
+.curve-container {
+    height: 90px;
+    width: 100%;
+    position: relative;
+    z-index: 3;
+    top: 66vh;
+    background: linear-gradient(to right,
+            rgba(33, 13, 22, 1) 16%,
+            rgba(184, 40, 105, 1),
+            rgba(229, 9, 20, 1),
+            rgba(184, 40, 105, 1),
+            rgba(33, 13, 22, 1) 84%);
+    border: solid .25rem transparent;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+    border-bottom: none;
+}
+
+.curve {
+    box-sizing: border-box;
+    height: 101%;
+    width: 100%;
+    position: relative;
+    z-index: 4;
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+    background: radial-gradient(50% 500% at 50% -420%,
+            rgba(64, 97, 231, 0.4) 80%,
+            rgba(0, 0, 0, 0.1) 100%),
+            black;
 }
 
 nav {
@@ -109,7 +144,7 @@ nav .logo {
 
 .hero-section {
     padding: 0 30px;
-    transform: translateY(60%);
+    transform: translateY(90%);
     margin: auto;
     text-align: center;
     color: rgb(255, 255, 255);
@@ -175,6 +210,7 @@ nav .logo {
     border: none;
 
 }
+
 .user .btn:hover {
     background-color: rgb(200, 23, 32);
 }
@@ -195,10 +231,44 @@ nav .logo {
     .hero-section .hero-text #hero-heading {
         font-size: 33px;
     }
+
     .hero-section .hero-text #hero-para {
         font-size: 16px;
     }
+
     .hero-section {
         transform: translateY(60%);
+    }
+
+}
+
+@media (min-width: 630px) {
+    .curve-container {
+        width: 120%;
+        left: -10%;
+    }
+}
+
+/* Media query for background image adjustment  */
+@media (max-width: 630px) {
+    .background-image {
+        height: 60%;
+        width: 100vw;
+    }
+}
+
+@media (min-width: 630px) {
+    .curve-container {
+        width: 120%;
+        left: -12%;
+
+    }
+}
+
+@media (max-width: 630px) {
+    .curve-container {
+        width: 120%;
+        left: -10%;
+        top: 30vh;
     }
 }
