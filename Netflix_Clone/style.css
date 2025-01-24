@@ -280,10 +280,26 @@ form {
     }
 }
 
-@media (min-width: 630px) {
+@media(min-width: 921px) {
+    .curve-container {
+        
+        top: 57vh;
+
+    }
+}
+
+@media (min-width: 742px) and (max-width: 819px) {
     .curve-container {
         width: 120%;
         left: -12%;
+        top: 57vh;
+
+    }
+}
+@media(min-width: 820px) and (max-width: 920px) {
+    .curve-container {
+        
+        top: 50vh;
 
     }
 }
@@ -292,6 +308,6 @@ form {
     .curve-container {
         width: 120%;
         left: -10%;
-        top: 30vh;
+        top: 23vh;
     }
 }
