@@ -78,7 +78,7 @@ html {
     background: radial-gradient(50% 500% at 50% -420%,
             rgba(64, 97, 231, 0.4) 80%,
             rgba(0, 0, 0, 0.1) 100%),
-            black;
+        black;
 }
 
 nav {
@@ -144,7 +144,7 @@ nav .logo {
 
 .hero-section {
     padding: 0 30px;
-    transform: translateY(100%);
+    transform: translateY(50%);
     margin: auto;
     text-align: center;
     color: rgb(255, 255, 255);
@@ -195,12 +195,14 @@ nav .logo {
     border-radius: 3px;
     background-color: rgba(24, 24, 24, 0.611);
 }
+
 form {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
 }
+
 .user .btn {
     position: relative;
     z-index: 5;
@@ -221,12 +223,77 @@ form {
     background-color: rgb(200, 23, 32);
 }
 
+.bottom-body-container {
+    margin-bottom: 200px;
+    display: flex;
+    gap: 1.8rem;
+    overflow-x: auto;
+    margin: auto;
+    width: 65%;
+    max-width: 1200px;
+    padding: 1.5rem;
+    background-color: #000;
+    border-radius: 8px;
+    scrollbar-color: #393838 #000000;
+}
+
+.movies {
+    flex: 0 0 auto;
+    width: 12vw;
+    min-width: 110px;
+    height: 250px;
+    border-radius: 4px;
+}
+
+.movie-1 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABZMosKxdFgxev7W1YxooOu2wL_Kc3LwyYduCJ8nKme-kSdFXzCIRaMV4kYchreILRl6izcs-TrvJJCatDPe_vPwJ-wR6Zjk6yHTOXTM767pKfIrjgSGm5iTT5QFzgN6xjheO.jpg?r=06c");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-2 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABQEDSaystzESjISVXNUcnidnEvSdMMQ93HP2TjUY4um9PKSsU3h7MTCOR_kADDf0P1YMW3WM02TqEfUTrixH1o4eKw7TDBNZqAV-RLLIvWT7_9gtYUYEGGO-iIsRHet24xzy.jpg?r=14c");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-3 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABdtI3qpl44Mqt3cF7fLUeETUD2gmqPcRyZltCa4p2nJhI04eMY8JQ-mP4gqNZEc2ORSotMR3FJgelqWI29fe_k_2c3koayQSnCo.jpg?r=e1d");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-4 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABVIXwU97bc1M-8NWuaiMQcrbNZMsG5gxGA9pAQakEcwa8_nel_9EfL9dbt5O7fbprc9Udp0enwYKpZIreIboRBybE_r4kDy4L-VohacrrgkhKg5zuMDnPCb55EAYE_dhXRm4.jpg?r=dfc");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-5 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABUEGRIx8pMkzIHvS6XmVZgzHYZMG2dIBRVOVc3UXSqbxdOEjKzVBpEWQMUAnSyYy8jTsT6z7eIevymQ1FUCKMQa8UJGMD51Z_noJTVhLAwNamAYy4Iyxhh4gY-cjE0l-skj_.jpg?r=e02");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-6 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABZs4GW3WDVsjXWM20j8LvVzDMV-rHCT77eb1VVXtATBzEivjiK9_mKgKl3tiHXwZ-9Bzl7hUoIodArSOU7e-c7y7WDmy9aV0RwZEWzmqFdJGwO8RvP9el-x-a5WdISIkX4vG.jpg?r=e48");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-7 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABYGTGD-fxq0DEV1gNw-skG1_on4ZqYHYWgmiglVmf-l445vJs-lHgrjJ0SF11rpCQbm4jZx60OfB-w3pLtc8Y3ojBuleqdHUP18.jpg?r=bf7");
+    background-size: cover;
+    background-position: center center;
+}
+.movie-8 {
+    background-image: url("https://occ-0-4994-2164.1.nflxso.net/dnm/api/v6/mAcAr9TxZIVbINe88xb3Teg5_OA/AAAABTPYH3Xvoi8dTgeuS794DSnIpfxQbQcF8tNSf47WMkTQqOeF0sW-dLxv-OZDt6fezcQKgKAnA1G_Yn5-PsISXfx6Uz7c4sVBh0c.jpg?r=4ed");
+    background-size: cover;
+    background-position: center center;
+}
+
+
 /* Media Query for navbar  */
 @media (max-width: 580px) {
     nav {
         width: 95vw;
         margin-left: 2%;
     }
+
     nav .logo {
         background-size: 6rem;
     }
@@ -237,13 +304,21 @@ form {
 
 }
 
+@media (max-width: 760px) {
+    .background-image {
+        height: 60vh;
+    }
+}
+
 @media (max-width: 740px) {
     .hero-section {
         transform: translateY(40%);
     }
+
     form {
         flex-direction: column;
     }
+
     .curve-container {
         width: 120%;
         left: -10%;
@@ -282,7 +357,7 @@ form {
 
 @media(min-width: 921px) {
     .curve-container {
-        
+
         top: 57vh;
 
     }
@@ -296,9 +371,10 @@ form {
 
     }
 }
+
 @media(min-width: 820px) and (max-width: 920px) {
     .curve-container {
-        
+
         top: 50vh;
 
     }
