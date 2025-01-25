@@ -19,11 +19,13 @@ A basic clone of the Amazon website built using **HTML** and **CSS**. This proje
 ### 2. Netflix Clone
 A basic clone of the Netflix website built using **HTML** and **CSS**. This project focuses on creating a visually appealing layout that mimics the structure of Netflix.
 
-- **Status**: In Progress. 
+- **Status**: Completed. 
 - **Features**: 
   - Navigation Bar
   - Hero Section
-  - Footer Section
+  - Movie Slider
+  - Other Things
+  - Frequently Asked Questions
 
 
 ### 3. Tic Tac Toe
