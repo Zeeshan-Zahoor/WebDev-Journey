@@ -45,6 +45,14 @@ A basic Snake Water Gun Game built using **HTML**, **CSS** and **JAVASCRIPT** . 
   - Taking User Choice
   - Showing the Winner and Score Board.
 
+
+### 4. Currency Converter
+A basic Currency Converter App using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Currency Converter App.
+- **Status**: Just Started. 
+- **Features**: 
+  - Converts the Currency
+  - Showing Flags of Countries with Country Codes.
+
 ---
 
 ## Goals
