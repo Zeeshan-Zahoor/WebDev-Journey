@@ -48,12 +48,25 @@ A basic Snake Water Gun Game built using **HTML**, **CSS** and **JAVASCRIPT** . 
 
 ### 4. Currency Converter
 A basic Currency Converter App using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of a Currency Converter App.
-- **Status**: Just Started. 
+- **Status**: Pending (API not Avaible). 
 - **Features**: 
   - Converts the Currency
   - Showing Flags of Countries with Country Codes.
 
+
+### 5. Spotify Clone
+A Clone of the Spotify Website using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of Spotify Website.
+- **Status**: Just Started. 
+- **Features**: 
+  - Header and Navigation Bar
+  - Playlist Listings
+  - Songs Library
+  - Seeker
+  - Footer Section and more.
+
+
 ---
+
 
 ## Goals
 - Improve my skills in **HTML**, **CSS**, and **JavaScript**.  
