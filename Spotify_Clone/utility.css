@@ -1,0 +1,7 @@
+.invert {
+    filter: invert(100%);
+}
+
+.border-rad-1 {
+    border-radius: 8px;
+}
