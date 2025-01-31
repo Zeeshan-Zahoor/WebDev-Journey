@@ -1,7 +1,14 @@
 .invert {
     filter: invert(100%);
 }
+.invert-2 {
+    filter: invert(70%);
+}
 
 .border-rad-1 {
     border-radius: 8px;
+}
+
+.sign-grey {
+    color: #c0c0c0;
 }
