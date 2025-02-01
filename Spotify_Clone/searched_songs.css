@@ -1,0 +1,29 @@
+.hide {
+    display: none;
+}
+
+.searched-songs {
+    width: 100%;
+    height: 70%;
+    background-color: #121212;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    overflow-y: scroll;
+    flex-shrink: 0;
+    padding: 5px;
+}
+.searched-song-card {
+    position: relative;
+    padding: 0.35rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 4rem;
+    background-color: #3c3c3c;
+    border-radius: 8px;
+    
+}
