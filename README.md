@@ -56,7 +56,7 @@ A basic Currency Converter App using **HTML**, **CSS** and **JAVASCRIPT** . This
 
 ### 5. Spotify Clone
 A Clone of the Spotify Website using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating a visually appealing functional layout of Spotify Website.
-- **Status**: Just Started. 
+- **Status**: In Progress. 
 - **Features**: 
   - Header and Navigation Bar
   - Playlist Listings
