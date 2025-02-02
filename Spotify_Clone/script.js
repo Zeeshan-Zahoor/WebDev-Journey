@@ -31,7 +31,7 @@ async function fetchSongData(searchedSong) {
                         <h4>${songName}</h4> 
                         <span>Channel: ${channelName}</span> 
                     </div> 
-                    <div class='play searched-song-play' tabindex='0' data-video-id='${VideoID}'> 
+                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name = '${songName}'> <h3> Play </h3> 
                     </div> 
                 </div>`;
 
@@ -43,6 +43,10 @@ async function fetchSongData(searchedSong) {
         playButtons.forEach(playButton => {
             playButton.addEventListener("click", () => {
                 const VideoID = playButton.getAttribute('data-video-id');
+                const songName = playButton.getAttribute('song-name');
+
+                // adding the details in the play-bar
+                document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
                 playAudio(VideoID);
             })
         });
@@ -57,23 +61,93 @@ const hideSearchedSongs = () => {
     searchedSongs.classList.add("hide");
 }
 
-const playAudio = (videoId) => {
-    //create an iframe to embed the video in it.
-    const iframe = document.createElement("iframe");
-    iframe.setAttribute("width", "0");
-    iframe.setAttribute("height", "0");
-    iframe.setAttribute("src", `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=0&controls=0&showinfo=0&autohide=1`);
-    iframe.setAttribute("frameborder", '0');
-    iframe.setAttribute("allow", "autoplay; encrypted-media");
+let player; // Global player variable
 
-    // append the iframe to the audio container 
-    const audioContainer = document.getElementById("audio-container");
-    audioContainer.innerHTML = ""; // clear any previous audio
-    audioContainer.appendChild(iframe);
+  const playAudio = (videoId) => {
+      // Clear previous content
+      const audioContainer = document.getElementById("audio-container");
+      audioContainer.innerHTML = "";
+
+      // Create a div for YouTube player
+      const playerDiv = document.createElement("div");
+      playerDiv.setAttribute("id", "yt-player");
+      playerDiv.style.width = "0px";  // Keep it tiny
+      playerDiv.style.height = "0px"; // Hide visually but keep functional
+      playerDiv.style.overflow = "hidden"; // Ensure it's hidden
+      audioContainer.appendChild(playerDiv);
+
+      // Load YouTube Player API
+      player = new YT.Player("yt-player", {
+          height: "100", 
+          width: "200",
+          videoId: videoId,
+          playerVars: {
+              autoplay: 1,  
+              controls: 0,  
+              showinfo: 0,  
+              autohide: 1,  
+              modestbranding: 1,
+              mute: 0 
+          },
+          events: {
+              "onReady": (event) => {
+                  event.target.setPlaybackQuality("small"); // Set 144p quality
+                  event.target.playVideo();
+              },
+              "onError": (error) => {
+                  console.error("YouTube Playback Error:", error);
+                  alert("This video cannot be played. Try another one!");
+              }
+          }
+      });
+  };
+
+const updatePlaybarTimes = () => {
+    if (player) {
+        let currentTime = player.getCurrentTime();
+        let totalDuration = player.getDuration();
+
+        // format the current time and duraiton in standart format 
+        let f_currentTime = formatTime(currentTime);
+        let f_totalDuration = formatTime(totalDuration);
+
+        // upadate the play bar 
+        document.getElementsByClassName("current-time")[0].innerHTML = `<span>${f_currentTime}</span>`;
+        document.getElementsByClassName("total-time")[0].innerHTML = `<span>${f_totalDuration}</span>`;
+    }
 }
+// Update the play bar times every second
+setInterval(updatePlaybarTimes, 1000);
+
+const formatTime = (seconds) => {
+    let minutes = Math.floor(seconds / 60);
+    let secs = Math.floor(seconds % 60);
+    return `${minutes < 10? '0'+ minutes : minutes}:${secs < 10? '0'+ secs: secs}`;
+}
+
+const pauseAudio = () => {
+    if (player) player.pauseVideo();
+  }
+const playPausedAudio = () => {
+    if (player) player.playVideo();
+}
+
+document.getElementById("pause-action").addEventListener("click", ()=> {
+    let pauseButton = document.getElementById("pause-action");
+    let image = pauseButton.getAttribute("src");
+    if (image === 'pause.svg') {
+        pauseAudio();
+        pauseButton.setAttribute("src", 'play.svg');
+    } else  {
+        playPausedAudio();
+        pauseButton.setAttribute("src", 'pause.svg');
+    }
+});
+
 
 document.querySelector("#search-song").addEventListener("click", () => {
     let searched_Song = document.getElementById("song-input").value;
     console.log(searched_Song);
     fetchSongData(searched_Song);
 });
+

@@ -31,7 +31,8 @@
                     <div class="verticle-slash"></div>
                     <img class="invert-2" src="browse.svg" alt="browse-icon" width="25px">
                 </div>
-                <!-- Container to display the audio (hidden iframe) -->
+
+                <!-- Audio Container -->
                 <div id="audio-container"></div>
             </div>
         </div>
@@ -250,7 +251,7 @@
                         <span>Artist Name</span>
 
                     </div>
-                    <div class="play" tabindex="0">
+                    <div class="searched-song-play" tabindex="0"> <h3> Play </h3>
 
                     </div>
                 </div>
@@ -317,7 +318,7 @@
 
             </div>
 
-            <div class="player">
+            <div class="play-bar">
                 <div class="song-name">
                     <h4>Mai aa likhoun - tu aajaye, mai baith likhoun - tu aa baithe..</h4>
                 </div>
@@ -328,13 +329,19 @@
                     </div>
                 </div>
                 <div class="controlls">
-                    <div class="curren-time">
+                    <div class="current-time">
                         <span>00:01:23</span>
                     </div>
                     <div class="actions">
-                        <img class="invert" src="prev_song.svg" alt="prev_song" width="15px">
-                        <img class="invert" src="pause.svg" alt="pause" width="15px">
-                        <img class="invert" src="next_song.svg" alt="next_song" width="15px">
+                        <div class="img">
+                            <img class="invert" src="prev_song.svg" alt="prev_song" width="15px">
+                        </div>
+                        <div class="img">
+                            <img id="pause-action" class="invert" src="pause.svg" alt="pause" width="15px">
+                        </div>
+                        <div class="img">
+                            <img class="invert" src="next_song.svg" alt="next_song" width="15px">
+                        </div>
                     </div>
                     <div class="total-time">
                         <span>00:03:50</span>
@@ -345,6 +352,9 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Load YouTube API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 </body>
 
 </html>

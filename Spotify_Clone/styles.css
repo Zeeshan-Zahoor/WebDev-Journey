@@ -10,6 +10,8 @@
     outline: none;
     box-sizing: border-box;
     text-decoration: none;
+    background-color: transparent;
+    outline: none;
 }
 
 body, HTML {
@@ -86,11 +88,19 @@ body, HTML {
     width: 25rem;
 }
 input {
-    padding-left: 0.5rem ;
-    font-size: 1rem;
-    color: white;
-    
+    padding-left: 0.7rem;
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    width: 95%;
+    font-size: 1.13rem;
+    color: rgb(248, 248, 248);
+    background-color: transparent !important;
 }
+
+input::-webkit-input-placeholder {
+    color: rgb(172, 172, 172); /* Customize the placeholder text color */
+}
+
 .browse-icon {
     display: flex;
     justify-content: space-between;
@@ -460,7 +470,7 @@ input {
     background-color: #121212;
     flex-shrink: 0;
 }
-.right .player {
+.right .play-bar {
 
     display: flex;
     flex-direction: column; 
@@ -510,8 +520,20 @@ input {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px;
+    gap: 20px;
 }
-.actions img {
+.actions .img {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+}
+.actions .img:hover {
+    background-color: rgb(75, 75, 75);
+}
+.actions .img:active {
+    border: 2px solid rgb(159, 159, 159);
 }
