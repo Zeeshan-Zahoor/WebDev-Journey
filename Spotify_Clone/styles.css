@@ -495,9 +495,11 @@ input::-webkit-input-placeholder {
     height: 5px;
     margin: 10px auto;
     border-radius: 5px;
-    background-color: #FFF;
+    background-color: #fff;
     cursor: pointer;
+    
 }
+
 .visitor {
     position: absolute;
     height: auto;

@@ -93,11 +93,11 @@ const playAudio = (videoId) => {
             "onReady": (event) => {
                 event.target.setPlaybackQuality("small"); // Set 144p quality
                 event.target.playVideo();
-                moveVisitor();
+                seekerSection();
             },
             "onError": (error) => {
                 console.error("YouTube Playback Error:", error);
-                alert("This video cannot be played. Try another one!");
+                alert("This Song cannot be played. Try another one!");
             }
         }
     });
@@ -122,21 +122,19 @@ const updatePlaybarTimes = () => {
 setInterval(updatePlaybarTimes, 1000);
 
 // move the visitor on the seeker with song
-const moveVisitor = () => {
+const seekerSection = () => {
     if (player) {
         let visitor = document.getElementsByClassName("visitor")[0];
-        let seeker = document.getElementsByClassName("song-line")[0];
         let duration = player.getDuration();
-        let seekerWidth = seeker.offsetWidth;   // get the total width of the seeker
+        
         setInterval(() => {
             let currentTime = player.getCurrentTime();
-            let progress = (currentTime / duration) * seekerWidth; // Convert time to pixels
-            visitor.style.transform = `translateX(${progress}px)`;
+            let progress = (currentTime / duration) * 100;
+            visitor.style.left = `${progress}%`;
 
         }, 50);
     }
 }
-
 
 const formatTime = (seconds) => {
     let minutes = Math.floor(seconds / 60);
