@@ -36,7 +36,7 @@ async function fetchSongData(searchedSong) {
                 </div>`;
 
             searchedSongs.innerHTML = searchedSongs.innerHTML + newSong;
-        
+
         }
 
         let playButtons = document.querySelectorAll(".searched-song-play");
@@ -63,44 +63,45 @@ const hideSearchedSongs = () => {
 
 let player; // Global player variable
 
-  const playAudio = (videoId) => {
-      // Clear previous content
-      const audioContainer = document.getElementById("audio-container");
-      audioContainer.innerHTML = "";
+const playAudio = (videoId) => {
+    // Clear previous content
+    const audioContainer = document.getElementById("audio-container");
+    audioContainer.innerHTML = "";
 
-      // Create a div for YouTube player
-      const playerDiv = document.createElement("div");
-      playerDiv.setAttribute("id", "yt-player");
-      playerDiv.style.width = "0px";  // Keep it tiny
-      playerDiv.style.height = "0px"; // Hide visually but keep functional
-      playerDiv.style.overflow = "hidden"; // Ensure it's hidden
-      audioContainer.appendChild(playerDiv);
+    // Create a div for YouTube player
+    const playerDiv = document.createElement("div");
+    playerDiv.setAttribute("id", "yt-player");
+    playerDiv.style.width = "0px";  // Keep it tiny
+    playerDiv.style.height = "0px"; // Hide visually but keep functional
+    playerDiv.style.overflow = "hidden"; // Ensure it's hidden
+    audioContainer.appendChild(playerDiv);
 
-      // Load YouTube Player API
-      player = new YT.Player("yt-player", {
-          height: "100", 
-          width: "200",
-          videoId: videoId,
-          playerVars: {
-              autoplay: 1,  
-              controls: 0,  
-              showinfo: 0,  
-              autohide: 1,  
-              modestbranding: 1,
-              mute: 0 
-          },
-          events: {
-              "onReady": (event) => {
-                  event.target.setPlaybackQuality("small"); // Set 144p quality
-                  event.target.playVideo();
-              },
-              "onError": (error) => {
-                  console.error("YouTube Playback Error:", error);
-                  alert("This video cannot be played. Try another one!");
-              }
-          }
-      });
-  };
+    // Load YouTube Player API
+    player = new YT.Player("yt-player", {
+        height: "100",
+        width: "200",
+        videoId: videoId,
+        playerVars: {
+            autoplay: 1,
+            controls: 0,
+            showinfo: 0,
+            autohide: 1,
+            modestbranding: 1,
+            mute: 0
+        },
+        events: {
+            "onReady": (event) => {
+                event.target.setPlaybackQuality("small"); // Set 144p quality
+                event.target.playVideo();
+                moveVisitor();
+            },
+            "onError": (error) => {
+                console.error("YouTube Playback Error:", error);
+                alert("This video cannot be played. Try another one!");
+            }
+        }
+    });
+};
 
 const updatePlaybarTimes = () => {
     if (player) {
@@ -116,29 +117,47 @@ const updatePlaybarTimes = () => {
         document.getElementsByClassName("total-time")[0].innerHTML = `<span>${f_totalDuration}</span>`;
     }
 }
+
 // Update the play bar times every second
 setInterval(updatePlaybarTimes, 1000);
+
+// move the visitor on the seeker with song
+const moveVisitor = () => {
+    if (player) {
+        let visitor = document.getElementsByClassName("visitor")[0];
+        let seeker = document.getElementsByClassName("song-line")[0];
+        let duration = player.getDuration();
+        let seekerWidth = seeker.offsetWidth;   // get the total width of the seeker
+        setInterval(() => {
+            let currentTime = player.getCurrentTime();
+            let progress = (currentTime / duration) * seekerWidth; // Convert time to pixels
+            visitor.style.transform = `translateX(${progress}px)`;
+
+        }, 50);
+    }
+}
+
 
 const formatTime = (seconds) => {
     let minutes = Math.floor(seconds / 60);
     let secs = Math.floor(seconds % 60);
-    return `${minutes < 10? '0'+ minutes : minutes}:${secs < 10? '0'+ secs: secs}`;
+    return `${minutes < 10 ? '0' + minutes : minutes}:${secs < 10 ? '0' + secs : secs}`;
 }
 
 const pauseAudio = () => {
     if (player) player.pauseVideo();
-  }
+}
 const playPausedAudio = () => {
     if (player) player.playVideo();
 }
 
-document.getElementById("pause-action").addEventListener("click", ()=> {
+document.getElementById("pause-action").addEventListener("click", () => {
     let pauseButton = document.getElementById("pause-action");
     let image = pauseButton.getAttribute("src");
     if (image === 'pause.svg') {
         pauseAudio();
         pauseButton.setAttribute("src", 'play.svg');
-    } else  {
+    } else {
         playPausedAudio();
         pauseButton.setAttribute("src", 'pause.svg');
     }
