@@ -25,12 +25,14 @@
                     <img id="search-song" class="invert-2" src="search.svg" alt="search-icon" width="25px">
                 </div>
                 <div class="input-search">
-                    <input id="song-input" type="text" placeholder="What do you want to play?">
+                    <input id="song-input" type="text" placeholder="What do you want to play?" autocomplete="off">
                 </div>
                 <div class="browse-icon">
                     <div class="verticle-slash"></div>
                     <img class="invert-2" src="browse.svg" alt="browse-icon" width="25px">
                 </div>
+                <!-- Container to display the audio (hidden iframe) -->
+                <div id="audio-container"></div>
             </div>
         </div>
         <div class="nav-right">
@@ -231,9 +233,12 @@
             </div>
         </div>
         <div class="right border-rad-1">
-            <div class="searched-songs"> <!-- to be kept hidden initially-->
+            <div class="searched-songs hide"> <!-- to be kept hidden initially-->
                 <div class="search-results">
                     <h2>Search Results</h2>
+                    <button id="cancel-btn" onclick="hideSearchedSongs()">
+                        <img class="invert" src="cancel.svg" alt="cancel">
+                    </button>
                 </div>
                 <div class="searched-song-card">
                     <div class="music-thumb border-rad-1">
@@ -249,118 +254,7 @@
 
                     </div>
                 </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
 
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
-                <div class="searched-song-card">
-                    <div class="music-thumb border-rad-1">
-                        <img class="invert" src="music.svg" alt="music-icon">
-                    </div>
-                    <div class="song-info">
-                        <h4>Teri Meri Meri Teri Prem Kahani hai mushkil Do lafzoun mai yeh bayan na ho paaye
-                        </h4>
-                        <span>Artist Name</span>
-
-                    </div>
-                    <div class="play" tabindex="0">
-
-                    </div>
-                </div>
             </div>
             <div class="top">
                 <div class="top-line">
