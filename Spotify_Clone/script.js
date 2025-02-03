@@ -126,15 +126,27 @@ const seekerSection = () => {
     if (player) {
         let visitor = document.getElementsByClassName("visitor")[0];
         let duration = player.getDuration();
-        
+        // add event listner to the seeker
+        let seeker = document.querySelector(".seeker")
+        seeker.addEventListener("click", (e) => {
+            let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
+            console.log("Clicked", e.offsetX);
+            visitor.style.left = `${percent}%`;
+
+            //calculate new time and seek the video
+            let newTime = (duration * percent)/100;
+            player.seekTo(newTime, true);
+        });
         setInterval(() => {
             let currentTime = player.getCurrentTime();
             let progress = (currentTime / duration) * 100;
-            visitor.style.left = `${progress}%`;
-
+            visitor.style.left = `${progress}%`;           
         }, 50);
     }
 }
+
+
+
 
 const formatTime = (seconds) => {
     let minutes = Math.floor(seconds / 60);

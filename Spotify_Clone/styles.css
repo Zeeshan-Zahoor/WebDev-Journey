@@ -505,7 +505,6 @@ input::-webkit-input-placeholder {
     height: auto;
     bottom: 7.5px;
     left: 0;
-    cursor: pointer;
 }
 .visitor img {
     background-color: #dbdbdb;
