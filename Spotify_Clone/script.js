@@ -1,5 +1,6 @@
 // Lets write some Javascript 
 console.log("lets get started with functionalities");
+let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
 
 
@@ -48,6 +49,10 @@ async function fetchSongData(searchedSong) {
                 // adding the details in the play-bar
                 document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
                 playAudio(VideoID);
+                playBar.classList.remove("hide");
+                if(image === 'play.svg') {
+                    image = 'pause.svg';
+                }
             })
         });
 
@@ -125,27 +130,40 @@ setInterval(updatePlaybarTimes, 1000);
 const seekerSection = () => {
     if (player) {
         let visitor = document.getElementsByClassName("visitor")[0];
-        let duration = player.getDuration();
-        // add event listner to the seeker
-        let seeker = document.querySelector(".seeker")
+        let seeker = document.querySelector(".seeker");
+        let intervalId;
+        let isSeeking = false; 
+
+        // Function to update the visitor position
+        const updateVisitor = () => {
+            if (!isSeeking) {  // Only update if not seeking
+                let duration = player.getDuration();
+                let currentTime = player.getCurrentTime();
+                let progress = (currentTime / duration) * 100;
+                visitor.style.left = `${progress}%`;
+            }
+        };
+
+        // Add event listener to seek when user clicks
         seeker.addEventListener("click", (e) => {
-            let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
-            console.log("Clicked", e.offsetX);
+            let duration = player.getDuration();
+            let percent = (e.offsetX / seeker.getBoundingClientRect().width) * 100;
+            let newTime = (duration * percent) / 100;
+
+            isSeeking = true;  // Temporarily disable updates
+            player.seekTo(newTime, true);
+
+            // Move visitor immediately to the clicked position
             visitor.style.left = `${percent}%`;
 
-            //calculate new time and seek the video
-            let newTime = (duration * percent)/100;
-            player.seekTo(newTime, true);
+            // Resume updates after a short delay
+            setTimeout(() => { isSeeking = false; }, 500);
         });
-        setInterval(() => {
-            let currentTime = player.getCurrentTime();
-            let progress = (currentTime / duration) * 100;
-            visitor.style.left = `${progress}%`;           
-        }, 50);
+
+        // Start updating visitor position at regular intervals
+        intervalId = setInterval(updateVisitor, 50);
     }
-}
-
-
+};
 
 
 const formatTime = (seconds) => {
@@ -161,9 +179,10 @@ const playPausedAudio = () => {
     if (player) player.playVideo();
 }
 
+
+let pauseButton = document.getElementById("pause-action");
+let image = pauseButton.getAttribute("src");
 document.getElementById("pause-action").addEventListener("click", () => {
-    let pauseButton = document.getElementById("pause-action");
-    let image = pauseButton.getAttribute("src");
     if (image === 'pause.svg') {
         pauseAudio();
         pauseButton.setAttribute("src", 'play.svg');
@@ -174,9 +193,13 @@ document.getElementById("pause-action").addEventListener("click", () => {
 });
 
 
-document.querySelector("#search-song").addEventListener("click", () => {
+document.querySelector(".search-icon").addEventListener("click", () => {
     let searched_Song = document.getElementById("song-input").value;
-    console.log(searched_Song);
-    fetchSongData(searched_Song);
+    if (searched_Song) {
+        console.log(searched_Song);
+        fetchSongData(searched_Song);
+    } else  {
+        alert("Please Enter the Song First");
+    }
 });
 
