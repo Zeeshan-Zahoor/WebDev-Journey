@@ -2,6 +2,9 @@
 console.log("lets get started with functionalities");
 let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
+let pauseButton = document.getElementById("pause-action");
+let image = pauseButton.getAttribute("src");        //play pause button image
+
 
 
 async function fetchSongData(searchedSong) {
@@ -51,8 +54,9 @@ async function fetchSongData(searchedSong) {
                 playAudio(VideoID);
                 playBar.classList.remove("hide");
                 if(image === 'play.svg') {
-                    image = 'pause.svg';
+                    pauseButton.setAttribute("src", "pause.svg");
                 }
+                playPauseButton();
             })
         });
 
@@ -102,6 +106,10 @@ const playAudio = (videoId) => {
             },
             "onError": (error) => {
                 console.error("YouTube Playback Error:", error);
+                image = pauseButton.getAttribute("src");
+                if (image === 'pause.svg') {
+                    pauseButton.setAttribute("src", "play.svg");
+                }
                 alert("This Song cannot be played. Try another one!");
             }
         }
@@ -132,7 +140,7 @@ const seekerSection = () => {
         let visitor = document.getElementsByClassName("visitor")[0];
         let seeker = document.querySelector(".seeker");
         let intervalId;
-        let isSeeking = false; 
+        let isSeeking = false;
 
         // Function to update the visitor position
         const updateVisitor = () => {
@@ -180,17 +188,18 @@ const playPausedAudio = () => {
 }
 
 
-let pauseButton = document.getElementById("pause-action");
-let image = pauseButton.getAttribute("src");
-document.getElementById("pause-action").addEventListener("click", () => {
-    if (image === 'pause.svg') {
-        pauseAudio();
-        pauseButton.setAttribute("src", 'play.svg');
-    } else {
-        playPausedAudio();
-        pauseButton.setAttribute("src", 'pause.svg');
-    }
-});
+const playPauseButton = () => {
+    pauseButton.addEventListener("click", () => {
+        let image = pauseButton.getAttribute("src");
+        if (image === 'pause.svg') {
+            pauseAudio();
+            pauseButton.setAttribute("src", 'play.svg');
+        } else {
+            playPausedAudio();
+            pauseButton.setAttribute("src", 'pause.svg');
+        }
+    });
+}
 
 
 document.querySelector(".search-icon").addEventListener("click", () => {
@@ -198,7 +207,7 @@ document.querySelector(".search-icon").addEventListener("click", () => {
     if (searched_Song) {
         console.log(searched_Song);
         fetchSongData(searched_Song);
-    } else  {
+    } else {
         alert("Please Enter the Song First");
     }
 });

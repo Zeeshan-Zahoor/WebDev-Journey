@@ -372,6 +372,7 @@ input::-webkit-input-placeholder {
     padding: 12px 12px 8px 10px;
 
 }
+
 .song-info {
     width: 87%;
     height: 30px;
@@ -524,25 +525,35 @@ button:hover {
 }
 
 .right .play-bar {
-
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     position: sticky;
     width: 97%;
-    padding: 15px;
-    border-radius: 60px;
+    padding: 3px;
+    padding-bottom: 5px;
+    padding-top: 15px;
+    border-radius: 18px;
     background-color: #212121;
     bottom: 1rem;
     left: 1rem;
 }
-
+.upper-part {
+    display: flex;
+    width: 96%;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto;
+    margin-bottom: 7px;
+}
 .song-name {
-    width: 97%;
-    margin-left: auto;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 90%;
     white-space: nowrap;
     overflow-x: hidden;
 }
+
 
 .seeker {
     position: relative;
