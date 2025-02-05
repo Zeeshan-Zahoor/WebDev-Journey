@@ -47,6 +47,8 @@
     border-radius: 8px;
 }
 .searched-song-play {
+    font-size: 1.15rem;
+    font-weight: bolder;
     padding: 0.5rem 1.2rem;
     margin-right: 0.4rem;
     cursor: pointer;
@@ -54,9 +56,7 @@
 }
 .searched-song-play:hover {
     background-color: #ffffff;
-    h3 {
-        color: black;
-    }
+    color: black;
     transition-duration: 0.15s;
 }
 .searched-song-play:active {

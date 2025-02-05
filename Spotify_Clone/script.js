@@ -35,8 +35,7 @@ async function fetchSongData(searchedSong) {
                         <h4>${songName}</h4> 
                         <span>Channel: ${channelName}</span> 
                     </div> 
-                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name = '${songName}'> <h3> Play </h3> 
-                    </div> 
+                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name = '${songName}'>Play</div> 
                 </div>`;
 
             searchedSongs.innerHTML = searchedSongs.innerHTML + newSong;
@@ -211,4 +210,3 @@ document.querySelector(".search-icon").addEventListener("click", () => {
         alert("Please Enter the Song First");
     }
 });
-
