@@ -322,3 +322,12 @@ document.querySelector(".search-icon").addEventListener("click", () => {
         alert("Please Enter the Song First");
     }
 });
+
+// hamburger 
+function hamburger () {
+    const libWindow = document.querySelector(".left");
+    libWindow.style.zIndex = '2';
+    libWindow.style.left = '0%';
+    libWindow.style.width = '90vw';
+    libWindow.style.transition = '1s';
+}

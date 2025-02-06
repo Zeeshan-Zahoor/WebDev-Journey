@@ -30,9 +30,9 @@ HTML {
 }
 
 .nav-left {
-    display: inline;
+    display: inline-block;
     height: 37px;
-    width: 37px;
+    width: 39px;
     background-image: url("logo.svg");
     background-size: cover;
     filter: invert(100%);
@@ -51,11 +51,14 @@ HTML {
 }
 
 .home-icon {
-    width: 50px;
-    height: 50px;
-    padding: 14px;
+    padding: 1.5rem;
+    background-image: url("home.svg");
+    filter: invert(85%);
+    background-size: 1.5rem;
+    background-repeat: no-repeat;
+    background-position: center 48%;
     border-radius: 50% 50%;
-    background-color: #212121;
+    background-color: #ffffff;
     display: inline-block;
 }
 
@@ -69,6 +72,7 @@ HTML {
 
 .search-bar {
     display: flex;
+    height: fit-content;
     justify-content: space-between;
     background-color: #1e1e1e;
     border-radius: 30px;
@@ -141,7 +145,7 @@ input::-webkit-input-placeholder {
 }
 
 .nav-right {
-    margin-right: 1rem;
+    margin-right: 2%;
     width: fit-content;
     height: fit-content;
     display: flex;
@@ -538,6 +542,7 @@ button:hover {
     background-color: #212121;
     bottom: 1rem;
     left: 1rem;
+    z-index: 3;
 }
 .upper-part {
     display: flex;
