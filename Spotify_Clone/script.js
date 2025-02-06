@@ -125,7 +125,7 @@ const updateLibrary = (savedSongs) => {
     } else {
         library.innerHTML = "";
         savedSongs.forEach(song => {
-            songCard = `<div class="song-card border-rad-1">
+            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}'>
 
                         <div class="music-thumb border-rad-1">
                             <img class="invert" src="music.svg" alt="music-icon">
@@ -138,6 +138,7 @@ const updateLibrary = (savedSongs) => {
             library.innerHTML += songCard;
         });
     }
+    playFromLibrary();
 }
 
 // Remove songs from the library
@@ -146,6 +147,35 @@ const removeSong = (videoId) => {
     savedSongs = savedSongs.filter(song => song.videoId !== videoId);
     localStorage.setItem("librarySongs", JSON.stringify(savedSongs));
     updateLibrary(savedSongs);
+}
+
+
+// play song from library
+const playFromLibrary = () => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    let songs = document.querySelectorAll(".song-card");
+    songs.forEach(eachSong => {
+        eachSong.addEventListener("click", () => {
+            const videoId = eachSong.getAttribute('current-video-id');
+            const songName = eachSong.getAttribute('current-song-name');
+            let liked = savedSongs.some(song=> song.videoId === videoId);
+            console.log(videoId);
+            playBar.classList.remove("hide");
+            // adding the details in the play-bar
+            document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+            if(image === 'play.svg') {
+                pauseButton.setAttribute("src", "pause.svg");
+            }
+            if (!liked) {
+                heartbtn.classList.remove("turn-green");
+                heartbtn.classList.add("turn-transparent");
+            } else {
+                heartbtn.classList.remove("turn-transparent");
+                heartbtn.classList.add("turn-green");
+            }
+            playAudio(videoId);
+        });
+    });
 }
 
 const hideSearchedSongs = () => {
