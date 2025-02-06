@@ -213,7 +213,7 @@ input::-webkit-input-placeholder {
     display: flex;
     justify-content: space-evenly;
     width: 100vw;
-    height: 91vh;
+    height: 91dvh;
     border-radius: 7px;
 
 }
@@ -543,7 +543,7 @@ button:hover {
     padding-top: 15px;
     border-radius: 18px;
     background-color: #212121;
-    bottom: 5vh;
+    bottom: 5dvh;
     left: 1rem;
     z-index: 3;
 }
