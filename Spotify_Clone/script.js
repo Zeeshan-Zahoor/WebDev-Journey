@@ -4,6 +4,12 @@ let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
 let pauseButton = document.getElementById("pause-action");
 let image = pauseButton.getAttribute("src");        //play pause button image
+let heartbtn = document.getElementById("like-btn");
+
+window.onload = () => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    updateLibrary(savedSongs);
+}
 
 
 
@@ -35,7 +41,7 @@ async function fetchSongData(searchedSong) {
                         <h4>${songName}</h4> 
                         <span>Channel: ${channelName}</span> 
                     </div> 
-                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name = '${songName}'>Play</div> 
+                    <div class='searched-song-play' tabindex='0' data-video-channel='${channelName}' data-video-id='${VideoID}' song-name = '${songName}'>Play</div> 
                 </div>`;
 
             searchedSongs.innerHTML = searchedSongs.innerHTML + newSong;
@@ -47,15 +53,24 @@ async function fetchSongData(searchedSong) {
             playButton.addEventListener("click", () => {
                 const VideoID = playButton.getAttribute('data-video-id');
                 const songName = playButton.getAttribute('song-name');
-
+                const channelName = playButton.getAttribute('data-video-channel');
+                let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
+                let liked = savedSongs.some(song => song.videoId === VideoID);
                 // adding the details in the play-bar
                 document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+                if (!liked) {
+                    heartbtn.classList.remove("turn-green");
+                    heartbtn.classList.add("turn-transparent");
+                } else {
+                    heartbtn.classList.remove("turn-transparent");
+                    heartbtn.classList.add("turn-green");
+                }
                 playAudio(VideoID);
                 playBar.classList.remove("hide");
                 if(image === 'play.svg') {
                     pauseButton.setAttribute("src", "pause.svg");
                 }
-                playPauseButton();
+                
             })
         });
 
@@ -63,6 +78,74 @@ async function fetchSongData(searchedSong) {
     } catch (error) {
         console.log("Error Fetching the Song Data", error);
     }
+}
+
+// add event listener to the like button
+document.querySelector(".like-btn").addEventListener("click", () => {
+    const songName = document.getElementsByClassName("song-name")[0].innerText;
+    const videoId = player.getVideoData().video_id;
+    const channelName = player.getVideoData().author;
+    let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
+    let liked = savedSongs.some(song => song.videoId === videoId);
+    
+    if (!liked) {
+        saveSongs(songName, videoId, channelName);
+        heartbtn.classList.remove("turn-transparent");
+        heartbtn.classList.add("turn-green");
+    } else {
+        removeSong(videoId);
+        heartbtn.classList.remove("turn-green");
+        heartbtn.classList.add("turn-transparent");
+    }
+});
+
+//save song to library
+const saveSongs = (songName, videoId, channelName) => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    const newSong = {
+        name: songName, 
+        videoId: videoId, 
+        channelName: channelName
+    }
+
+    if(!savedSongs.some(song => song.videoId === videoId)) {
+        savedSongs.push(newSong);
+        // save the array back to the local storage
+        localStorage.setItem("librarySongs", JSON.stringify(savedSongs));
+    }
+    updateLibrary(savedSongs);
+}
+
+// display saved songs in the library
+const updateLibrary = (savedSongs) => {
+    let library = document.querySelector(".library-body");
+    let songCard = `<h3>Your Library is Empty</h3>`;
+    if (savedSongs.length === 0) {
+        library.innerHTML = songCard;
+    } else {
+        library.innerHTML = "";
+        savedSongs.forEach(song => {
+            songCard = `<div class="song-card border-rad-1">
+
+                        <div class="music-thumb border-rad-1">
+                            <img class="invert" src="music.svg" alt="music-icon">
+                        </div>
+                        <div class="song-info">
+                            <h4>${song.name}</h4>
+                            <span>${song.channelName}</span>
+                        </div>
+                    </div>`;
+            library.innerHTML += songCard;
+        });
+    }
+}
+
+// Remove songs from the library
+const removeSong = (videoId) => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    savedSongs = savedSongs.filter(song => song.videoId !== videoId);
+    localStorage.setItem("librarySongs", JSON.stringify(savedSongs));
+    updateLibrary(savedSongs);
 }
 
 const hideSearchedSongs = () => {
@@ -187,18 +270,17 @@ const playPausedAudio = () => {
 }
 
 
-const playPauseButton = () => {
-    pauseButton.addEventListener("click", () => {
-        let image = pauseButton.getAttribute("src");
-        if (image === 'pause.svg') {
-            pauseAudio();
-            pauseButton.setAttribute("src", 'play.svg');
-        } else {
-            playPausedAudio();
-            pauseButton.setAttribute("src", 'pause.svg');
-        }
-    });
-}
+
+pauseButton.addEventListener("click", () => {
+    let image = pauseButton.getAttribute("src");
+    if (image === 'pause.svg') {
+        pauseAudio();
+        pauseButton.setAttribute("src", 'play.svg');
+    } else {
+        playPausedAudio();
+        pauseButton.setAttribute("src", 'pause.svg');
+    }
+});
 
 
 document.querySelector(".search-icon").addEventListener("click", () => {
