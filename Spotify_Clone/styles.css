@@ -17,8 +17,8 @@
 body,
 HTML {
     background-color: black;
-    overflow-x: none;
-    overflow-y: none;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .nav {
@@ -26,7 +26,7 @@ HTML {
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    height: 64px;
+    height: 9vh;
 }
 
 .nav-left {
@@ -212,13 +212,13 @@ input::-webkit-input-placeholder {
     display: flex;
     justify-content: space-evenly;
     width: 100vw;
-    height: 100vh;
+    height: 91vh;
     border-radius: 7px;
 
 }
 
 .left {
-    height: 88%;
+    height: 100%;
     width: 25%;
     background-color: #121212;
 }
@@ -332,7 +332,6 @@ input::-webkit-input-placeholder {
     padding: 6px 10px;
     display: flex;
     align-items: center;
-    margin-top: 1rem;
     border: 1px solid rgb(150, 150, 150);
     border-radius: 30px;
 }
@@ -396,8 +395,9 @@ input::-webkit-input-placeholder {
 
 .right {
     position: relative;
-    height: 88vh;
+    height: 100%;
     width: 73%;
+    background-color: #121212;
     border-radius: 7px;
     display: flex;
     flex-direction: column;

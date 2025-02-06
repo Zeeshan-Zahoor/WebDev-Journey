@@ -67,10 +67,10 @@ async function fetchSongData(searchedSong) {
                 }
                 playAudio(VideoID);
                 playBar.classList.remove("hide");
-                if(image === 'play.svg') {
+                if (image === 'play.svg') {
                     pauseButton.setAttribute("src", "pause.svg");
                 }
-                
+
             })
         });
 
@@ -87,7 +87,7 @@ document.querySelector(".like-btn").addEventListener("click", () => {
     const channelName = player.getVideoData().author;
     let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
     let liked = savedSongs.some(song => song.videoId === videoId);
-    
+
     if (!liked) {
         saveSongs(songName, videoId, channelName);
         heartbtn.classList.remove("turn-transparent");
@@ -103,12 +103,12 @@ document.querySelector(".like-btn").addEventListener("click", () => {
 const saveSongs = (songName, videoId, channelName) => {
     let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
     const newSong = {
-        name: songName, 
-        videoId: videoId, 
+        name: songName,
+        videoId: videoId,
         channelName: channelName
     }
 
-    if(!savedSongs.some(song => song.videoId === videoId)) {
+    if (!savedSongs.some(song => song.videoId === videoId)) {
         savedSongs.push(newSong);
         // save the array back to the local storage
         localStorage.setItem("librarySongs", JSON.stringify(savedSongs));
@@ -158,12 +158,12 @@ const playFromLibrary = () => {
         eachSong.addEventListener("click", () => {
             const videoId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
-            let liked = savedSongs.some(song=> song.videoId === videoId);
+            let liked = savedSongs.some(song => song.videoId === videoId);
             console.log(videoId);
             playBar.classList.remove("hide");
             // adding the details in the play-bar
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
-            if(image === 'play.svg') {
+            if (image === 'play.svg') {
                 pauseButton.setAttribute("src", "pause.svg");
             }
             if (!liked) {
@@ -324,13 +324,13 @@ document.querySelector(".search-icon").addEventListener("click", () => {
 });
 
 // hamburger 
-function hamburger () {
+function hamburger() {
     const libWindow = document.querySelector(".left");
     libWindow.style.zIndex = '2';
     libWindow.style.left = '0%';
     libWindow.style.width = '90vw';
     libWindow.style.transition = '0.7s';
-    
+
     document.querySelector(".library-heading-right").addEventListener("click", () => {
         libWindow.style.left = '-100%';
         libWindow.style.transition = '0.7s';
