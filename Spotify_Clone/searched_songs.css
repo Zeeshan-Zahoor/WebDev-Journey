@@ -16,24 +16,29 @@
     padding: 5px;
     margin-bottom: 1rem;
 }
+
 .search-results {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;  
+    padding: 1rem;
 }
+
 #cancel-btn {
     padding: 8px 9px 5px 9px;
     border-radius: 50%;
     box-sizing: border-box;
 }
+
 #cancel-btn:active {
     border: 1px solid rgb(134, 134, 134);
 }
+
 #cancel-btn:hover {
     background-color: #3c3c3c;
     transition-duration: 0.2s;
 }
+
 .searched-song-card {
     position: relative;
     padding: 0.35rem 0.5rem;
@@ -46,6 +51,7 @@
     background-color: #3c3c3c;
     border-radius: 8px;
 }
+
 .searched-song-play {
     font-size: 1.15rem;
     font-weight: bolder;
@@ -54,11 +60,13 @@
     cursor: pointer;
     border-radius: 30px;
 }
+
 .searched-song-play:hover {
     background-color: #ffffff;
     color: black;
     transition-duration: 0.15s;
 }
+
 .searched-song-play:active {
     background-color: #848383;
 }

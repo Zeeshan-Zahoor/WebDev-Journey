@@ -14,21 +14,19 @@
 
 <body>
     <!-- Navbar  -->
-    <div class="nav">
+    <header class="nav">
         <div class="main-left">
             <div class="nav-left">
             </div>
-            <div onclick="hamburger ()" class="hamburger">
-                
-            </div>
+            <button onclick="hamburger ()" class="hamburger"></button>
         </div>
         <div class="nav-middle">
-            <div class="home-icon">
-            </div>
+            <button class="home-icon">
+            </button>
             <div class="search-bar" tabindex="0">
-                <div class="search-icon" tabindex="0">
+                <button class="search-icon" tabindex="0">
                     <img id="search-song" class="invert-2" src="search.svg" alt="search-icon" width="25px">
-                </div>
+                </button>
                 <div class="input-search">
                     <input id="song-input" type="text" placeholder="What do you want to play?" autocomplete="off">
                 </div>
@@ -42,21 +40,21 @@
             </div>
         </div>
         <div class="nav-right">
-            <div class="black-btn">
+            <button class="black-btn">
                 <img class="invert" src="install.svg" alt="install-icon" width="16px">
                 <a href="https://open.spotify.com/download">Install App</a>
-            </div>
-            <div class="black-btn">
+            </button>
+            <button class="black-btn">
                 <a href="https://www.spotify.com/in-en/signup?forward_url=https%3A%2F%2Fopen.spotify.com%2Fsearch"
                     target="_blank">Sign up</a>
-            </div>
-            <div class="white-btn">
+            </button>
+            <button class="white-btn">
                 <a href="https://accounts.spotify.com/en/login?continue=https%3A%2F%2Fopen.spotify.com%2Fsearch"
                     target="_blank">Log in</a>
-            </div>
+            </button>
         </div>
-    </div>
-    <div class="container">
+    </header>
+    <section class="container">
         <div class="left border-rad-1">
             <div class="library">
                 <div class="library-heading">
@@ -64,7 +62,7 @@
                         <img class="invert-2" src="library.svg" alt="library-icon" width="25px">
                         <h3 class="sign-grey">Your Library</h3>
                     </div>
-                    <div class="library-heading-right"></div>
+                    <button class="library-heading-right"></button>
                 </div>
                 <div class="library-body border-rad-1">
                     <!-- <div class="song-card border-rad-1">
@@ -80,7 +78,7 @@
                         </div>
                     </div> -->
                 </div>
-                <div class="library-footer">
+                <footer class="library-footer">
                     <ul>
                         <li><a href="">Legal</a></li>
                         <li><a href="">Safety & Privacy Center</a></li>
@@ -98,7 +96,7 @@
                             <option value="Hindi">Hindi</option>
                         </select>
                     </div>
-                </div>
+                </footer>
             </div>
         </div>
         <div class="right border-rad-1">
@@ -119,7 +117,7 @@
                         <span>Artist Name</span>
 
                     </div>
-                    <div class="searched-song-play" tabindex="0">Play</div>
+                    <button class="searched-song-play" tabindex="0">Play</button>
                 </div>
 
             </div>
@@ -180,42 +178,42 @@
             <div class="next">
 
             </div>
-        
-            
+
+
 
             <div class="play-bar hide"> <!--To be kept hidden initially-->
                 <div class="upper-part">
                     <div class="song-name">
                         <h4></h4>
                     </div>
-                    <div class="like-btn">
+                    <button class="like-btn">
                         <svg id="like-btn" width="25px" heigth="25px" class="invert turn-transparent"
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="-17 -10 603 561"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
                             <path
                                 d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z" />
                         </svg>
-                    </div>
+                    </button>
                 </div>
                 <div class="seeker">
-                    <div class="visitor">
+                    <button class="visitor">
                         <img class="invert" src="visitor.svg" alt="visitor" width="20px">
-                    </div>
+                    </button>
                 </div>
                 <div class="controlls">
                     <div class="current-time">
                         <span>00:00</span>
                     </div>
                     <div class="actions">
-                        <div class="img">
+                        <button class="img">
                             <img class="invert" src="prev_song.svg" alt="prev_song" width="15px">
-                        </div>
-                        <div class="img">
+                        </button>
+                        <button class="img">
                             <img id="pause-action" class="invert" src="play.svg" alt="pause" width="15px">
-                        </div>
-                        <div class="img">
+                        </button>
+                        <button class="img">
                             <img class="invert" src="next_song.svg" alt="next_song" width="15px">
-                        </div>
+                        </button>
                     </div>
                     <div class="total-time">
                         <span>00:00</span>
@@ -223,7 +221,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <script src="script.js"></script>
 

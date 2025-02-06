@@ -35,9 +35,11 @@
         position: absolute;
         left: -100%;
     }
+
     .library-heading-right {
         transform: rotate(45deg);
     }
+
     .right {
         width: 100%;
     }
@@ -94,15 +96,16 @@
         height: 40px;
         width: 5.66rem;
     }
+
     .nav-right .black-btn {
         display: none;
     }
 }
 
 @media (width <=570px) {
-    
 
-    
+
+
     .nav-right .white-btn {
         display: none;
     }
@@ -110,18 +113,18 @@
 
 @media (width <=430px) {
     .search-bar {
-        width: 16rem;
-       
+        width: 19rem;
+
     }
 }
 
 @media (width <=360px) {
     .search-bar {
-        width: 16rem;
+        width: 19rem;
     }
 
     .search-icon {
-        padding: 0.7rem 0.2rem 0.5rem 0.6rem;
+        padding: 0.5rem 0.6rem 0.4rem 0.6rem;
     }
 
     .nav-middle .home-icon {

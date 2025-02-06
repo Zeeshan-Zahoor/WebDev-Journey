@@ -313,7 +313,18 @@ pauseButton.addEventListener("click", () => {
 });
 
 
-document.querySelector(".search-icon").addEventListener("click", () => {
+let searchButton = document.querySelector('.search-icon');
+
+// Add event listner for Enter key
+document.getElementById("song-input").addEventListener("keydown", (event) => {
+    if(event.key === "Enter") {
+        searchButton.style.hover = true;
+        searchSong();
+        searchButton.click();
+    }
+});
+
+const searchSong = () => {
     let searched_Song = document.getElementById("song-input").value;
     if (searched_Song) {
         console.log(searched_Song);
@@ -321,7 +332,8 @@ document.querySelector(".search-icon").addEventListener("click", () => {
     } else {
         alert("Please Enter the Song First");
     }
-});
+}
+searchButton.addEventListener("click", searchSong);
 
 // hamburger 
 function hamburger() {

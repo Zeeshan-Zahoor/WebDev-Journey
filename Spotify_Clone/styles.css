@@ -135,6 +135,7 @@ input::-webkit-input-placeholder {
     display: flex;
     justify-content: space-between;
     width: fit-content;
+    padding-right: 0.4rem;
     gap: 8px;
 }
 
@@ -356,10 +357,12 @@ input::-webkit-input-placeholder {
     height: 4rem;
     background-color: #212121;
 }
+
 .song-card:hover {
     background-color: #545454;
     cursor: pointer;
 }
+
 ::-webkit-scrollbar {
     background-color: transparent;
     width: 15px;
@@ -544,6 +547,7 @@ button:hover {
     left: 1rem;
     z-index: 3;
 }
+
 .upper-part {
     display: flex;
     width: 96%;
@@ -552,6 +556,7 @@ button:hover {
     margin: auto;
     margin-bottom: 7px;
 }
+
 .song-name {
     display: flex;
     justify-content: start;
