@@ -35,7 +35,9 @@
         position: absolute;
         left: -100%;
     }
-
+    .library-heading-right {
+        transform: rotate(45deg);
+    }
     .right {
         width: 100%;
     }

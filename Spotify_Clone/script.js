@@ -329,5 +329,11 @@ function hamburger () {
     libWindow.style.zIndex = '2';
     libWindow.style.left = '0%';
     libWindow.style.width = '90vw';
-    libWindow.style.transition = '1s';
+    libWindow.style.transition = '0.7s';
+    
+    document.querySelector(".library-heading-right").addEventListener("click", () => {
+        libWindow.style.left = '-100%';
+        libWindow.style.transition = '0.7s';
+        libWindow.style.zIndex = '0';
+    });
 }

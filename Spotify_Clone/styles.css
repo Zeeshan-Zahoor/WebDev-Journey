@@ -253,7 +253,7 @@ input::-webkit-input-placeholder {
     width: 3rem;
     background-image: url("plus.svg");
     filter: invert(70%);
-    background-size: 1.77rem;
+    background-size: 2.2rem;
     background-repeat: no-repeat;
     background-position: center center;
     border-radius: 50%;
