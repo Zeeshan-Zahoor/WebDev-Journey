@@ -406,13 +406,10 @@ input::-webkit-input-placeholder {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    padding-right: 10px;
 }
 
 .top {
     width: 100%;
-    min-height: 200px;
-    height: 50%;
     background: linear-gradient(to bottom, #212121, #121212);
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -421,6 +418,7 @@ input::-webkit-input-placeholder {
     gap: 1rem;
     overflow: hidden;
     flex-shrink: 0;
+    margin-bottom: 10px;
 }
 
 .right .top .top-line h2 {
@@ -485,11 +483,9 @@ button:hover {
     width: 10rem;
     height: 10rem;
     border-radius: 50%;
-
     background-position: center center;
     background-size: cover;
     box-shadow: -2px 10px 15px rgba(0, 0, 0, 0.5);
-    /* Proper syntax */
 }
 
 .green-play {
@@ -529,25 +525,28 @@ button:hover {
 }
 
 .next {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0.1rem 0.5rem 0.5rem;
     width: 100%;
     min-height: 200px;
-    height: 50%;
+    height: fit-content;
     background-color: #121212;
-    flex-shrink: 0;
+    gap: 1rem;
 }
 
 .right .play-bar {
     display: flex;
     flex-direction: column;
-    position: sticky;
+    position: fixed;
     width: 97%;
     padding: 3px;
     padding-bottom: 5px;
     padding-top: 15px;
     border-radius: 18px;
     background-color: #212121;
-    bottom: 5dvh;
-    left: 1rem;
+    bottom: 2dvh;
+    left: 0.4rem;
     z-index: 3;
 }
 

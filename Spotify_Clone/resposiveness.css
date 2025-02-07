@@ -49,6 +49,11 @@
     .hamburger {
         display: none;
     }
+    .right .play-bar {
+        position: fixed;
+        width: 70%;
+        left: 28%;
+    }
 }
 
 @media (width <=810px) {
@@ -112,12 +117,24 @@
 }
 
 @media (width <=430px) {
+    body {
+        font-size: 1rem;
+    }
+    h2 {
+        font-size: medium;
+    }
     .search-bar {
         width: 19rem;
     }
     .artist-card {
-        height: 13rem;
-        width: 9.6rem;
+        height: 9.3rem;
+        width: 6.6rem;
+    }
+    #singer-name {
+        font-size: 0.75rem;
+    }
+    .artist-card span{
+        font-size: 0.6rem;
     }
 }
 

@@ -1,0 +1,66 @@
+.next .top-line {
+    margin-left: 1rem;
+}
+.album-singer-image {
+    width: 10rem;
+    height: 10rem;
+    margin-bottom: 0.5rem;
+    border-radius: 8px;
+    background-position: center center;
+    background-size: cover;
+    box-shadow: -2px 10px 15px rgba(0, 0, 0, 0.5);
+}
+.popular-albums {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.top-line button {
+    color: #ACACAC;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding-right: 10px;
+}
+
+.honey-singh {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e02aad3f4b601ae8763b3fc4e88");
+}
+.ashiqi-2{
+    background-image: url("https://i.scdn.co/image/ab67616d00001e026404721c1943d5069f0805f3");
+}
+.yeh-jawani {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e02707ea5b8023ac77d31756ed4");
+}
+.jimin {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e027f35adfbec3bb2bc8256802b");
+}
+.mismatched {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e0279f4a87c23143f0abb14c279");
+}
+.karan {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e02bb25239324c4e16ae01fda36");
+}
+.jasleen {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e02b5e7944443cec785db91184b");
+}
+.anuv {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e0272a77d038887cdc425f5ee55");
+}
+.arijit {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e021aa5adad8593923dcdf1a7d0");
+}
+.arjan {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e0209c9bf421422262c368009d6");
+}
+.siddhu {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e021d1cc2e40d533d7bcebf5dae");
+}
+.shubh {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e026138560a7e7475706e900d3c");
+}
+.animal {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e025f3ede47954a93aa03efe5f9");
+}
+.gaga {
+    background-image: url("https://i.scdn.co/image/ab67616d00001e0282ea2e9e1858aa012c57cd45");
+}

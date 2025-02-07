@@ -16,6 +16,7 @@ window.onload = () => {
 
 
 async function fetchSongData(searchedSong) {
+    // const apiKey = "AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA";
     const apiKey_2 = "AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY";
     const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchedSong)}&key=${apiKey_2}`;
 
