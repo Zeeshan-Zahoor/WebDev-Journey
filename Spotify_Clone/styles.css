@@ -11,6 +11,7 @@
     box-sizing: border-box;
     text-decoration: none;
     background-color: transparent;
+    -webkit-tap-highlight-color: transparent;
     outline: none;
 }
 
@@ -273,7 +274,7 @@ input::-webkit-input-placeholder {
     gap: 0.2rem;
     overflow: auto;
     width: 90%;
-    height: 60%;
+    height: 55%;
     padding-right: 5px;
     margin-bottom: 1rem;
 
@@ -365,10 +366,10 @@ input::-webkit-input-placeholder {
 
 ::-webkit-scrollbar {
     background-color: transparent;
-    width: 15px;
+    width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
+.library-body::-webkit-scrollbar-thumb {
     background-color: #212121;
     border-radius: 8px;
 }
@@ -451,10 +452,12 @@ button:hover {
     margin-left: 1rem;
     width: 100%;
     display: flex;
-    overflow: hidden;
+    overflow-x: auto;
     align-items: center;
 }
-
+.artist-container::-webkit-scrollbar-thumb {
+    background: #f92e00; /* Scrollbar color */
+}
 .artist-card {
     position: relative;
     padding: 0.66rem;

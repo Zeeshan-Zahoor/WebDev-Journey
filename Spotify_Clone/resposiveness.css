@@ -114,7 +114,10 @@
 @media (width <=430px) {
     .search-bar {
         width: 19rem;
-
+    }
+    .artist-card {
+        height: 13rem;
+        width: 9.6rem;
     }
 }
 
