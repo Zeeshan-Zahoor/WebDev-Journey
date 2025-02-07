@@ -6,6 +6,8 @@ let pauseButton = document.getElementById("pause-action");
 let image = pauseButton.getAttribute("src");        //play pause button image
 let heartbtn = document.getElementById("like-btn");
 
+
+
 window.onload = () => {
     let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
     updateLibrary(savedSongs);
@@ -14,26 +16,39 @@ window.onload = () => {
 
 
 async function fetchSongData(searchedSong) {
-    const apiKey = "AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA";
-    const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchedSong)}&key=${apiKey}`;
+    const apiKey_2 = "AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY";
+    const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchedSong)}&key=${apiKey_2}`;
 
     try {
+        // Clear previous search results and show loader
+        searchedSongs.innerHTML = `
+            <div class="search-results">
+                <h2>Search Results</h2>
+                <button id="cancel-btn" onclick="hideSearchedSongs()">
+                    <img class="invert" src="cancel.svg" alt="cancel">
+                </button>
+            </div>
+            <div class="loader"></div> <!-- Loader is visible by default -->
+        `;
+        searchedSongs.classList.remove("hide");
+
+        // Fetch song data
         let response = await fetch(searchURL);
         const data = await response.json();
-        console.log(data);
-        searchedSongs.classList.remove("hide");
-        searchedSongs.innerHTML = `<div class="search-results">
-                                        <h2>Search Results</h2>
-                                        <button id="cancel-btn" onclick="hideSearchedSongs()">
-                                            <img class="invert" src="cancel.svg" alt="cancel">
-                                        </button>
-                                    </div>`;    // keep the searched songs container empty first
         let songArray = data.items;
+
+        // Hide loader after data is fetched
+        let loader = document.querySelector(".loader");
+        loader.classList.add("hide");
+
+        // Display new search results
+        let newSongs = "";
         for (let Video of songArray) {
             const VideoID = Video.id.videoId;
             let songName = Video.snippet.title;
             let channelName = Video.snippet.channelTitle;
-            let newSong = `<div class='searched-song-card'> 
+            newSongs += `
+                <div class='searched-song-card'> 
                     <div class='music-thumb border-rad-1'> 
                         <img class='invert' src='music.svg' alt='music-icon'> 
                     </div> 
@@ -41,22 +56,29 @@ async function fetchSongData(searchedSong) {
                         <h4>${songName}</h4> 
                         <span>Channel: ${channelName}</span> 
                     </div> 
-                    <div class='searched-song-play' tabindex='0' data-video-channel='${channelName}' data-video-id='${VideoID}' song-name = '${songName}'>Play</div> 
-                </div>`;
-
-            searchedSongs.innerHTML = searchedSongs.innerHTML + newSong;
-
+                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name='${songName}' data-video-channel='${channelName}'>Play</div> 
+                </div>
+            `;
         }
+        searchedSongs.innerHTML += newSongs;
 
+        // Add event listeners to play buttons
         let playButtons = document.querySelectorAll(".searched-song-play");
         playButtons.forEach(playButton => {
+            // Remove any existing event listeners to avoid duplication
+            playButton.replaceWith(playButton.cloneNode(true));
+        });
+
+        // Re-select the play buttons and add fresh event listeners
+        document.querySelectorAll(".searched-song-play").forEach(playButton => {
             playButton.addEventListener("click", () => {
                 const VideoID = playButton.getAttribute('data-video-id');
                 const songName = playButton.getAttribute('song-name');
                 const channelName = playButton.getAttribute('data-video-channel');
                 let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
                 let liked = savedSongs.some(song => song.videoId === VideoID);
-                // adding the details in the play-bar
+
+                // Update play-bar with song details
                 document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
                 if (!liked) {
                     heartbtn.classList.remove("turn-green");
@@ -65,18 +87,21 @@ async function fetchSongData(searchedSong) {
                     heartbtn.classList.remove("turn-transparent");
                     heartbtn.classList.add("turn-green");
                 }
-                playAudio(VideoID);
-                playBar.classList.remove("hide");
+
+                // Play the audio and update the play/pause button
                 if (image === 'play.svg') {
                     pauseButton.setAttribute("src", "pause.svg");
                 }
-
-            })
+                playAudio(VideoID);
+                playBar.classList.remove("hide");
+            });
         });
-
 
     } catch (error) {
         console.log("Error Fetching the Song Data", error);
+        // Hide loader in case of error
+        let loader = document.querySelector(".loader");
+        loader.classList.add("hide");
     }
 }
 
@@ -313,19 +338,25 @@ pauseButton.addEventListener("click", () => {
 });
 
 
+
 let searchButton = document.querySelector('.search-icon');
+let songInput = document.getElementById("song-input");
 
-// Add event listner for Enter key
-document.getElementById("song-input").addEventListener("keydown", (event) => {
-    if(event.key === "Enter") {
-        searchButton.style.hover = true;
-        searchSong();
-        searchButton.click();
-    }
-});
+// Check if the elements exist before adding event listeners
+if (songInput) {
+    songInput.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            searchSong();
+        }
+    });
+}
 
-const searchSong = () => {
-    let searched_Song = document.getElementById("song-input").value;
+if (searchButton) {
+    searchButton.addEventListener("click", searchSong);
+}
+
+function searchSong() {
+    let searched_Song = songInput ? songInput.value.trim() : "";
     if (searched_Song) {
         console.log(searched_Song);
         fetchSongData(searched_Song);
@@ -333,7 +364,7 @@ const searchSong = () => {
         alert("Please Enter the Song First");
     }
 }
-searchButton.addEventListener("click", searchSong);
+
 
 // hamburger 
 function hamburger() {

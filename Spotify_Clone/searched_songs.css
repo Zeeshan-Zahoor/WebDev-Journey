@@ -5,6 +5,7 @@
 .searched-songs {
     position: absolute;
     width: 100%;
+    min-height: 50%;
     max-height: 70%;
     background-color: #121212;
     border-radius: 8px;
@@ -71,3 +72,29 @@
 .searched-song-play:active {
     background-color: #848383;
 }
+
+
+.loader {
+    inset: 0;
+    margin: auto;
+    height: 70px;
+    width: 70px;
+    background-color: transparent;
+    border: 8px solid rgb(127, 127, 127);
+    border-top: 8px solid #212121;
+    border-radius: 50%;
+    animation: rotation;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+
+ }
+
+
+ @keyframes rotation {
+    from {
+        transform: rotate(0deg)
+    } to {
+        transform: rotate(360deg)
+    }
+ }
