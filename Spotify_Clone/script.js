@@ -14,11 +14,11 @@ window.onload = () => {
 }
 
 
+let apiKeys = ['key1', 'key2'];
 
+let currentKeyIndex = 0;
 async function fetchSongData(searchedSong) {
-    // const apiKey = "AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA";
-    const apiKey_2 = "AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY";
-    const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchedSong)}&key=${apiKey_2}`;
+    const searchURL = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchedSong)}&key=${apiKeys[currentKeyIndex]}`;
 
     try {
         // Clear previous search results and show loader
@@ -36,11 +36,27 @@ async function fetchSongData(searchedSong) {
         // Fetch song data
         let response = await fetch(searchURL);
         const data = await response.json();
-        let songArray = data.items;
+        
+        // If Quota Exceeded, try next API
+        if (data.error && data.error.errors[0].reason === 'quotaExceeded') {
+            console.warn(`Qouta Exceeded for API key ${currentKeyIndex + 1}, trying next API key..` );
+            if (currentKeyIndex < apiKeys.length -1) {
+                currentKeyIndex ++;
+                return fetchSongData(searchedSong);
+            } else  {
+                throw new error ("All API keys have exceeded daily Qouta Limit..")
+            }
+        }
 
+        let songArray = data.items;
         // Hide loader after data is fetched
         let loader = document.querySelector(".loader");
         loader.classList.add("hide");
+
+        if(!data.items || data.items.length === 0) {
+            searchedSongs.innerHTML += "<p>No songs found. Try another search.</p>";
+            return;
+        }
 
         // Display new search results
         let newSongs = "";
