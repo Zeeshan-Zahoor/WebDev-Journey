@@ -127,8 +127,8 @@
         width: 19rem;
     }
     .artist-card {
-        height: 9.3rem;
-        width: 6.6rem;
+        height: 11.3rem;
+        width: 8.9rem;
     }
     #singer-name {
         font-size: 0.75rem;
@@ -138,7 +138,7 @@
     }
 }
 
-@media (width <=360px) {
+@media (width <=376px) {
     .search-bar {
         width: 19rem;
     }
