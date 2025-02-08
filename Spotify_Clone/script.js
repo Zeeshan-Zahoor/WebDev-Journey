@@ -3,6 +3,7 @@ console.log("lets get started with functionalities");
 let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
 let pauseButton = document.getElementById("pause-action");
+// let nextButton = document.
 let image = pauseButton.getAttribute("src");        //play pause button image
 let heartbtn = document.getElementById("like-btn");
 
@@ -106,9 +107,8 @@ async function fetchSongData(searchedSong) {
                 }
 
                 // Play the audio and update the play/pause button
-                if (image === 'play.svg') {
-                    pauseButton.setAttribute("src", "pause.svg");
-                }
+                pauseButton.innerHTML = pauseImage;
+        
                 playAudio(VideoID);
                 playBar.classList.remove("hide");
             });
@@ -205,9 +205,8 @@ const playFromLibrary = () => {
             playBar.classList.remove("hide");
             // adding the details in the play-bar
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
-            if (image === 'play.svg') {
-                pauseButton.setAttribute("src", "pause.svg");
-            }
+            pauseButton.innerHTML = pauseImage;
+
             if (!liked) {
                 heartbtn.classList.remove("turn-green");
                 heartbtn.classList.add("turn-transparent");
@@ -260,9 +259,8 @@ const playAudio = (videoId) => {
             },
             "onError": (error) => {
                 console.error("YouTube Playback Error:", error);
-                image = pauseButton.getAttribute("src");
-                if (image === 'pause.svg') {
-                    pauseButton.setAttribute("src", "play.svg");
+                if (pauseButton.innerHTML === pauseImage) {
+                    pauseButton.innerHTML = playImage;
                 }
                 alert("This Song cannot be played. Try another one!");
             }
@@ -309,7 +307,7 @@ const seekerSection = () => {
 
                 if(Math.floor(currentTime) === Math.floor(duration)-1) { // pause after end of song
                     console.log("song ended");
-                    pauseButton.setAttribute("src", "play.svg");
+                    pauseButton.innerHTML = playImage;
                     return
                 }
             }
@@ -350,17 +348,18 @@ const playPausedAudio = () => {
     if (player) player.playVideo();
 }
 
-
-
-pauseButton.addEventListener("click", () => {
-    let image = pauseButton.getAttribute("src");
-     
-    if (image === 'pause.svg') {
+let playImage = '<img  class="invert" src="play.svg" alt="play" width="15px">';
+let pauseImage = '<img  class="invert" src="pause.svg" alt="pause" width="15px">';
+pauseButton.innerHTML = playImage;
+pauseButton.addEventListener("click", () => {     
+    if (pauseButton.getAttribute("data-playing") === "true") {
         pauseAudio();
-        pauseButton.setAttribute("src", 'play.svg');
+        pauseButton.innerHTML = playImage;
+        pauseButton.setAttribute("data-playing", "false");  // Update state
     } else {
         playPausedAudio();
-        pauseButton.setAttribute("src", 'pause.svg');
+        pauseButton.innerHTML = pauseImage;
+        pauseButton.setAttribute("data-playing", "true");  // Update state
     }
 });
 
