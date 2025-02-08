@@ -505,7 +505,7 @@ button:hover {
 
 .green-play:hover {
     height: 25.5%;
-    width: 32.5%;
+    width: 33%;
     transition-duration: 0.1s;
     background-color: #34ea74;
 }
