@@ -13,8 +13,8 @@ window.onload = () => {
     updateLibrary(savedSongs);
 }
 
-
-let apiKeys = ['key1', 'key2'];
+let apiKeys = ['AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY', 'AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA'];
+// let apiKeys = ['key1', 'key2'];
 
 let currentKeyIndex = 0;
 async function fetchSongData(searchedSong) {
@@ -282,6 +282,8 @@ const updatePlaybarTimes = () => {
         // upadate the play bar 
         document.getElementsByClassName("current-time")[0].innerHTML = `<span>${f_currentTime}</span>`;
         document.getElementsByClassName("total-time")[0].innerHTML = `<span>${f_totalDuration}</span>`;
+
+       
     }
 }
 
@@ -301,15 +303,22 @@ const seekerSection = () => {
             if (!isSeeking) {  // Only update if not seeking
                 let duration = player.getDuration();
                 let currentTime = player.getCurrentTime();
+                
                 let progress = (currentTime / duration) * 100;
                 visitor.style.left = `${progress}%`;
+
+                if(Math.floor(currentTime) === Math.floor(duration)-1) { // pause after end of song
+                    console.log("song ended");
+                    pauseButton.setAttribute("src", "play.svg");
+                    return
+                }
             }
         };
 
         // Add event listener to seek when user clicks
         seeker.addEventListener("click", (e) => {
             let duration = player.getDuration();
-            let percent = (e.offsetX / seeker.getBoundingClientRect().width) * 100;
+            let percent = (e.offsetX / seeker.getBoundingClientRect().width) *100;
             let newTime = (duration * percent) / 100;
 
             isSeeking = true;  // Temporarily disable updates
@@ -345,6 +354,7 @@ const playPausedAudio = () => {
 
 pauseButton.addEventListener("click", () => {
     let image = pauseButton.getAttribute("src");
+     
     if (image === 'pause.svg') {
         pauseAudio();
         pauseButton.setAttribute("src", 'play.svg');
