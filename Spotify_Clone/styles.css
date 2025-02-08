@@ -363,7 +363,9 @@ input::-webkit-input-placeholder {
     background-color: #545454;
     cursor: pointer;
 }
-
+.song-card:focus {
+    background-color: #494949;
+}
 ::-webkit-scrollbar {
     background-color: transparent;
     width: 8px;

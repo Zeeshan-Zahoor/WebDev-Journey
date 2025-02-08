@@ -151,7 +151,7 @@ const updateLibrary = (savedSongs) => {
     } else {
         library.innerHTML = "";
         savedSongs.forEach(song => {
-            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}'>
+            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}' tabindex='0'>
 
                         <div class="music-thumb border-rad-1">
                             <img class="invert" src="music.svg" alt="music-icon">
