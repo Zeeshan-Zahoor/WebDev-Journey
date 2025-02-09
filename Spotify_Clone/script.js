@@ -16,8 +16,8 @@ window.onload = () => {
     updateLibrary(savedSongs);
 }
 
-let apiKeys = ['AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY', 'AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA'];
-// let apiKeys = ['key1', 'key2'];
+
+let apiKeys = ['key1', 'key2'];     // your api key or keys
 
 let currentKeyIndex = 0;
 async function fetchSongData(searchedSong) {
@@ -320,9 +320,7 @@ const playAudio = (videoId) => {
                 event.target.playVideo();
                 pauseButton.innerHTML = pauseImage;
                 seekerSection();
-
-                // Set up Media Session API when the song starts
-                setupMediaSession(videoId);
+                
             },
             "onError": (error) => {
                 console.error("YouTube Playback Error:", error);
@@ -333,40 +331,6 @@ const playAudio = (videoId) => {
             }
         }
     });
-};
-
-// Function to handle Media Session API
-const setupMediaSession = (videoId) => {
-    if ("mediaSession" in navigator) {
-        let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
-        let currentSong = savedSongs.find(song => song.videoId === videoId);
-
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: currentSong ? currentSong.songName : "Unknown Song",
-            artist: "Your App",
-            album: "Music Library",
-            artwork: [
-                { src: "your-song-thumbnail-url.jpg", sizes: "512x512", type: "image/png" },
-            ],
-        });
-
-        // Handle media controls
-        navigator.mediaSession.setActionHandler("play", () => {
-            player.playVideo();
-        });
-
-        navigator.mediaSession.setActionHandler("pause", () => {
-            player.pauseVideo();
-        });
-
-        navigator.mediaSession.setActionHandler("previoustrack", () => {
-            playPrevSong();
-        });
-
-        navigator.mediaSession.setActionHandler("nexttrack", () => {
-            playNextSong();
-        });
-    }
 };
 
 
