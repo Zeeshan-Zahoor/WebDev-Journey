@@ -318,6 +318,7 @@ const playAudio = (videoId) => {
             "onReady": (event) => {
                 event.target.setPlaybackQuality("small"); // Set 144p quality
                 event.target.playVideo();
+                pauseButton.innerHTML = pauseImage;
                 seekerSection();
             },
             "onError": (error) => {
