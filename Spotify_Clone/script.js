@@ -3,9 +3,11 @@ console.log("lets get started with functionalities");
 let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
 let pauseButton = document.getElementById("pause-action");
-// let nextButton = document.
+let prevButton = document.getElementById("previous-btn");
+let nextButton = document.getElementById("next-btn");
 let image = pauseButton.getAttribute("src");        //play pause button image
 let heartbtn = document.getElementById("like-btn");
+
 
 
 
@@ -191,6 +193,57 @@ const removeSong = (videoId) => {
     updateLibrary(savedSongs);
 }
 
+// next and previous button functionality
+let currentSongId = null;
+const playNextSong = () => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    let currentSongIndex = savedSongs.findIndex(song => song.videoId === currentSongId);
+
+    if (savedSongs.length === 0) {
+        console.log("Library is empty!");
+        return;
+    }
+
+    if (currentSongIndex < savedSongs.length -1) {  // ensure we are not moving above the length of the array
+        currentSongId = savedSongs[currentSongIndex + 1].videoId;
+    } else  {
+        console.log("No next Song Available");
+        currentSongId = savedSongs[0].videoId;  // return back to the first song
+    }
+
+    playAudio(currentSongId);
+
+    // Update the song name in the playbar
+    let currentSong = savedSongs.find(song => song.videoId === currentSongId);
+    if (currentSong) {
+        document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+    }
+}
+    
+const playPrevSong = () => {
+    let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
+    let currentSongIndex = savedSongs.findIndex(song => song.videoId === currentSongId);
+
+    if (savedSongs.length === 0) {
+        console.log("Library is empty!");
+        return;
+    }
+
+    if (currentSongIndex > 0) {  // ensure we are not moving above the length of the array
+        currentSongId = savedSongs[currentSongIndex - 1].videoId;
+    } else  {
+        console.log("No previous Song Available");
+        currentSongId = savedSongs[savedSongs.length -1].videoId;  // return back to the last song
+    }
+
+    playAudio(currentSongId);
+
+    let currentSong = savedSongs.find(song => song.videoId === currentSongId);
+    if (currentSong) {
+        document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+    }
+
+}
 
 // play song from library
 const playFromLibrary = () => {
@@ -198,10 +251,20 @@ const playFromLibrary = () => {
     let songs = document.querySelectorAll(".song-card");
     songs.forEach(eachSong => {
         eachSong.addEventListener("click", () => {
-            const videoId = eachSong.getAttribute('current-video-id');
+            currentSongId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
-            let liked = savedSongs.some(song => song.videoId === videoId);
-            console.log(videoId);
+
+            // Remove previous event listeners to avoid multiple function calls
+            nextButton.replaceWith(nextButton.cloneNode(true));
+            prevButton.replaceWith(prevButton.cloneNode(true));  
+
+            nextButton = document.getElementById("next-btn");
+            prevButton = document.getElementById("previous-btn");  
+            nextButton.addEventListener("click", () => playNextSong()); 
+            prevButton.addEventListener("click", () => playPrevSong());
+    
+            
+            let liked = savedSongs.some(song => song.videoId === currentSongId);
             playBar.classList.remove("hide");
             // adding the details in the play-bar
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
@@ -214,7 +277,7 @@ const playFromLibrary = () => {
                 heartbtn.classList.remove("turn-transparent");
                 heartbtn.classList.add("turn-green");
             }
-            playAudio(videoId);
+            playAudio(currentSongId);
         });
     });
 }
@@ -362,7 +425,6 @@ pauseButton.addEventListener("click", () => {
         pauseButton.setAttribute("data-playing", "true");  // Update state
     }
 });
-
 
 
 let searchButton = document.querySelector('.search-icon');
