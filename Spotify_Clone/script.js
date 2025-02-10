@@ -16,8 +16,8 @@ window.onload = () => {
     updateLibrary(savedSongs);
 }
 
-
-let apiKeys = ['key1', 'key2'];     // your api key or keys
+let apiKeys = ['AIzaSyDzNBcDHy7nkhXSUl6XiKrSFq3Njg36keY', 'AIzaSyAX-ilrWOk3DZc3x94gY3WWPO3u0u6P-DA'];
+// let apiKeys = ['key1', 'key2'];     // your api key or keys
 
 let currentKeyIndex = 0;
 async function fetchSongData(searchedSong) {
