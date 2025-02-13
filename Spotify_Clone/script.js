@@ -116,7 +116,7 @@ async function fetchSongData(searchedSong) {
 
                 // Play the audio and update the play/pause button
                 pauseButton.innerHTML = pauseImage;
-                if(playBar.classList.contains("big-bar")) {
+                if (playBar.classList.contains("big-bar")) {
                     searchedSongs.classList.add("hide");
                 }
                 playBar.classList.remove("hide");
@@ -218,13 +218,17 @@ const playNextSong = () => {
     }
 
     playAudio(currentSongId);
-    document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
-    // Update the song name in the playbar
     let currentSong = savedSongs.find(song => song.videoId === currentSongId);
+    
+    setTimeout(() => {
+    // Update the song name in the playbar
     if (currentSong) {
         document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
-        document.getElementById(`${currentSongId}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${song.videoId}/default.jpg')`;
+        document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     }
+    }, 1000);
+    
+    
 }
 
 const playPrevSong = () => {
@@ -242,14 +246,15 @@ const playPrevSong = () => {
     }
 
     playAudio(currentSongId);
-    document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     let currentSong = savedSongs.find(song => song.videoId === currentSongId);
-    // upadate the song name in the playbar 
-    if (currentSong) {
-        document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
-        document.getElementById(`${currentSongId}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${song.videoId}/default.jpg')`;
-        
-    }
+   
+    setTimeout(() => {
+        // Update the song name in the playbar
+        if (currentSong) {
+            document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+            document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
+        }
+        }, 1000);
 
 }
 
@@ -270,7 +275,7 @@ const playFromLibrary = () => {
     songs.forEach(eachSong => {
         eachSong.addEventListener("click", () => {
             //close the library
-            if(playBar.classList.contains("big-bar")) {
+            if (playBar.classList.contains("big-bar")) {
                 libWindow.style.left = '-100%';
                 libWindow.style.transition = '0.4s';
                 libWindow.style.zIndex = '0';
@@ -345,6 +350,8 @@ const playAudio = (videoId) => {
                 event.target.setPlaybackQuality("small"); // Set 144p quality
                 event.target.playVideo();
                 pauseButton.innerHTML = pauseImage;
+                // update the Duration
+                totalTimeDiv.innerText = formatTime(player.getDuration());
                 seekerSection();
 
             },
@@ -366,7 +373,7 @@ const seekerSection = () => {
         let slider = document.getElementById("seekbar");
         let intervalId;
         let isSeeking = false;
-
+        
 
         // Function to update the visitor position
         const updateVisitor = () => {
@@ -392,7 +399,6 @@ const seekerSection = () => {
         // Add event listener to seek when user clicks
         slider.addEventListener("input", (e) => {
             isSeeking = true
-            let duration = player.getDuration();
 
             player.seekTo(slider.value);
 
@@ -482,10 +488,20 @@ function hamburger() {
 // big song card appreance
 let timeInterval = null;
 songCardBtn.addEventListener("click", () => {
-    // playBar.style.transition = 'all 0.5s ease-in-out';
-    if(!searchedSongs.classList.contains("hide")) {
+    // check wether the saearced songs are visible or not 
+    if (!searchedSongs.classList.contains("hide")) {
         searchedSongs.classList.add("hide");
     }
+
+    // check weather the library is open or not
+    if (libWindow.style.zIndex === '2' &&
+        libWindow.style.left === '0%' &&
+        libWindow.style.width === '90vw') {
+            libWindow.style.left = '-100%';
+            libWindow.style.transition = '0.4s';
+            libWindow.style.zIndex = '0';
+    }
+
     if (!playBar.classList.contains("big-bar")) {
         //switch to the big bar
         playBar.classList.remove("play-bar");
@@ -493,7 +509,6 @@ songCardBtn.addEventListener("click", () => {
 
         // get the time elements 
         currTimeDiv.innerText = formatTime(player.getCurrentTime());
-        totalTimeDiv.innerText = formatTime(player.getDuration());
 
         // Unhiding the time elements
         currTimeDiv.classList.remove("hide");
@@ -516,14 +531,4 @@ songCardBtn.addEventListener("click", () => {
         // close the time interval
         clearInterval(timeInterval);
     }
-});
-
-
-// Handle browser back button 
-window.addEventListener("popstate", function (event) {
-    if(playBar.classList.contains("big-bar")) {
-        playBar.classList.remove("big-bar");
-        playBar.classList.add("play-bar");
-    }
-    
 });
