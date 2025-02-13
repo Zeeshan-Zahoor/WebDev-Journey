@@ -253,6 +253,7 @@ const playPrevSong = () => {
         if (currentSong) {
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
             document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
+
         }
         }, 1000);
 
@@ -267,6 +268,7 @@ const playFromLibrary = () => {
     songs.forEach(eachSong => {
         let newSong = eachSong.cloneNode(true); // Clone without old listeners
         eachSong.replaceWith(newSong); // Replace with cloned node
+        
     });
 
     // Re-select all song elements after replacing them
@@ -280,7 +282,6 @@ const playFromLibrary = () => {
                 libWindow.style.transition = '0.4s';
                 libWindow.style.zIndex = '0';
             }
-
             currentSongId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
 
