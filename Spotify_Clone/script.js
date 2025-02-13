@@ -496,7 +496,7 @@ songCardBtn.addEventListener("click", () => {
     // check weather the library is open or not
     if (libWindow.style.left === '0%') {
             libWindow.style.left = '-100%';
-            libWindow.style.transition = '0.5s';
+            libWindow.style.transition = '0.15s';
             libWindow.style.zIndex = '0';
     }
 
