@@ -270,9 +270,11 @@ const playFromLibrary = () => {
     songs.forEach(eachSong => {
         eachSong.addEventListener("click", () => {
             //close the library
-            libWindow.style.left = '-100%';
-            libWindow.style.transition = '0.4s';
-            libWindow.style.zIndex = '0';
+            if(playBar.classList.contains("big-bar")) {
+                libWindow.style.left = '-100%';
+                libWindow.style.transition = '0.4s';
+                libWindow.style.zIndex = '0';
+            }
 
             currentSongId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
