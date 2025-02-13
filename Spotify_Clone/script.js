@@ -116,7 +116,9 @@ async function fetchSongData(searchedSong) {
 
                 // Play the audio and update the play/pause button
                 pauseButton.innerHTML = pauseImage;
-
+                if(playBar.classList.contains("big-bar")) {
+                    searchedSongs.classList.add("hide");
+                }
                 playBar.classList.remove("hide");
                 playAudio(VideoID);
             });
@@ -267,6 +269,11 @@ const playFromLibrary = () => {
 
     songs.forEach(eachSong => {
         eachSong.addEventListener("click", () => {
+            //close the library
+            libWindow.style.left = '-100%';
+            libWindow.style.transition = '0.4s';
+            libWindow.style.zIndex = '0';
+
             currentSongId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
 
@@ -455,16 +462,16 @@ function searchSong() {
 
 
 // hamburger 
+const libWindow = document.querySelector(".left");
 function hamburger() {
-    const libWindow = document.querySelector(".left");
     libWindow.style.zIndex = '2';
     libWindow.style.left = '0%';
     libWindow.style.width = '90vw';
-    libWindow.style.transition = '0.7s';
+    libWindow.style.transition = '0.5s';
 
     document.querySelector(".library-heading-right").addEventListener("click", () => {
         libWindow.style.left = '-100%';
-        libWindow.style.transition = '0.7s';
+        libWindow.style.transition = '0.5s';
         libWindow.style.zIndex = '0';
     });
 }
@@ -474,7 +481,9 @@ function hamburger() {
 let timeInterval = null;
 songCardBtn.addEventListener("click", () => {
     // playBar.style.transition = 'all 0.5s ease-in-out';
-
+    if(!searchedSongs.classList.contains("hide")) {
+        searchedSongs.classList.add("hide");
+    }
     if (!playBar.classList.contains("big-bar")) {
         //switch to the big bar
         playBar.classList.remove("play-bar");
@@ -514,4 +523,5 @@ window.addEventListener("popstate", function (event) {
         playBar.classList.remove("big-bar");
         playBar.classList.add("play-bar");
     }
+    
 });
