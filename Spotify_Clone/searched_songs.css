@@ -3,19 +3,21 @@
 }
 
 .searched-songs {
-    position: absolute;
+    position: fixed;
     width: 100%;
     min-height: 50%;
     max-height: 70%;
-    background-color: #121212;
-    border-radius: 8px;
+    background-color: #000000;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
     overflow-y: scroll;
     flex-shrink: 0;
-    padding: 5px;
+    padding: 5px 1px 15px 9px;
     margin-bottom: 1rem;
+    box-shadow: 164px 235px 233px rgb(89 89 89 / 88%);
     z-index: 1;
 }
 

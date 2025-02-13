@@ -43,16 +43,74 @@
     .right {
         width: 100%;
     }
+    .searched-songs {
+        box-shadow: 0px 235px 233px rgb(89 89 89 / 88%);
+    }
+    .play-bar  {
+        box-shadow: 0px 54px 123px #ffffff;
+    }
 }
 
 @media (width > 960px) {
     .hamburger {
         display: none;
     }
+    .searched-songs {
+        width: 73.7%;
+    }
     .right .play-bar {
         position: fixed;
-        width: 70%;
-        left: 28%;
+        width: 73%;
+        left: 26.3%;
+    }
+    .big-bar {
+        height: 91dvh !important;
+        border-radius: 8px;
+    }
+    .big-bar .song-thumbnail {
+        margin-left: -19% !important;
+        width: 62% !important;
+        height: 50% !important;
+        bottom: 41dvh !important;
+    }
+    .big-bar {
+        .nav {
+            display: none !important;
+        }
+        .song-channel-names {
+            position: absolute !important;
+            width: 50% !important;
+            left: 7% !important;
+            bottom: 31dvh !important;
+        }
+        #like-btn {
+            left: 63% !important;
+            bottom: 33dvh !important;
+        }
+        #seekbar {
+            width: 60% !important;
+            left: 7% !important;
+            bottom: 26dvh !important;
+        }
+        .current-time {
+            left: 7% !important;
+            bottom: 21dvh !important;
+        }
+        .total-time {
+            left: 64% !important;
+            bottom: 21dvh !important;
+        }
+        #play-btn {
+            left: 35% !important;
+            bottom: 11dvh !important;
+        }
+        .play-next {
+            right: 45% !important;
+            bottom: 13dvh !important;
+        }
+        .play-previous {
+            bottom: 13dvh !important;
+        }
     }
 }
 

@@ -1,0 +1,256 @@
+.play-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+    position: fixed;
+    width: 100%;
+    background-color: #1a1a1a;
+    bottom: 0dvh;
+    left: 0;
+    z-index: 3;
+}
+
+#seekbar {
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+    padding: 0 0 0 0;
+    width: 100%;
+    height: 3px; /* This won't work unless track is also set */
+    background: rgba(226, 226, 226, 0.868); /* Make it transparent to avoid double styling */
+    position: relative;
+}
+
+/* Style the track */
+#seekbar::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 3px; /* This is needed for height to apply */
+    cursor: pointer;
+}
+
+/* Style the thumb */
+#seekbar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0;
+    height: 0;
+    background-color: red;
+    /* margin-top: -5px; Aligns thumb properly with the 5px track */
+}
+
+/* Firefox Support */
+#seekbar::-moz-range-track {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(to right, rgb(255, 255, 255) 60%, rgba(197, 197, 197, 0.879) 60%);
+}
+
+/* Firefox Thumb */
+#seekbar::-moz-range-thumb {
+    width: 0;
+    height: 0;
+    cursor: pointer;
+}
+
+.play-bar-top {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+.thumb-plus-name {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding:5px 8% 3px 5px;
+    overflow-x: hidden;
+}
+.song-channel-names {
+    width: 100%;
+    overflow-x: hidden;
+}
+.song-thumbnail {
+    width: 64px;
+    height: 50px;
+    background-image: url("music.svg");
+    background-position: center center;
+    background-size: 180%;
+    background-repeat: no-repeat;
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0px 0px 12px rgb(0 0 0 / 29%);
+    transition: all 0.2s;
+}
+#play-btn {
+    margin: 0 8px;
+    padding: 6.5px 11px 3px 11px;
+    border-radius: 50%;
+}
+
+.channel-name {
+    font-size: small;
+    padding-top: 5px;
+}
+
+
+.big-bar {
+    position: fixed;
+    transition: 0.4s;
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(0, 0, 0) 60%);
+
+    .thumb-plus-name {
+        display: flex;
+        flex-direction: column;
+    }
+    .play-bar-top{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .song-thumbnail {
+        position: absolute;
+        margin-left: 6%;
+        width: 85%;
+        height: 50%;
+        background-size: 150%;
+        border-radius: 15px;
+        bottom: 46dvh;
+        box-shadow: 4px 20px 140px rgb(165 165 165 / 81%);
+        transition: all 0.2s;
+    }
+    .song-channel-names {
+        position: absolute;
+        width: 60%;
+        left: 9%;
+        bottom: 36dvh;
+    }
+    .song-name h4 {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    #like-btn {
+        position: absolute;
+        bottom: 37dvh;
+        width: 35px;
+        left: 80%;
+    }
+    #seekbar {
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        padding: 0 0 0 0;
+        width: 82%;
+        height: 2px; /* This won't work unless track is also set */
+        position: absolute;
+        /* background: rgba(255, 255, 255, 0); Make it transparent to avoid double styling */
+        bottom: 32dvh;
+        left: 9%;
+    }
+    /* Style the track */
+#seekbar::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 2px; /* This is needed for height to apply */
+    background: linear-gradient(to right, rgb(255, 255, 255) 0%, rgba(255, 255, 255, 0.255) 0%);
+    cursor: pointer;
+}
+
+/* Style the thumb */
+#seekbar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 15px;
+    height: 15px;
+    background: white;
+    border-radius: 50%;
+    margin-top: -6px; /* Aligns thumb properly with the 2px track*/
+}
+
+/* Firefox Support */
+#seekbar::-moz-range-track {
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, rgb(255, 255, 255) 60%, rgba(255, 255, 255, 0.255) 60%);
+}
+
+/* Firefox Thumb */
+#seekbar::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    margin-top: -6px; /* Aligns thumb properly with the 2px track*/
+    cursor: pointer;
+}
+#play-btn {
+    position: absolute;
+    bottom: 18dvh;
+    width: 70px;
+    height: 70px;
+    background-color: rgb(0, 0, 0);
+    filter: invert(100%);
+}
+.play-next {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-image: url("next_song.svg");
+    filter: invert(100%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+    border-radius: 50%;
+    bottom: 20dvh;
+    right: 22%;
+}
+.play-next:active {
+    background-color: rgb(189, 189, 189);
+    filter:invert(20%);
+    transition: all;
+    transition-timing-function: ease-in-out;
+}
+.play-previous {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    background-image: url("prev_song.svg");
+    filter: invert(100%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 20px;
+    border-radius: 50%;
+    bottom: 20dvh;
+    left: 22%;
+}
+.play-previous:active {
+    background-color: rgb(189, 189, 189);
+    filter:invert(20%);
+    transform: all;
+    transition-timing-function: ease-in-out;
+}
+.current-time {
+    width: 60px;
+    height: 20px;
+    position: absolute;
+    bottom: 27dvh;
+    left: 10%;
+    color: rgba(255, 255, 255, 0.601);
+}
+.total-time {
+    width: 60px;
+    height: 20px;
+    position: absolute;
+    bottom: 27dvh;
+    right: 0;
+    color: rgba(255, 255, 255, 0.601);
+}
+}
+

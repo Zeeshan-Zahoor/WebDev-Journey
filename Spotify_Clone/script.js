@@ -2,11 +2,15 @@
 console.log("lets get started with functionalities");
 let playBar = document.querySelector(".play-bar");
 let searchedSongs = document.getElementsByClassName("searched-songs")[0];
-let pauseButton = document.getElementById("pause-action");
+let pauseButton = document.getElementById("play-btn");
 let prevButton = document.getElementById("previous-btn");
 let nextButton = document.getElementById("next-btn");
 let image = pauseButton.getAttribute("src");        //play pause button image
 let heartbtn = document.getElementById("like-btn");
+let songCardBtn = document.getElementsByClassName("thumb-plus-name")[0];
+let currTimeDiv = document.getElementsByClassName("current-time")[0];
+let totalTimeDiv = document.getElementsByClassName("total-time")[0];
+
 
 
 
@@ -34,53 +38,56 @@ async function fetchSongData(searchedSong) {
             </div>
             <div class="loader"></div> <!-- Loader is visible by default -->
         `;
+
         searchedSongs.classList.remove("hide");
 
         // Fetch song data
         let response = await fetch(searchURL);
         const data = await response.json();
-        
+
         // If Quota Exceeded, try next API
         if (data.error && data.error.errors[0].reason === 'quotaExceeded') {
-            console.warn(`Qouta Exceeded for API key ${currentKeyIndex + 1}, trying next API key..` );
-            if (currentKeyIndex < apiKeys.length -1) {
-                currentKeyIndex ++;
+            console.warn(`Qouta Exceeded for API key ${currentKeyIndex + 1}, trying next API key..`);
+            if (currentKeyIndex < apiKeys.length - 1) {
+                currentKeyIndex++;
                 return fetchSongData(searchedSong);
-            } else  {
-                throw new error ("All API keys have exceeded daily Qouta Limit..")
+            } else {
+                throw new error("All API keys have exceeded daily Qouta Limit..")
             }
         }
 
         let songArray = data.items;
+        console.log(songArray)
         // Hide loader after data is fetched
         let loader = document.querySelector(".loader");
         loader.classList.add("hide");
 
-        if(!data.items || data.items.length === 0) {
-            searchedSongs.innerHTML += "<p>No songs found. Try another search.</p>";
+        if (!data.items || data.items.length === 0) {
+            searchedSongs.innerHTML += "<h3>No songs found. Try another search.</h3>";
             return;
         }
 
         // Display new search results
-        let newSongs = "";
         for (let Video of songArray) {
             const VideoID = Video.id.videoId;
             let songName = Video.snippet.title;
             let channelName = Video.snippet.channelTitle;
-            newSongs += `
-                <div class='searched-song-card'> 
-                    <div class='music-thumb border-rad-1'> 
-                        <img class='invert' src='music.svg' alt='music-icon'> 
-                    </div> 
-                    <div class='song-info'> 
-                        <h4>${songName}</h4> 
-                        <span>Channel: ${channelName}</span> 
-                    </div> 
-                    <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name='${songName}' data-video-channel='${channelName}'>Play</div> 
-                </div>
-            `;
+
+
+            searchedSongs.innerHTML += `
+            <div class='searched-song-card'> 
+                <div id='${VideoID}' class='music-thumb border-rad-1'> 
+                </div> 
+                <div class='song-info'> 
+                    <h4>${songName}</h4> 
+                    <span>Channel: ${channelName}</span> 
+                </div> 
+                <div class='searched-song-play' tabindex='0' data-video-id='${VideoID}' song-name='${songName}' data-video-channel='${channelName}'>Play</div> 
+            </div>
+        `;
+            document.getElementById(`${VideoID}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${VideoID}/default.jpg')`;
         }
-        searchedSongs.innerHTML += newSongs;
+
 
         // Add event listeners to play buttons
         let playButtons = document.querySelectorAll(".searched-song-play");
@@ -94,12 +101,12 @@ async function fetchSongData(searchedSong) {
             playButton.addEventListener("click", () => {
                 const VideoID = playButton.getAttribute('data-video-id');
                 const songName = playButton.getAttribute('song-name');
-                const channelName = playButton.getAttribute('data-video-channel');
                 let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
                 let liked = savedSongs.some(song => song.videoId === VideoID);
 
                 // Update play-bar with song details
                 document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+                document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${VideoID}/hqdefault.jpg')`;
                 if (!liked) {
                     heartbtn.classList.remove("turn-green");
                     heartbtn.classList.add("turn-transparent");
@@ -110,9 +117,9 @@ async function fetchSongData(searchedSong) {
 
                 // Play the audio and update the play/pause button
                 pauseButton.innerHTML = pauseImage;
-        
-                playAudio(VideoID);
+
                 playBar.classList.remove("hide");
+                playAudio(VideoID);
             });
         });
 
@@ -129,11 +136,12 @@ document.querySelector(".like-btn").addEventListener("click", () => {
     const songName = document.getElementsByClassName("song-name")[0].innerText;
     const videoId = player.getVideoData().video_id;
     const channelName = player.getVideoData().author;
+    const thumbnail = `https://i.ytimg.com/vi/${videoId}/default.jpg`;
     let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
     let liked = savedSongs.some(song => song.videoId === videoId);
 
     if (!liked) {
-        saveSongs(songName, videoId, channelName);
+        saveSongs(songName, videoId, channelName, thumbnail);
         heartbtn.classList.remove("turn-transparent");
         heartbtn.classList.add("turn-green");
     } else {
@@ -149,7 +157,7 @@ const saveSongs = (songName, videoId, channelName) => {
     const newSong = {
         name: songName,
         videoId: videoId,
-        channelName: channelName
+        channelName: channelName,
     }
 
     if (!savedSongs.some(song => song.videoId === videoId)) {
@@ -169,10 +177,9 @@ const updateLibrary = (savedSongs) => {
     } else {
         library.innerHTML = "";
         savedSongs.forEach(song => {
-            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}' tabindex='0'>
+            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}'>
 
-                        <div class="music-thumb border-rad-1">
-                            <img class="invert" src="music.svg" alt="music-icon">
+                        <div id='${song.videoId}' class="music-thumb border-rad-1">
                         </div>
                         <div class="song-info">
                             <h4>${song.name}</h4>
@@ -180,6 +187,7 @@ const updateLibrary = (savedSongs) => {
                         </div>
                     </div>`;
             library.innerHTML += songCard;
+            document.getElementById(`${song.videoId}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${song.videoId}/default.jpg')`;
         });
     }
     playFromLibrary();
@@ -204,22 +212,23 @@ const playNextSong = () => {
         return;
     }
 
-    if (currentSongIndex < savedSongs.length -1) {  // ensure we are not moving above the length of the array
+    if (currentSongIndex < savedSongs.length - 1) {  // ensure we are not moving above the length of the array
         currentSongId = savedSongs[currentSongIndex + 1].videoId;
-    } else  {
+    } else {
         console.log("No next Song Available");
         currentSongId = savedSongs[0].videoId;  // return back to the first song
     }
 
     playAudio(currentSongId);
-
+    document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     // Update the song name in the playbar
     let currentSong = savedSongs.find(song => song.videoId === currentSongId);
     if (currentSong) {
         document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+        document.getElementById(`${currentSongId}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${song.videoId}/default.jpg')`;
     }
 }
-    
+
 const playPrevSong = () => {
     let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
     let currentSongIndex = savedSongs.findIndex(song => song.videoId === currentSongId);
@@ -231,16 +240,19 @@ const playPrevSong = () => {
 
     if (currentSongIndex > 0) {  // ensure we are not moving above the length of the array
         currentSongId = savedSongs[currentSongIndex - 1].videoId;
-    } else  {
+    } else {
         console.log("No previous Song Available");
-        currentSongId = savedSongs[savedSongs.length -1].videoId;  // return back to the last song
+        currentSongId = savedSongs[savedSongs.length - 1].videoId;  // return back to the last song
     }
 
     playAudio(currentSongId);
-
+    document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     let currentSong = savedSongs.find(song => song.videoId === currentSongId);
+    // upadate the song name in the playbar 
     if (currentSong) {
         document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+        document.getElementById(`${currentSongId}`).style.backgroundImage = `url('https://i.ytimg.com/vi/${song.videoId}/default.jpg')`;
+        
     }
 
 }
@@ -249,6 +261,16 @@ const playPrevSong = () => {
 const playFromLibrary = () => {
     let savedSongs = JSON.parse(localStorage.getItem("librarySongs")) || [];
     let songs = document.querySelectorAll(".song-card");
+
+    // First, remove all existing event listeners
+    songs.forEach(eachSong => {
+        let newSong = eachSong.cloneNode(true); // Clone without old listeners
+        eachSong.replaceWith(newSong); // Replace with cloned node
+    });
+
+    // Re-select all song elements after replacing them
+    songs = document.querySelectorAll(".song-card");
+
     songs.forEach(eachSong => {
         eachSong.addEventListener("click", () => {
             currentSongId = eachSong.getAttribute('current-video-id');
@@ -256,18 +278,19 @@ const playFromLibrary = () => {
 
             // Remove previous event listeners to avoid multiple function calls
             nextButton.replaceWith(nextButton.cloneNode(true));
-            prevButton.replaceWith(prevButton.cloneNode(true));  
+            prevButton.replaceWith(prevButton.cloneNode(true));
 
             nextButton = document.getElementById("next-btn");
-            prevButton = document.getElementById("previous-btn");  
-            nextButton.addEventListener("click", () => playNextSong()); 
+            prevButton = document.getElementById("previous-btn");
+            nextButton.addEventListener("click", () => playNextSong());
             prevButton.addEventListener("click", () => playPrevSong());
-    
-            
+
+
             let liked = savedSongs.some(song => song.videoId === currentSongId);
             playBar.classList.remove("hide");
             // adding the details in the play-bar
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+            document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
             pauseButton.innerHTML = pauseImage;
 
             if (!liked) {
@@ -320,7 +343,7 @@ const playAudio = (videoId) => {
                 event.target.playVideo();
                 pauseButton.innerHTML = pauseImage;
                 seekerSection();
-                
+
             },
             "onError": (error) => {
                 console.error("YouTube Playback Error:", error);
@@ -334,44 +357,28 @@ const playAudio = (videoId) => {
 };
 
 
-const updatePlaybarTimes = () => {
-    if (player) {
-        let currentTime = player.getCurrentTime();
-        let totalDuration = player.getDuration();
-
-        // format the current time and duraiton in standart format 
-        let f_currentTime = formatTime(currentTime);
-        let f_totalDuration = formatTime(totalDuration);
-
-        // upadate the play bar 
-        document.getElementsByClassName("current-time")[0].innerHTML = `<span>${f_currentTime}</span>`;
-        document.getElementsByClassName("total-time")[0].innerHTML = `<span>${f_totalDuration}</span>`;
-
-       
-    }
-}
-
-// Update the play bar times every second
-setInterval(updatePlaybarTimes, 1000);
-
 // move the visitor on the seeker with song
 const seekerSection = () => {
     if (player) {
-        let visitor = document.getElementsByClassName("visitor")[0];
-        let seeker = document.querySelector(".seeker");
+        let slider = document.getElementById("seekbar");
         let intervalId;
         let isSeeking = false;
+
 
         // Function to update the visitor position
         const updateVisitor = () => {
             if (!isSeeking) {  // Only update if not seeking
                 let duration = player.getDuration();
-                let currentTime = player.getCurrentTime();
-                
-                let progress = (currentTime / duration) * 100;
-                visitor.style.left = `${progress}%`;
+                if (!duration) return;
 
-                if(Math.floor(currentTime) === Math.floor(duration)-1) { // pause after end of song
+                slider.setAttribute('max', duration);
+
+                let currentTime = player.getCurrentTime();
+                slider.value = currentTime;
+                let progress = (slider.value / slider.max) * 100;
+                slider.style.background = `linear-gradient(to right, white ${progress}%, rgba(255, 255, 255, 0.255) ${progress}%)`;
+
+                if (currentTime >= duration - 1) { // pause after end of song
                     console.log("song ended");
                     pauseButton.innerHTML = playImage;
                     playNextSong();     // play next song automaically after current song is ended.
@@ -381,16 +388,14 @@ const seekerSection = () => {
         };
 
         // Add event listener to seek when user clicks
-        seeker.addEventListener("click", (e) => {
+        slider.addEventListener("input", (e) => {
+            isSeeking = true
             let duration = player.getDuration();
-            let percent = (e.offsetX / seeker.getBoundingClientRect().width) *100;
-            let newTime = (duration * percent) / 100;
 
-            isSeeking = true;  // Temporarily disable updates
-            player.seekTo(newTime, true);
+            player.seekTo(slider.value);
 
-            // Move visitor immediately to the clicked position
-            visitor.style.left = `${percent}%`;
+            let progress = (slider.value / slider.max) * 100;
+            slider.style.background = `linear-gradient(to right, white ${progress}%, rgba(255, 255, 255, 0.255) ${progress}%)`;
 
             // Resume updates after a short delay
             setTimeout(() => { isSeeking = false; }, 500);
@@ -400,7 +405,6 @@ const seekerSection = () => {
         intervalId = setInterval(updateVisitor, 50);
     }
 };
-
 
 const formatTime = (seconds) => {
     let minutes = Math.floor(seconds / 60);
@@ -415,10 +419,10 @@ const playPausedAudio = () => {
     if (player) player.playVideo();
 }
 
-let playImage = '<img  class="invert" src="play.svg" alt="play" width="15px">';
-let pauseImage = '<img  class="invert" src="pause.svg" alt="pause" width="15px">';
+let playImage = '<img  class="invert" src="play.svg" alt="play" width="35em">';
+let pauseImage = '<img  class="invert" src="pause.svg" alt="pause" width="35em">';
 pauseButton.innerHTML = playImage;
-pauseButton.addEventListener("click", () => {     
+pauseButton.addEventListener("click", () => {
     if (pauseButton.getAttribute("data-playing") === "true") {
         pauseAudio();
         pauseButton.innerHTML = playImage;
@@ -472,3 +476,51 @@ function hamburger() {
         libWindow.style.zIndex = '0';
     });
 }
+
+
+// big song card appreance
+let timeInterval = null;
+songCardBtn.addEventListener("click", () => {
+    // playBar.style.transition = 'all 0.5s ease-in-out';
+
+    if (!playBar.classList.contains("big-bar")) {
+        //switch to the big bar
+        playBar.classList.remove("play-bar");
+        playBar.classList.add("big-bar");
+
+        // get the time elements 
+        currTimeDiv.innerText = formatTime(player.getCurrentTime());
+        totalTimeDiv.innerText = formatTime(player.getDuration());
+
+        // Unhiding the time elements
+        currTimeDiv.classList.remove("hide");
+        totalTimeDiv.classList.remove("hide");
+
+        // setting the time interval for the live time updation
+        timeInterval = setInterval(() => {
+            currTimeDiv.innerText = formatTime(player.getCurrentTime());
+        }, 1000);
+
+    } else {
+        //switch to the normal playbar
+        playBar.classList.remove("big-bar");
+        playBar.classList.add("play-bar");
+
+        // hide the time elements again
+        currTimeDiv.classList.add("hide");
+        totalTimeDiv.classList.add("hide");
+
+        // close the time interval
+        clearInterval(timeInterval);
+    }
+});
+
+
+// Handle browser back button (Windows & Android browsers)
+window.addEventListener("popstate", function (event) {
+    console.log("Back button pressed in browser!");
+    if(playBar.classList.contains("big-bar")) {
+        playBar.classList.remove("big-bar");
+        playBar.classList.add("play-bar");
+    }
+});
