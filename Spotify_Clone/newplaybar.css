@@ -150,7 +150,6 @@
         width: 82%;
         height: 2px; /* This won't work unless track is also set */
         position: absolute;
-        /* background: rgba(255, 255, 255, 0); Make it transparent to avoid double styling */
         bottom: 32dvh;
         left: 9%;
     }

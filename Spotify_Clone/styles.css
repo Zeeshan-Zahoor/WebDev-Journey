@@ -382,7 +382,6 @@ input::-webkit-input-placeholder {
     height: 40px;
     width: 40px;
     background-color: #868686;
-    /* background-image: url("https://i.ytimg.com/vi/snpV6awcBPo/default.jpg"); */
     background-position: center center;
     background-size: 70px;
     padding: 12px 12px 8px 10px;
@@ -477,16 +476,11 @@ button:hover {
 
 .artist-card:hover {
     background-color: #1d1d1d;
-
     .green-play {
         opacity: 1;
         transition-duration: 0.16s;
     }
-
-    ;
-
 }
-
 .singer-image {
     width: 10rem;
     height: 10rem;
@@ -532,41 +526,6 @@ button:hover {
     color: #ababab;
 }
 
-.next {
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem 0.1rem 0.5rem 0.5rem;
-    width: 100%;
-    min-height: 200px;
-    height: fit-content;
-    background-color: #121212;
-    gap: 1rem;
-}
-
-/* .right .play-bar {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    width: 97%;
-    padding: 3px;
-    padding-bottom: 5px;
-    padding-top: 15px;
-    border-radius: 18px;
-    background-color: #212121;
-    bottom: 2dvh;
-    left: 0.4rem;
-    z-index: 3;
-} */
-
-.upper-part {
-    display: flex;
-    width: 96%;
-    justify-content: space-between;
-    align-items: center;
-    margin: auto;
-    margin-bottom: 7px;
-}
-
 .song-name {
     display: flex;
     justify-content: start;
@@ -574,61 +533,4 @@ button:hover {
     width: 100%;
     white-space: nowrap;
     overflow-x: hidden;
-}
-
-
-/* .seeker {
-    position: relative;
-    width: 96%;
-    height: 5px;
-    margin: 10px auto;
-    border-radius: 5px;
-    background-color: #fff;
-    cursor: pointer;
-
-} */
-
-/* .visitor {
-    position: absolute;
-    height: auto;
-    bottom: 7.5px;
-    left: 0;
-}
-
-.visitor img {
-    background-color: #dbdbdb;
-} */
-
-.controlls {
-    margin: auto;
-    width: 95%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-}
-
-.actions .img {
-    width: 2.5rem;
-    height: 2.5rem;
-    display: flex;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
-.actions .img:hover {
-    background-color: rgb(75, 75, 75);
-}
-
-.actions .img:active {
-    border: 2px solid rgb(159, 159, 159);
 }

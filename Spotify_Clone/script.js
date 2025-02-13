@@ -57,7 +57,6 @@ async function fetchSongData(searchedSong) {
         }
 
         let songArray = data.items;
-        console.log(songArray)
         // Hide loader after data is fetched
         let loader = document.querySelector(".loader");
         loader.classList.add("hide");
@@ -124,7 +123,6 @@ async function fetchSongData(searchedSong) {
         });
 
     } catch (error) {
-        console.log("Error Fetching the Song Data", error);
         // Hide loader in case of error
         let loader = document.querySelector(".loader");
         loader.classList.add("hide");
@@ -208,14 +206,12 @@ const playNextSong = () => {
     let currentSongIndex = savedSongs.findIndex(song => song.videoId === currentSongId);
 
     if (savedSongs.length === 0) {
-        console.log("Library is empty!");
         return;
     }
 
     if (currentSongIndex < savedSongs.length - 1) {  // ensure we are not moving above the length of the array
         currentSongId = savedSongs[currentSongIndex + 1].videoId;
     } else {
-        console.log("No next Song Available");
         currentSongId = savedSongs[0].videoId;  // return back to the first song
     }
 
@@ -234,14 +230,12 @@ const playPrevSong = () => {
     let currentSongIndex = savedSongs.findIndex(song => song.videoId === currentSongId);
 
     if (savedSongs.length === 0) {
-        console.log("Library is empty!");
         return;
     }
 
     if (currentSongIndex > 0) {  // ensure we are not moving above the length of the array
         currentSongId = savedSongs[currentSongIndex - 1].videoId;
     } else {
-        console.log("No previous Song Available");
         currentSongId = savedSongs[savedSongs.length - 1].videoId;  // return back to the last song
     }
 
@@ -379,7 +373,6 @@ const seekerSection = () => {
                 slider.style.background = `linear-gradient(to right, white ${progress}%, rgba(255, 255, 255, 0.255) ${progress}%)`;
 
                 if (currentTime >= duration - 1) { // pause after end of song
-                    console.log("song ended");
                     pauseButton.innerHTML = playImage;
                     playNextSong();     // play next song automaically after current song is ended.
                     return;
@@ -454,7 +447,6 @@ if (searchButton) {
 function searchSong() {
     let searched_Song = songInput ? songInput.value.trim() : "";
     if (searched_Song) {
-        console.log(searched_Song);
         fetchSongData(searched_Song);
     } else {
         alert("Please Enter the Song First");
@@ -516,9 +508,8 @@ songCardBtn.addEventListener("click", () => {
 });
 
 
-// Handle browser back button (Windows & Android browsers)
+// Handle browser back button 
 window.addEventListener("popstate", function (event) {
-    console.log("Back button pressed in browser!");
     if(playBar.classList.contains("big-bar")) {
         playBar.classList.remove("big-bar");
         playBar.classList.add("play-bar");

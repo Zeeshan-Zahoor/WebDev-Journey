@@ -92,7 +92,7 @@
 
  }
 
-
+ /* animations for the loader  */
  @keyframes rotation {
     from {
         transform: rotate(0deg)
