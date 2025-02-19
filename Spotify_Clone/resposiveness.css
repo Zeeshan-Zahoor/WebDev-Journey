@@ -43,10 +43,12 @@
     .right {
         width: 100%;
     }
+
     .searched-songs {
         box-shadow: 0px 172px 245px rgb(89 89 89 / 52%);
     }
-    .play-bar  {
+
+    .play-bar {
         box-shadow: 0px 54px 123px #ffffff;
     }
 }
@@ -55,59 +57,72 @@
     .hamburger {
         display: none;
     }
+
     .searched-songs {
         width: 73.7%;
     }
+
     .right .play-bar {
         position: fixed;
         width: 73%;
         left: 26.3%;
     }
+
     .big-bar {
         height: 91dvh !important;
         border-radius: 8px;
     }
+
     .big-bar .song-thumbnail {
         margin-left: -19% !important;
         width: 62% !important;
         height: 50% !important;
         bottom: 41dvh !important;
     }
+
     .big-bar {
         .nav {
             display: none !important;
         }
+
         .song-channel-names {
             position: absolute !important;
             width: 50% !important;
             left: 7% !important;
             bottom: 31dvh !important;
         }
+
         #like-btn {
             left: 63% !important;
             bottom: 33dvh !important;
         }
+
         #seekbar {
             width: 60% !important;
             left: 7% !important;
             bottom: 26dvh !important;
         }
+
         .current-time {
             left: 7% !important;
             bottom: 21dvh !important;
         }
+
         .total-time {
             left: 64% !important;
             bottom: 21dvh !important;
         }
+
         #play-btn {
             left: 35% !important;
             bottom: 11dvh !important;
         }
+
         .play-next {
             right: 45% !important;
             bottom: 13dvh !important;
         }
+
         .play-previous {
             bottom: 13dvh !important;
         }
@@ -166,9 +181,6 @@
 }
 
 @media (width <=570px) {
-
-
-
     .nav-right .white-btn {
         display: none;
     }
@@ -178,25 +190,55 @@
     body {
         font-size: 1rem;
     }
+
     h2 {
-        font-size: medium;
+        font-size: large;
     }
+
     .search-bar {
         width: 19rem;
     }
+
     .artist-card {
-        height: 11.3rem;
-        width: 8.9rem;
+        height: 18rem;
+        width: 15rem;
+    }
+    .album-singer-image {
+        width: 20rem !important;
+        height: 20rem !important;
     }
     #singer-name {
         font-size: 0.75rem;
     }
-    .artist-card span{
+
+    .artist-card span {
         font-size: 0.6rem;
     }
 }
 
-@media (width <=376px) {
+@media (width <=388px) {
+    .top {
+        display: none;
+    }
+    .artist-card span {
+        font-size: 1.3rem;
+    }
+    #singer-name {
+        font-size: 1.5rem !important;
+        font-weight: 700;
+    }
+    .singer-image {
+        width: 25rem !important;
+        height: 25rem !important;
+    }
+    .artist-card {
+        height: 29rem;
+        width: 95dvw;
+    }
+    .album-singer-image {
+        width: 29rem !important;
+        height: 29rem !important;
+    }
     .search-bar {
         width: 19rem;
     }
@@ -207,5 +249,14 @@
 
     .nav-middle .home-icon {
         display: none;
+    }
+}
+
+@media (width <=360px) {
+    .big-bar .song-thumbnail {
+        margin-left: 7% !important;
+        width: 85% !important;
+        height: 39% !important;
+        bottom: 50dvh !important;
     }
 }

@@ -466,6 +466,7 @@ button:hover {
 .artist-card {
     position: relative;
     padding: 0.66rem;
+    margin-top: 15px;
     height: 15rem;
     width: 11.5rem;
     display: flex;
