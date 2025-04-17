@@ -10,7 +10,7 @@ let heartbtn = document.getElementById("like-btn");
 let songCardBtn = document.getElementsByClassName("thumb-plus-name")[0];
 let currTimeDiv = document.getElementsByClassName("current-time")[0];
 let totalTimeDiv = document.getElementsByClassName("total-time")[0];
-
+let playBarChannelName = document.getElementsByClassName("channel-name")[0];
 
 
 
@@ -177,7 +177,7 @@ const updateLibrary = (savedSongs) => {
     } else {
         library.innerHTML = "";
         savedSongs.forEach(song => {
-            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}'>
+            songCard = `<div class="song-card border-rad-1" current-song-name='${song.name}' current-video-id = '${song.videoId}' current-song-channel-name = '${song.channelName}'>
 
                         <div id='${song.videoId}' class="music-thumb border-rad-1">
                         </div>
@@ -221,9 +221,10 @@ const playNextSong = () => {
     let currentSong = savedSongs.find(song => song.videoId === currentSongId);
     
     setTimeout(() => {
-    // Update the song name in the playbar
+    // Update the song name and channel name in the playbar
     if (currentSong) {
         document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+        playBarChannelName.innerHTML = `<span>${currentSong.channelName}</span>`
         document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     }
     }, 1000);
@@ -252,6 +253,7 @@ const playPrevSong = () => {
         // Update the song name in the playbar
         if (currentSong) {
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
+            playBarChannelName.innerHTML = `<span>${currentSong.channelName}</span>`
             document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
 
         }
@@ -284,7 +286,7 @@ const playFromLibrary = () => {
             }
             currentSongId = eachSong.getAttribute('current-video-id');
             const songName = eachSong.getAttribute('current-song-name');
-
+            const channelName = eachSong.getAttribute('current-song-channel-name');
             // Remove previous event listeners to avoid multiple function calls
             nextButton.replaceWith(nextButton.cloneNode(true));
             prevButton.replaceWith(prevButton.cloneNode(true));
@@ -299,6 +301,7 @@ const playFromLibrary = () => {
             playBar.classList.remove("hide");
             // adding the details in the play-bar
             document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+            playBarChannelName.innerHTML = `<span>${channelName}</span>`
             document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
             pauseButton.innerHTML = pauseImage;
 
