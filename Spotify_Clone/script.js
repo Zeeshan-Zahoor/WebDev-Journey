@@ -100,11 +100,13 @@ async function fetchSongData(searchedSong) {
             playButton.addEventListener("click", () => {
                 const VideoID = playButton.getAttribute('data-video-id');
                 const songName = playButton.getAttribute('song-name');
+                const channelName = playButton.getAttribute('data-video-channel');
                 let savedSongs = JSON.parse(localStorage.getItem('librarySongs')) || [];
                 let liked = savedSongs.some(song => song.videoId === VideoID);
 
                 // Update play-bar with song details
                 document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${songName}</h4>`;
+                playBarChannelName.innerHTML = `<span>${channelName}</span>`;
                 document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${VideoID}/hqdefault.jpg')`;
                 if (!liked) {
                     heartbtn.classList.remove("turn-green");
@@ -224,7 +226,7 @@ const playNextSong = () => {
     // Update the song name and channel name in the playbar
     if (currentSong) {
         document.getElementsByClassName("song-name")[0].innerHTML = `<h4>${currentSong.name}</h4>`;
-        playBarChannelName.innerHTML = `<span>${currentSong.channelName}</span>`
+        playBarChannelName.innerHTML = `<span>${currentSong.channelName}</span>`;
         document.getElementsByClassName("song-thumbnail")[0].style.backgroundImage = `url('https://i.ytimg.com/vi/${currentSongId}/hqdefault.jpg')`;
     }
     }, 1000);
