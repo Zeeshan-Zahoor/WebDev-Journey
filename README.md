@@ -65,6 +65,15 @@ A Clone of the Spotify Website using **HTML**, **CSS** and **JAVASCRIPT** . This
   - Footer Section and more.
 
 
+### 6. Kashmere
+An Expense tracking Web App made by using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating an app for tracking your daily expenses.
+- **Status**: In Progress. 
+- **Features**: 
+  - Custom Names
+  - Multiple Expense handling
+  - Detailes Modals of Expenses
+
+
 ---
 
 
