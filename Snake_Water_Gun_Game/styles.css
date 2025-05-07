@@ -1,6 +1,7 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -11,61 +12,70 @@ body {
     text-align: center;
     height: 100vh;
     width: 100vw;
-    background-image: url("https://static.vecteezy.com/system/resources/previews/017/214/886/original/spring-green-fields-landscape-with-mountain-blue-sky-and-clouds-background-panorama-peaceful-rural-nature-in-springtime-with-green-grass-land-cartoon-illustration-for-spring-and-summer-banner-vector.jpg");
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    z-index: -1;
+    background: linear-gradient(135deg, #ee9667, #4f1400);
+    color: #1e293b;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
 }
 
 .container {
-    height: 650px;
+    height: 750px;
     min-width: 340px;
-    /* border: 2px solid black; */
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 2rem;
 }
 
 .main {
-    margin-top: 8%;
+    margin-top: 5%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-
-
+    gap: 1.5rem;
 }
 
 .choice-box {
-    padding-top: 0.4rem;
     display: flex;
     justify-content: center;
-    gap: 1rem;
+    gap: 1.5rem;
     height: 9rem;
     width: 90%;
-    /* border: 2px solid black; */
 }
 
 .choice {
     height: 6rem;
     width: 6.7rem;
-    border: 5px solid rgba(105, 105, 105, 0.819);
+    border: 3px solid rgba(0, 0, 0, 0.2);
     border-radius: 50%;
     cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    background-color: rgba(255, 255, 255, 0.85);
+    position: relative;
 }
 
-#snake:focus {
-    border: 5px solid black;
+.choice:hover {
+    transform: scale(1.1);
+    border-color: #ff4500;
+    box-shadow: 0 10px 20px rgba(255, 69, 0, 0.3);
 }
 
-#water:focus {
-    border: 5px solid black;
+.choice span {
+    display: inline-block;
+    margin-top: 6.5rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #1e293b;
+    transition: color 0.3s ease;
 }
 
-#gun:focus {
-    border: 5px solid black;
+.choice:hover span {
+    color: #ff4500;
 }
-
 #snake {
     background-image: url("snake.webp");
     background-size: contain;
@@ -86,31 +96,28 @@ body {
     background-color: white;
 }
 
-.choice span {
-    display: inline-block;
-    margin-top: 6.5rem;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    font-size: 1.5rem;
-
-    -webkit-text-stroke-width: 0.5px;
-    -webkit-text-stroke-color: white;
-
-}
-
 .main p {
-    text-align: center;
     font-size: 25px;
-    font-family: Helvetica, sans-serif;
     font-weight: 700;
-}
-
-#pop-up-message {
-    font-size: 20px;
+    color: #1e293b;
 }
 
 #front-line {
     font-weight: bolder;
     font-size: 35px;
+    background: linear-gradient(45deg, #1e293b, #ff4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: subtleGlow 3s infinite alternate;
+}
+
+@keyframes subtleGlow {
+    0% {
+        text-shadow: 0 0 5px rgba(30, 41, 59, 0.5);
+    }
+    100% {
+        text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+    }
 }
 
 .score-board {
@@ -118,73 +125,59 @@ body {
     justify-content: space-between;
     align-items: center;
     width: 90%;
-    height: 40px;
-    background-color: transparent;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.score #common-score {
+#your-score, #computer-score {
     font-size: 1.3rem;
-    font-weight: 700;
-    font-family: serif;
+    font-weight: bold;
 }
 
 #your-score {
-    color: rgb(0, 89, 255);
-    font-family: Impact;
-    font-size: 1.3rem;
-    font-weight: 0;
+    color: #1e293b;
 }
 
 #computer-score {
-    color: rgb(255, 45, 45);
-    font-family: Impact;
-    font-weight: 0;
-    font-size: 1.3rem;
+    color: #ff4500;
 }
 
-/* Winning Images */
-.snake-won {
+.snake-won, .water-won, .gun-won, .draw {
     height: 10rem;
     width: 10rem;
-    border: 4px solid black;
+    border: 3px solid #1e293b;
     border-radius: 50%;
-    background-image: url("swimming_snake.png");
     background-size: cover;
-    transition-property: all;
-    transition-duration: 1s;
+    transition: all 0.5s ease;
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.snake-won {
+    background-image: url("swimming_snake.png");
 }
 
 .water-won {
-    height: 10rem;
-    width: 10rem;
-    border: 4px solid black;
-    border-radius: 50%;
     background-image: url("damaged_gun.webp");
-    background-size: cover;
-    transition-property: all;
-    transition-duration: 1s;
 }
 
 .gun-won {
-    height: 10rem;
-    width: 10rem;
-    border: 4px solid black;
-    border-radius: 50%;
     background-image: url("escaping_snake.webp");
-    background-size: cover;
-    transition-property: all;
-    transition-duration: 1s;
 }
 
 .draw {
-    height: 10rem;
-    width: 10rem;
-    border: 4px solid black;
-    border-radius: 50%;
     background-image: url("draw.jpg");
-    background-size: cover;
-    transition-property: all;
-    transition-duration: 1s;
 }
 
 .hide {

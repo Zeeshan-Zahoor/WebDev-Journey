@@ -1,0 +1,72 @@
+.edit-amount-window {
+    margin: auto;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    width: 70%;
+    padding: 20px 5px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 12px;
+
+}
+
+#entered-amount {
+    text-align: center;
+    padding: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    width: 110px;
+    height: 35px;
+    max-width: 100%;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.229);
+    border-radius: 12px;
+    
+}
+
+#enter-btn {
+    width: 70px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    margin: 5px;
+    width: 45%;
+    font-size: 13px;
+}
+

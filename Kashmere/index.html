@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kashmere - Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="edit_amount_window.css">
+    <link rel="stylesheet" href="helpers.css">
+    <link rel="stylesheet" href="expense_model.css">
+</head>
+
+<body>
+    <header>
+        <span>Welcome to</span>
+        <h1>Kashmere</h1>
+    </header>
+    <main>
+        <div class="container" role="button">
+            <div class="balance">
+                <h3 id="total-balance">Total Balance: 0</h3>
+                <button id="edit-amount-btn" onclick="show_Edit_Amount_Window()">Edit</button>
+            </div>
+            <div class="edit-amount-window hide">
+                <input type="number" name="amount" id="entered-amount">
+                <button id="enter-btn" onclick="editAmount()">Enter</button>
+            </div>
+            <!-- Add Expense Modal -->
+            <div id="expense-modal" class="modal hide">
+                <div class="modal-content">
+                    <h3>Add New Expense</h3>
+                    <input type="text" id="expense-input" placeholder="Enter expense name" />
+                    <button id="save-expense-btn">Save</button>
+                    <button id="cancel-expense-btn">Cancel</button>
+                </div>
+            </div>
+
+            <div id="expense-card"></div>
+
+            <button id="add-expense-btn">Add</button>
+        </div>
+    </main>
+
+
+    <!-- Notepad Modal Structure -->
+    <!-- Expense Details Modal -->
+    <div id="expense-details-modal" class="modal hide">
+        <div class="modal-content">
+            <h2 id="modal-expense-name">Expense Name</h2>
+            <div id="expense-details-content">
+                <!-- Details will be inserted here -->
+                
+
+            </div>
+            <button id="close-modal">Close</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

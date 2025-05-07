@@ -16,7 +16,6 @@ const winPatterns = [
 
 boxes.forEach((box) => {
     box.addEventListener("click", () => {
-        console.log("button was Clicked");
         if (turn_X) {
             box.innerText = "X";
             box.style.color = "#ae0000";
@@ -39,7 +38,6 @@ const resetGame = ()=> {
 }
 
 reset_btn.addEventListener("click", () => {
-    console.log("game resetted");
     resetGame();
     return;
 });
@@ -74,7 +72,6 @@ const checkWinner = ()=> {
 
         if (pos1Val != "" && pos2Val != "" && pos3Val != "") {
         if (pos1Val === pos2Val && pos2Val === pos3Val) {
-            console.log("Winner");
             showWinner(pos1Val);
         }
         }
