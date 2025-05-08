@@ -1,0 +1,104 @@
+#details-box{
+    margin-top: 5px;
+    height: 75%;
+    max-height: 75%;
+    overflow-y: auto;
+    width: 100%;
+    background-color: rgb(251, 251, 251);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.486);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    padding: 10px 20px 10px 20px;
+    text-align: left;
+}
+
+.allocations {
+    margin-top: 10px;  
+    height: 60px;
+    width: 100%;
+    background-color: #0070f3;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+.boxes {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    gap: 5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+.box {
+    width: 149px;
+    height: 30px;
+    background-color: white;
+    border-radius: 6px;
+    padding: 2px;
+    text-align: center;
+}
+.headings span{
+    font-size: medium;
+    font-weight: 600;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    text-shadow: 0 4px 15px rgb(7, 5, 5);
+    
+}
+.headings {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 2px;
+
+}
+
+#details-box span {
+    font-size: 12px;
+}
+
+.detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#clear-detail {
+    margin: 0;
+    margin-bottom: 2px;
+    width: 50px;
+    height: 20px;
+    border-radius: 5px;
+    background-color: rgb(255, 64, 0);
+    color: #ffffff;
+    font-size: 10px;
+    padding: 4px;
+}
+
+#clear-detail:hover {
+    background-color: rgb(185, 37, 7);
+}
+#spend-btn {
+    margin:0;
+    margin-top: 5px;
+    width: 50px;
+    height: 25px;
+    font-size: 11px;
+    background-color: rgb(209, 101, 0);
+    padding: 0;
+}
+#spend-btn:hover {
+    background-color: rgb(102, 85, 0);
+}
+#credit-btn {
+    margin:0;
+    margin-top: 5px;
+    width: 50px;
+    height: 25px;
+    font-size: 11px;
+    background-color: rgb(0, 170, 0);
+    padding: 0;
+}
+#credit-btn:hover {
+    background-color: rgb(0, 102, 0);
+}

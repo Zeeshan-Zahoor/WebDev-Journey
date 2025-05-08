@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="edit_amount_window.css">
     <link rel="stylesheet" href="helpers.css">
     <link rel="stylesheet" href="expense_model.css">
+    <link rel="stylesheet" href="details_box.css">
 </head>
 
 <body>
@@ -31,6 +32,7 @@
                 <div class="modal-content">
                     <h3>Add New Expense</h3>
                     <input type="text" id="expense-input" placeholder="Enter expense name" />
+                    <input type="number" id="expense-input-amount" placeholder="Allocate Amount" />
                     <button id="save-expense-btn">Save</button>
                     <button id="cancel-expense-btn">Cancel</button>
                 </div>
@@ -48,10 +50,32 @@
     <div id="expense-details-modal" class="modal hide">
         <div class="modal-content">
             <h2 id="modal-expense-name">Expense Name</h2>
-            <div id="expense-details-content">
+            <div class="allocations">
+                <div class="headings">
+                    <span>Allocated</span>
+                    <span>Remaining</span>
+                </div>
+                <div class="boxes">
+                    <div class="box">
+                        <h4>30000</h4>
+                    </div>
+                    <div class="box">
+                        <h4>25000</h4>
+                    </div>
+                </div>
+            </div>
+            <div id="details-box">
                 <!-- Details will be inserted here -->
-                
+                <div class="detail">
+                    <span>-200 (Mandi Manzil)</span>
+                    <button id="clear-detail">Clear</button>
+                </div>
+               
 
+                
+                
+                <button id="spend-btn">Spend</button>
+                <button id="credit-btn">Credit</button>
             </div>
             <button id="close-modal">Close</button>
         </div>
