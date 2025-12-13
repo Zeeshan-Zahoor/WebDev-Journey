@@ -18,8 +18,8 @@
     padding: 20px;
     border-radius: 8px;
     max-width: 500px;
-    width: 98%;
-    height: fit-content;
+    width: 83%;
+    height: 33%;
     z-index: 1100;
 }
 .hide {

@@ -1,0 +1,30 @@
+.expense-container {
+    width: 98%;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.expense-container::-webkit-slider-thumb {
+    display: none;
+}
+
+.expense-container .expense-card {
+    width: 97%;
+    min-height: 50px;
+    background-color: #000ef72e;
+    margin: 5px;
+}
+
+.expense-container .expense-card .delete-expense-btn {
+    width: 3rem;
+    height: 1.2rem;
+    font-size: 0.6rem;
+    padding: 0;
+}
+
+.expense-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

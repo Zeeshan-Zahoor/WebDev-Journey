@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     border: none;
+
   }
   
   /* Body styling */
@@ -11,14 +12,15 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5faff;
     color: #002750;
-    min-height: 100vh;
+    height: auto;        /* important: don't lock height to 100vh */
+    overflow-y: auto
   }
   
   /* Header */
   header {
     text-align: center;
     padding: 10px 0 20px;
-    background-color: #0070f3;
+    background-color: #020077;
     width: 100%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 
@@ -39,42 +41,57 @@
   main {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
-    padding: 0 10px;
+    align-items: center;
+    flex-direction: column;
+
   }
   
   /* Container box */
   .container {
-    background-color: #ffffff;
+    background-color: #f5faff;
     margin-top: 10px;
-    padding: 25px;
+    padding: 0;
     border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 112, 243, 0.15);
     width: 100%;
     max-width: 360px;
-    height: 90dvh;
+    height: 83dvh;
     transition: transform 0.2s ease-in-out;
-  }
+    overflow: auto;
+    /* Hide scrollbar for Chrome, Edge, Safari */
+    scrollbar-width: none;          /* Firefox */
+    -ms-overflow-style: none;       /* Internet Explorer & Edge */
+}
+
+.container::-webkit-scrollbar {
+  display: none;            /* Chrome, Safari */
+}
   
-  .container:hover {
-    transform: scale(1.02);
+  
+  .top-shadow {
+    display: block;
+    margin-left: 1.5rem;
   }
-  .container .balance {
+
+  .balance {
+    width: 22rem;
     display: flex;
-    justify-content: space-between;
+    gap: 5rem;
+    padding-top: 5px;
+    padding-bottom: 3px;
   }
   /* Balance */
   .container h3 {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 20px;
     display: inline;
     color: #003366;
   }
   
   #edit-amount-btn {
-    width: 60px;
-    height: 35px;
-    font-size: 13px;
+    width: 52px;
+    height: 21px;
+    font-size: 11px;
+    margin-top: 4px;
     
   }
   /* Expense Card */
@@ -91,16 +108,17 @@
   }
   
   .expense-card h3 {
-    color: #0070f3;
+    color: #020077;
     font-size: 18px;
   }
   
   /* Add Button */
   button {
     width: 100%;
-    padding: 10px;
+    padding: 6px;
+    margin-bottom: 5px;
     font-size: 16px;
-    background-color: #0070f3;
+    background-color: #020077;
     color: white;
     border: none;
     border-radius: 8px;
@@ -109,7 +127,7 @@
   }
   
   button:hover {
-    background-color: #005fd1;
+    background-color: #020077;
   }
   
 

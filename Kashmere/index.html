@@ -10,15 +10,19 @@
     <link rel="stylesheet" href="helpers.css">
     <link rel="stylesheet" href="expense_model.css">
     <link rel="stylesheet" href="details_box.css">
+    <link rel="stylesheet" href="spend_modal.css">
+    <link rel="stylesheet" href="partition_modal.css">
+    <link rel="stylesheet" href="partition_card.css">
+    <link rel="stylesheet" href="expense_container.css">
 </head>
 
 <body>
     <header>
         <span>Welcome to</span>
-        <h1>Kashmere</h1>
+        <h1>Cashmere</h1>
     </header>
     <main>
-        <div class="container" role="button">
+        <div class="top-shadow">
             <div class="balance">
                 <h3 id="total-balance">Total Balance: 0</h3>
                 <button id="edit-amount-btn" onclick="show_Edit_Amount_Window()">Edit</button>
@@ -27,6 +31,24 @@
                 <input type="number" name="amount" id="entered-amount">
                 <button id="enter-btn" onclick="editAmount()">Enter</button>
             </div>
+
+            <!-- Add-partition button  -->
+            <button id="add-partition-btn" onclick="show_Add_Partition_Modal()">Add Partition</button>
+        </div>
+
+        <div class="container">
+
+            <!-- Add-Partition Model  -->
+            <div id="partition-modal" class="partition hide">
+                <div class="partition-content">
+                    <h3>Add New Partition</h3>
+                    <input type="text" id="partition-input-name" placeholder="Enter partition name" />
+                    <input type="number" id="partition-input-amount" placeholder="Allocate amount" />
+                    <button id="save-partition-btn">Save</button>
+                    <button id="cancel-partition-btn" onclick="hide_partition_modal()">Cancel</button>
+                </div>
+            </div>
+
             <!-- Add Expense Modal -->
             <div id="expense-modal" class="modal hide">
                 <div class="modal-content">
@@ -38,9 +60,12 @@
                 </div>
             </div>
 
-            <div id="expense-card"></div>
+            <!-- partition container  -->
+            <div class="partition-container">
+                
+            </div>
 
-            <button id="add-expense-btn">Add</button>
+
         </div>
     </main>
 
@@ -57,29 +82,44 @@
                 </div>
                 <div class="boxes">
                     <div class="box">
-                        <h4>30000</h4>
+                        <h4 id="allocated-amount">30000</h4>
                     </div>
                     <div class="box">
-                        <h4>25000</h4>
+                        <h4 id="remaining-amount">25000</h4>
                     </div>
                 </div>
             </div>
             <div id="details-box">
                 <!-- Details will be inserted here -->
                 <div class="detail">
-                    <span>-200 (Mandi Manzil)</span>
-                    <button id="clear-detail">Clear</button>
+                    <div class="sub-detail">
+                        <span>-200 (Mandi Manzil)</span>
+                        <button id="clear-detail">Clear</button>
+                    </div>
                 </div>
-               
 
-                
-                
                 <button id="spend-btn">Spend</button>
                 <button id="credit-btn">Credit</button>
             </div>
             <button id="close-modal">Close</button>
         </div>
     </div>
+
+
+    <!-- spend modal -->
+    <div class="spend-modal hide">
+
+        <div class="spend-modal-inner">
+            <input type="number" id="spending-amount" placeholder="Amount Spending">
+            <input type="text" name="remark" id="remark" placeholder="Remarks">
+
+            <div>
+                <button id="enter-spend">Enter</button>
+                <button id="cancel-spend">Cancel</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="script.js"></script>
 </body>
