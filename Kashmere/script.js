@@ -112,7 +112,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
     //calculate unassingned amount
     let total = 0
     partitionObj.expenses.forEach((expense) => {
-            total += expense.expenseAllocatedAmount
+        total += expense.expenseAllocatedAmount
     })
     const unassingned = partitionObj.allocatedAmount - total;
 
@@ -239,27 +239,27 @@ saveExpenseBtn.addEventListener("click", () => {
 
     //check if the allocation exceeds the partition amount
     total = 0;
-    partitions[activePartitionIndex].expenses.forEach ((expense) => {
+    partitions[activePartitionIndex].expenses.forEach((expense) => {
         total += expense.expenseAllocatedAmount
     })
-    if(total + expenseAmount <= partitions[activePartitionIndex].allocatedAmount) {
+    if (total + expenseAmount <= partitions[activePartitionIndex].allocatedAmount) {
         if (expenseName && expenseAmount) {
-        partitions[activePartitionIndex].expenses.push({
-            expenseName: expenseName,
-            expenseAllocatedAmount: expenseAmount 
-        });
-        localStorage.setItem("partitions", JSON.stringify(partitions));
-        renderAllPartitions();
-        activePartitionIndex = null;
+            partitions[activePartitionIndex].expenses.push({
+                expenseName: expenseName,
+                expenseAllocatedAmount: expenseAmount
+            });
+            localStorage.setItem("partitions", JSON.stringify(partitions));
+            renderAllPartitions();
+            activePartitionIndex = null;
         }
         expenseInput.value = "";
         expenseInputAmount.value = "";
         expenseModal.classList.add("hide");
-    
+
     } else {
         window.alert("Opps! No enough balance in the current partition.")
     }
-    
+
 });
 
 // Cancel expense modal
@@ -297,6 +297,50 @@ if (closeModalBtn) {
 // Global variables
 let remaining;
 let totalSpent = 0;
+
+
+// circular progress bar animation
+document.querySelectorAll(".progress-ring").forEach((ring, i) => {
+
+    const circle = ring.querySelector(".progress-ring__circle");
+    const text = ring.parentElement.querySelector(".progress-text");
+
+    const spent = Number(ring.dataset.spent);
+    const total = Number(ring.dataset.total);
+
+    const percent = Math.min((spent / total) * 100, 100);
+
+    const radius = 30;
+    const circumference = 2 * Math.PI * radius;
+
+    // setup
+    circle.style.strokeDasharray = circumference;
+    circle.style.strokeDashoffset = circumference;
+    text.textContent = "0";
+
+    const duration = 800;
+    const startTime = performance.now();
+
+    function animate(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        
+        // animate arc
+        const currentPercent = progress * percent;
+        const offset = circumference - (currentPercent / 100) * circumference;
+        circle.style.strokeDashoffset = offset;
+
+        // animate number
+        const currentAmount = Math.floor(progress * spent);
+        text.textContent = currentAmount.toLocaleString();
+
+        if (progress < 1) requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+});
+
+
 
 
 // Allocate budget once
