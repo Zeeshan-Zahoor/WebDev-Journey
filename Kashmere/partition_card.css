@@ -29,8 +29,17 @@
 
 .partition-container .partition-card .partition-card-btns .delete-btn {
     background-color: #8c0000ad;
-    position: relative;
-    right: 0.5rem;
+    width: fit-content;
+    margin: 0;
+}
+.statue-delete-btn {
+    background-color: #8c0000ad;
+    width: fit-content;
+    margin: 0;
+    padding: 4px 10px;
+    font-size: 10px;
+    color: transparent;
+    background-color: transparent;
 }
 
 .add-expense-btn {
@@ -44,10 +53,12 @@
 
 .partition-card .partition-card-btns {
     display: flex;
-    justify-content: flex-start;
+    width: 100%;
+    margin: 10px 0px;
+    padding: 0 10px;
+    justify-content: space-between;
     align-items: center;
-    margin-left: 17%;
-    margin-top: 6%;
+    
 }
 
 

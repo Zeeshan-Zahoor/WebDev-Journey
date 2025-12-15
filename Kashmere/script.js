@@ -108,16 +108,26 @@ const editAmount = () => {
 const createPartitionCard = (partitionObj, partIndex) => {
     const partitionCard = document.createElement("div");
     partitionCard.className = "partition-card";
+
+    //calculate unassingned amount
+    let total = 0
+    partitionObj.expenses.forEach((expense) => {
+            total += expense.expenseAllocatedAmount
+    })
+    const unassingned = partitionObj.allocatedAmount - total;
+
+
     partitionCard.innerHTML = `
         <div class="partition-details">
             <h3>${partitionObj.name}</h3>
             <div class="partition-details-inner">
                 <h4>Balance: ${(partitionObj.allocatedAmount).toLocaleString('en-IN')}</h4>
-                <h5>Not yet assigned: ${500..toLocaleString('en-IN')}</h5> 
+                <h5>Not yet assigned: ${unassingned.toLocaleString('en-IN')}</h5> 
             </div>
         </div>
         <div class="expense-container"></div>
         <div class="partition-card-btns"> 
+            <button class="statue-delete-btn" data-index="${partIndex}">Delete</button>
             <button class="add-expense-btn" data-index="${partIndex}">Add</button>
             <button class="delete-btn" data-index="${partIndex}">Delete</button>
         </div>
@@ -287,6 +297,7 @@ if (closeModalBtn) {
 // Global variables
 let remaining;
 let totalSpent = 0;
+
 
 // Allocate budget once
 const allocate = () => {

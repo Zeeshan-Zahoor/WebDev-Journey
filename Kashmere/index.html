@@ -62,7 +62,7 @@
 
             <!-- partition container  -->
             <div class="partition-container">
-                
+
             </div>
 
 
@@ -72,38 +72,39 @@
 
     <!-- Notepad Modal Structure -->
     <!-- Expense Details Modal -->
-    <div id="expense-details-modal" class="modal hide">
-        <div class="modal-content">
-            <h2 id="modal-expense-name">Expense Name</h2>
-            <div class="allocations">
-                <div class="headings">
-                    <span>Allocated</span>
-                    <span>Remaining</span>
+    <div id="modal-content-pad" class="modal">
+        <div class="allocations">
+            <div class="boxes">
+                <div class="box">
+                    <h4 id="allocated-amount">30000 <h4>                   
                 </div>
-                <div class="boxes">
-                    <div class="box">
-                        <h4 id="allocated-amount">30000</h4>
-                    </div>
-                    <div class="box">
-                        <h4 id="remaining-amount">25000</h4>
-                    </div>
-                </div>
+                <span>Allocated</span>
+            </div> 
+            <div class="modal-expense-name">
+                <h2 id="modal-expense-name">Expense Name</h2>
             </div>
-            <div id="details-box">
-                <!-- Details will be inserted here -->
-                <div class="detail">
-                    <div class="sub-detail">
-                        <span>-200 (Mandi Manzil)</span>
-                        <button id="clear-detail">Clear</button>
-                    </div>
+            <div class="boxes">
+                <div class="box">
+                    <h4 id="remaining-amount">25000</h4>
                 </div>
-
-                <button id="spend-btn">Spend</button>
-                <button id="credit-btn">Credit</button>
+                <span>Remaining</span>
             </div>
-            <button id="close-modal">Close</button>
         </div>
+        <div id="details-box">
+            <!-- Details will be inserted here -->
+            <div class="detail">
+                <div class="sub-detail">
+                    <span>-200 (Mandi Manzil)</span>
+                    <button id="clear-detail">Clear</button>
+                </div>
+            </div>
+
+            <button id="spend-btn">Spend</button>
+            <button id="credit-btn">Credit</button>
+        </div>
+        <button id="close-modal">Close</button>
     </div>
+
 
 
     <!-- spend modal -->

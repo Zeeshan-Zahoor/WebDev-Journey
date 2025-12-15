@@ -6,14 +6,17 @@
     border: none;
 
   }
-  
+  html {
+    height: 100dvh;
+  }
+
   /* Body styling */
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f5faff;
     color: #002750;
-    height: auto;        /* important: don't lock height to 100vh */
-    overflow-y: auto
+    max-height: 100dvh;        /* important: don't lock height to 100vh*/
+    max-width: 100dvw;
   }
   
   /* Header */
@@ -21,7 +24,9 @@
     text-align: center;
     padding: 10px 0 20px;
     background-color: #020077;
-    width: 100%;
+    width: min(100dvw, 820px);
+    margin: auto;
+    height: 6rem;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 
   }
@@ -49,13 +54,12 @@
   /* Container box */
   .container {
     background-color: #f5faff;
-    margin-top: 10px;
-    padding: 0;
-    border-radius: 12px;
-    width: 100%;
-    max-width: 360px;
-    height: 83dvh;
-    transition: transform 0.2s ease-in-out;
+    padding: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.26);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.26);
+    width: min(100dvw, 820px);
+    margin: auto;
+    height: calc(97dvh - 12rem);
     overflow: auto;
     /* Hide scrollbar for Chrome, Edge, Safari */
     scrollbar-width: none;          /* Firefox */
@@ -68,16 +72,19 @@
   
   
   .top-shadow {
+    width: min(100dvw, 820px);
+    margin: auto;
+    height: 5.5rem;
     display: block;
-    margin-left: 1.5rem;
+    padding: 0.5rem 0.5rem;
   }
 
   .balance {
-    width: 22rem;
+    width: 100%;
     display: flex;
-    gap: 5rem;
-    padding-top: 5px;
-    padding-bottom: 3px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
   }
   /* Balance */
   .container h3 {
@@ -91,8 +98,7 @@
     width: 52px;
     height: 21px;
     font-size: 11px;
-    margin-top: 4px;
-    
+    margin: 0;
   }
   /* Expense Card */
   .expense-card {
@@ -135,17 +141,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 50px;
     background-color: #ff4d4d;
     color: white;
-    border: none;
     padding: 4px 10px;
     font-size: 10px;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 7px;
-    margin-left: 85%;
+    
   }
   
   .delete-btn:hover {
