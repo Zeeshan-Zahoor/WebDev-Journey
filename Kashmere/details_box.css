@@ -1,8 +1,8 @@
 .modal-content-pad {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    right: 50%;
+    transform: translate(350%, -50%);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -14,6 +14,8 @@
 }
 #modal-expense-name {
     color: white;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.4rem;
     margin: 0;
     padding: 0;
     margin-top: 0.4rem
@@ -22,7 +24,11 @@
 .allocations {  
     margin-top: 0.5%;
     width: 97%;
-    background-color: #020077;
+    /* background-color: #010028; */
+
+    background: linear-gradient(180deg, #01002d 0%, #040037 40%, #001235 100%);
+
+
     border-radius: 10px;
     display: flex;
     justify-content: space-around;
@@ -47,7 +53,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    margin-top: 0.7rem
+    margin-top: 0.2rem
 }
 .box {
     width: 55px;
@@ -64,13 +70,14 @@
 }
 .label {
     color: white;
+    font-size: 0.8rem;
     font-weight: 400;
 }
 
 .headings span{
     font-size: medium;
     font-weight: 600;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: white;
     
 }
@@ -129,6 +136,15 @@
 }
 #credit-btn:hover {
     background-color: rgb(0, 102, 0);
+}
+
+#close-modal-btn:hover {
+    background-color: #03017ab0;
+    transition: 0.2s ease;
+    font-size: 1.1rem;   
+}
+#close-modal-btn:active {
+    background-color: rgb(9, 2, 72);
 }
 
 #close-modal-btn {

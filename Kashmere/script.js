@@ -20,7 +20,9 @@ const partitionInputAmount = document.getElementById("partition-input-amount");
 const savePartitionBtn = document.getElementById("save-partition-btn");
 
 // Expense details modal (existing)
-const expenseDetails_Model = document.getElementById("expense-details-modal");
+const expenseDetails_Model = document.getElementById("modal-content-pad");
+const allocatedProgressRing = document.getElementById("progress-ring-allocated");
+const remainingProgressionRing = document.getElementById("progress-ring-remaining");
 
 // App state
 let totalBalance = 0;
@@ -280,16 +282,41 @@ const deleteExpense = (partitionIndex, expenseIndex) => {
 // Expense details (open modal when expense clicked)
 const handleExpenseCardClick = (expenseName, partitionIndex, expenseIndex) => {
     console.log(`Card clicked: ${expenseName} in partition ${partitionIndex} expenseIndex ${expenseIndex}`);
+
+    //In case of allocated ring, there should be no change (both value should be same)
+    allocatedProgressRing.setAttribute('data-spent', `${partitions[partitionIndex].expenses[expenseIndex].expenseAllocatedAmount}`)
+    allocatedProgressRing.setAttribute('data-total', `${partitions[partitionIndex].expenses[expenseIndex].expenseAllocatedAmount}`)
+
+    //In case of remaining ring, only data-spent should be changed
+    remainingProgressionRing.setAttribute('data-total', `${partitions[partitionIndex].expenses[expenseIndex].expenseAllocatedAmount}`)
+
     if (!expenseDetails_Model) return;
     expenseDetails_Model.classList.remove("hide");
     document.getElementById("modal-expense-name").innerText = `${expenseName}`;
+    expenseDetails_Model.classList.remove("hide");
+
+    expenseDetails_Model.style.transition = "transform 0.2s ease";
+    expenseDetails_Model.style.transform = "translate(350%, -50%)";
+    expenseDetails_Model.offsetHeight;
+    expenseDetails_Model.style.transform = "translate(50%, -50%)";
+
+    loadProgressionBars()
 };
 
 // close expense-details modal if it exists
-const closeModalBtn = document.getElementById("close-modal");
+const closeModalBtn = document.getElementById("close-modal-btn");
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
-        if (expenseDetails_Model) expenseDetails_Model.classList.add("hide");
+        if (expenseDetails_Model) {
+            expenseDetails_Model.style.transition = "transform 0.2s ease";
+            expenseDetails_Model.style.transform = "translate(50%, -50%)";
+            expenseDetails_Model.offsetHeight;
+            expenseDetails_Model.style.transform = "translate(350%, -50%)";
+            setTimeout(() => {
+                expenseDetails_Model.classList.add("hide");
+            }, 300)
+        }
+
     });
 }
 
@@ -298,47 +325,63 @@ if (closeModalBtn) {
 let remaining;
 let totalSpent = 0;
 
+// circular progress bar 
+const loadProgressionBars = () => {
+    document.querySelectorAll(".progress-ring").forEach((ring, index) => {
+        const circle = ring.querySelector(".progress-ring__circle");
+        const text = ring.parentElement.querySelector(".progress-text");
 
-// circular progress bar animation
-document.querySelectorAll(".progress-ring").forEach((ring, i) => {
+        // Set consistent rotation immediately
+        circle.style.transform = "rotate(-90deg)";
+        circle.style.transformOrigin = "35px 35px";
 
-    const circle = ring.querySelector(".progress-ring__circle");
-    const text = ring.parentElement.querySelector(".progress-text");
+        const spent = Number(ring.dataset.spent);
+        const total = Number(ring.dataset.total);
+        const percent = Math.min((spent / total) * 100, 100);
 
-    const spent = Number(ring.dataset.spent);
-    const total = Number(ring.dataset.total);
+        const radius = 30;
+        const circumference = 2 * Math.PI * radius;
 
-    const percent = Math.min((spent / total) * 100, 100);
+        // Setup
+        circle.style.strokeDasharray = `${circumference}`;
+        circle.style.strokeDashoffset = circumference;
+        text.textContent = "0";
 
-    const radius = 30;
-    const circumference = 2 * Math.PI * radius;
+        // Force layout calculation
+        void circle.offsetWidth;
 
-    // setup
-    circle.style.strokeDasharray = circumference;
-    circle.style.strokeDashoffset = circumference;
-    text.textContent = "0";
-
-    const duration = 800;
-    const startTime = performance.now();
-
-    function animate(now) {
-        const elapsed = now - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        
-        // animate arc
-        const currentPercent = progress * percent;
-        const offset = circumference - (currentPercent / 100) * circumference;
+        // Start animation
+        const offset = circumference - (percent / 100) * circumference;
         circle.style.strokeDashoffset = offset;
 
-        // animate number
-        const currentAmount = Math.floor(progress * spent);
-        text.textContent = currentAmount.toLocaleString();
+        // Animate counter
+        let start = null;
+        const duration = 500;
 
-        if (progress < 1) requestAnimationFrame(animate);
-    }
+        function animateCounter(timestamp) {
+            if (!start) start = timestamp;
+            const progress = Math.min((timestamp - start) / duration, 1);
 
-    requestAnimationFrame(animate);
-});
+            // Ease out cubic
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            // 🔥 Decrease from total → spent
+            const current = Math.floor(
+                total - easeProgress * (total - spent)
+            );
+
+            text.textContent = "₹" + current.toLocaleString('en-IN');
+
+            if (progress < 1) {
+                requestAnimationFrame(animateCounter);
+            } else {
+                text.textContent = "₹" + spent.toLocaleString('en-IN');
+            }
+        }
+
+        requestAnimationFrame(animateCounter);
+    });
+}
+
 
 
 

@@ -73,39 +73,64 @@
 
     <!-- Notepad Modal Structure -->
     <!-- Expense Details Modal -->
-    <div id="modal-content-pad" class="modal-content-pad">
+    <div id="modal-content-pad" class="modal-content-pad hide">
         <div class="allocations">
             <div class="boxes">
                 <div class="progress-container">
-                    <svg class="progress-ring" width="70" height="70" data-spent="4000" data-total="10000">
+                    <svg id="progress-ring-allocated" class="progress-ring" width="70" height="70" data-spent="10000" data-total="10000">
 
                         <defs>
-                            <linearGradient id="progressGradient-1" x1="0%" y1="0%" x2="100%" y2="100%">
-
+                            <!-- Gradient -->
+                            <linearGradient id="progressGradient-0" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="70"
+                                y2="70">
                                 <stop offset="0%" stop-color="green" />
                                 <stop offset="50%" stop-color="yellow" />
                                 <stop offset="100%" stop-color="red" />
                             </linearGradient>
+
+
                         </defs>
 
+                        <!-- Background ring -->
                         <circle class="progress-ring__background" cx="35" cy="35" r="30" />
 
-                        <circle class="progress-ring__circle" cx="35" cy="35" r="30"
-                            stroke="url(#progressGradient-1)" />
+                        <!-- Progress ring with gradient + glow -->
+                        <circle class="progress-ring__circle" cx="35" cy="35" r="30" stroke="url(#progressGradient-0)"
+                            transform="rotate(-90 35 35)" />
                     </svg>
 
                     <div class="progress-text">0</div>
                 </div>
-
-
                 <span class="label">Allocated</span>
             </div>
             <div class="modal-expense-name">
-                <h2 id="modal-expense-name">EXPENSE NAME</h2>
+                <h3 id="modal-expense-name">Expence Name</h3>
             </div>
             <div class="boxes">
-                <div class="box">
-                    <h4 id="remaining-amount">25000</h4>
+                <div class="progress-container">
+                    <svg id="progress-ring-remaining" class="progress-ring" width="70" height="70" data-spent="10" data-total="">
+
+                        <defs>
+                            <!-- Gradient -->
+                            <linearGradient id="progressGradient-1" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="70"
+                                y2="70">
+                                <stop offset="0%" stop-color="green" />
+                                <stop offset="50%" stop-color="yellow" />
+                                <stop offset="100%" stop-color="red" />
+                            </linearGradient>
+
+
+                        </defs>
+
+                        <!-- Background ring -->
+                        <circle class="progress-ring__background" cx="35" cy="35" r="30" />
+
+                        <!-- Progress ring with gradient + glow -->
+                        <circle class="progress-ring__circle" cx="35" cy="35" r="30" stroke="url(#progressGradient-1)"
+                            transform="rotate(-90 35 35)" />
+                    </svg>
+
+                    <div class="progress-text">0</div>
                 </div>
                 <span class="label">Remaining</span>
             </div>
@@ -140,7 +165,6 @@
             </div>
         </div>
     </div>
-
 
     <script src="script.js"></script>
 </body>
