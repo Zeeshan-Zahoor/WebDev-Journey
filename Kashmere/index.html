@@ -9,12 +9,14 @@
     <link rel="stylesheet" href="edit_amount_window.css">
     <link rel="stylesheet" href="helpers.css">
     <link rel="stylesheet" href="expense_model.css">
-    <link rel="stylesheet" href="details_box.css">
+    <link rel="stylesheet" href="expense_details_box.css">
     <link rel="stylesheet" href="spend_modal.css">
     <link rel="stylesheet" href="partition_modal.css">
     <link rel="stylesheet" href="partition_card.css">
     <link rel="stylesheet" href="expense_container.css">
     <link rel="stylesheet" href="progress_circle.css">
+    <link rel="stylesheet" href="details.css">
+    <link rel="stylesheet" href="add_subdetail_modal.css">
 </head>
 
 <body>
@@ -77,7 +79,8 @@
         <div class="allocations">
             <div class="boxes">
                 <div class="progress-container">
-                    <svg id="progress-ring-allocated" class="progress-ring" width="70" height="70" data-spent="10000" data-total="10000">
+                    <svg id="progress-ring-allocated" class="progress-ring" width="70" height="70" data-spent="10000"
+                        data-total="10000">
 
                         <defs>
                             <!-- Gradient -->
@@ -108,7 +111,8 @@
             </div>
             <div class="boxes">
                 <div class="progress-container">
-                    <svg id="progress-ring-remaining" class="progress-ring" width="70" height="70" data-spent="10" data-total="">
+                    <svg id="progress-ring-remaining" class="progress-ring" width="70" height="70" data-spent="10"
+                        data-total="">
 
                         <defs>
                             <!-- Gradient -->
@@ -136,16 +140,44 @@
             </div>
         </div>
         <div id="details-box">
-            <!-- Details will be inserted here -->
-            <div class="detail">
-                <div class="sub-detail">
-                    <span>-200 (Mandi Manzil)</span>
-                    <button id="clear-detail">Clear</button>
-                </div>
+            <div class="add-sub-detail-btn">
+                <img class="plus" src="plus.svg" fill="currentColor" alt="Add Sub Detail">
             </div>
 
-            <button id="spend-btn">Spend</button>
-            <button id="credit-btn">Credit</button>
+            <!-- add sub detail modal  -->
+            <div class="add-sub-detail-modal hide">
+
+                <div class="add-sub-detail-modal-inner">
+                    <input type="text" id="input-sub-detail-name" placeholder="Enter sub-detail name">
+
+                    <div class="add-sub-detail-modal-btns">
+                        <button id="enter-sub-detail-name-btn">Enter</button>
+                        <button id="cancel-sub-detail-name-btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="detail">
+                <!-- <div class="sub-detail">
+                    <span>-200 (Mandi Manzil)</span>
+                    <button id="clear-detail">Clear</button>
+                </div> -->
+
+                <div class="sub-details">
+                    <div class="sub-detail-name">
+                        <h5>Sub Detail Name</h5>
+                    </div>
+                    <div class="sub-detail-list">
+
+                    </div>
+                    <h5 class="sub-detail-total">Total: 0000</h5>
+                    <div class="sub-detail-btns">
+                        <button id="spend-btn">Spend</button>
+                        <button id="credit-btn">Credit</button>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
         <button id="close-modal-btn">Close</button>
     </div>
@@ -159,9 +191,9 @@
             <input type="number" id="spending-amount" placeholder="Amount Spending">
             <input type="text" name="remark" id="remark" placeholder="Remarks">
 
-            <div>
-                <button id="enter-spend">Enter</button>
-                <button id="cancel-spend">Cancel</button>
+            <div class="spend-modal-btns">
+                <button id="enter-spend-btn">Enter</button>
+                <button id="cancel-spend-btn">Cancel</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
-.spend-modal {
+.add-sub-detail-modal {
     position: fixed;
     display: flex;
     justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     height: 100%;
@@ -10,8 +11,8 @@
     z-index: 2000;
 }
 
-.spend-modal-inner {
-    transform: translateY(100%);
+.add-sub-detail-modal-inner {
+    /* transform: translateY(200%); */
     height: fit-content;
     width: 80%;
     padding: 30px;
@@ -22,14 +23,14 @@
     gap: 10px;
 }
 
-.spend-modal-inner input {
+.add-sub-detail-modal-inner input {
     width: 100%;
     height: 40px;
     border: 1px solid rgba(0, 0, 0, 0.371);
     border-radius: 12px;
     padding-left: 10px;
 }
-.spend-modal-btns {
+.add-sub-detail-modal-btns {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -37,22 +38,28 @@
     margin-top: 1rem;
 
 }
-#enter-spend-btn, #cancel-spend-btn {
+#enter-sub-detail-name-btn, #cancel-sub-detail-name-btn {
     border-radius: 30px;
     width: 48%;
 }
 
-#cancel-spend-btn {
-    color: rgb(94, 94, 94);
-    background-color: rgba(149, 149, 149, 0.31);
+#cancel-sub-detail-name-btn {
+    color: rgb(67, 67, 67);
+    background-color: rgba(149, 149, 149, 0.499);
     font-weight: bold;
 }
-#cancel-spend-btn:hover {
+#cancel-sub-detail-name-btn:hover {
     background-color: rgba(128, 128, 128, 0.825);
     color: black;
 }
 
+#enter-sub-detail-name-btn:active {
+    background-color: rgba(227, 227, 227, 0.904);
+    border: 3px solid rgb(0, 0, 0);
+    color: black;
+    transition:  ease 0.1s ;
+}
+
 .hide {
     display: none;
-    
 }

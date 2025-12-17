@@ -1,0 +1,17 @@
+.sub-details {
+    width: 100%;
+    height: fit-content;
+    background-color: #01002d1a;
+    border: 1px solid #01002d33;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.sub-detail-name {
+    width: 100%;
+    text-align: center;
+}

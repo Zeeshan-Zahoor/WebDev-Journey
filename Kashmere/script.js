@@ -60,16 +60,31 @@ window.onload = () => {
                 if (typeof expense === "string") {
                     return {
                         expenseName: expense,
-                        expenseAllocatedAmount: 0
+                        expenseAllocatedAmount: 0, 
+                        expenseRemainingAmount: 0, 
+                        expenseDetails: []  // will be array of objects
                     };
                 }
 
                 // New format: expense is an object
                 return {
                     expenseName: expense.expenseName ?? "",
-                    expenseAllocatedAmount: expense.expenseAllocatedAmount ?? 0
+                    expenseAllocatedAmount: expense.expenseAllocatedAmount ?? 0, 
+                    expenseRemainingAmount: expense.expenseRemainingAmount ?? 0, 
+                    expenseDetails : [],
+                    expenseDetailsTotal: expense.expenseDetailsTotal ?? 0
                 };
             });
+
+            if(Array.isArray(p.expenses.expenseDetails)) {
+                expenseDetails = p.expense.expenseDetails.map(detail => {
+                    return {
+                        subDetailName: detail.subDetailName ?? "",
+                        subDetailList: [],  // list of strings
+                        subDetailTotal: detail.subDetailTotal ?? 0
+                    }
+                });
+            }
         }
         // Return normalized partition object
         return {
@@ -232,13 +247,13 @@ savePartitionBtn.addEventListener("click", () => {
 saveExpenseBtn.addEventListener("click", () => {
     const expenseName = expenseInput.value.trim();
     const expenseAmount = Number(expenseInputAmount.value)
+
     if (activePartitionIndex === null || activePartitionIndex < 0 || activePartitionIndex >= partitions.length) {
         // No valid target partition selected
         alert("Please open the Add button inside a partition to add an expense.");
         expenseModal.classList.add("hide");
         return;
     }
-
     //check if the allocation exceeds the partition amount
     total = 0;
     partitions[activePartitionIndex].expenses.forEach((expense) => {
@@ -248,9 +263,11 @@ saveExpenseBtn.addEventListener("click", () => {
         if (expenseName && expenseAmount) {
             partitions[activePartitionIndex].expenses.push({
                 expenseName: expenseName,
-                expenseAllocatedAmount: expenseAmount
+                expenseAllocatedAmount: expenseAmount,
+                expenseRemainingAmount: expenseAmount
             });
             localStorage.setItem("partitions", JSON.stringify(partitions));
+
             renderAllPartitions();
             activePartitionIndex = null;
         }
@@ -289,6 +306,7 @@ const handleExpenseCardClick = (expenseName, partitionIndex, expenseIndex) => {
 
     //In case of remaining ring, only data-spent should be changed
     remainingProgressionRing.setAttribute('data-total', `${partitions[partitionIndex].expenses[expenseIndex].expenseAllocatedAmount}`)
+    remainingProgressionRing.setAttribute('data-spent', `${partitions[partitionIndex].expenses[expenseIndex].expenseRemainingAmount}`)
 
     if (!expenseDetails_Model) return;
     expenseDetails_Model.classList.remove("hide");
@@ -321,9 +339,6 @@ if (closeModalBtn) {
 }
 
 // Expense Datails Model 
-// Global variables
-let remaining;
-let totalSpent = 0;
 
 // circular progress bar 
 const loadProgressionBars = () => {
@@ -364,7 +379,7 @@ const loadProgressionBars = () => {
 
             // Ease out cubic
             const easeProgress = 1 - Math.pow(1 - progress, 3);
-            // 🔥 Decrease from total → spent
+            //  Decrease from total → spent
             const current = Math.floor(
                 total - easeProgress * (total - spent)
             );
@@ -383,50 +398,36 @@ const loadProgressionBars = () => {
 }
 
 
-
-
-
-// Allocate budget once
-const allocate = () => {
-    let inputAllocatedAmount = parseInt(document.getElementById("expense-input-amount").value);
-    if (!isNaN(inputAllocatedAmount) && inputAllocatedAmount > 0) {
-        document.getElementById("allocated-amount").innerText = inputAllocatedAmount;
-        remaining = inputAllocatedAmount;
-        document.getElementById("remaining-amount").innerText = remaining;
-    } else {
-        alert("Please enter a valid amount.");
-    }
-};
-
 // Show spend modal
 document.getElementById("spend-btn").addEventListener("click", () => {
-    document.querySelector(".spend-modal").classList.remove("hide");
+    const spendModal = document.querySelector(".spend-modal")
+    spendModal.classList.remove("hide");
 });
 
 // Cancel spend
-document.getElementById("cancel-spend").addEventListener("click", () => {
+document.getElementById("cancel-spend-btn").addEventListener("click", () => {
     document.querySelector(".spend-modal").classList.add("hide");
 });
 
-// Add expense entry
-document.getElementById("enter-spend").addEventListener("click", () => {
-    if (typeof remaining === "undefined") {
-        alert("Please allocate an amount first.");
-        return;
-    }
 
+
+
+
+// Add expense entry
+document.getElementById("enter-spend-btn").addEventListener("click", () => {
     let spendingAmount = parseInt(document.getElementById("spending-amount").value);
     let remarks = document.getElementById("remark").value;
     let detail = document.querySelector(".detail");
+    let remaining = Number(remainingProgressionRing.getAttribute('data-spent')) 
 
     if (!isNaN(spendingAmount) && spendingAmount > 0 && spendingAmount <= remaining) {
-        totalSpent += spendingAmount;
         remaining -= spendingAmount;
-        document.getElementById("remaining-amount").innerText = remaining;
+        remainingProgressionRing.setAttribute('data-spent',`${remaining}`);
+        loadProgressionBars()
 
         let detailText = `<div class="sub-detail">
                             <span>-${spendingAmount} (${remarks})</span>
-                            <button class="clear-detail">Clear</button>
+                            <button id="clear-detail">Clear</button>
                           </div>`;
         detail.innerHTML += detailText;
         document.querySelector(".spend-modal").classList.add("hide");
