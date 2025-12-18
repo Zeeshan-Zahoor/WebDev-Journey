@@ -46,7 +46,16 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     padding: 1% 1% 1% 1%;
     text-align: left;
+    scrollbar-width: thin;          /* Firefox */
+    -ms-overflow-style: thin;   
 }
+
+#detials-box::-webkit-scrollbar {
+  width: thin;
+}
+
+
+
 .add-sub-detail-btn {
     width: fit-content;
     height: fit-content;
@@ -141,7 +150,7 @@
 #clear-detail:hover {
     background-color: rgb(185, 37, 7);
 }
-#spend-btn {
+.spend-btn {
     margin:0;
     margin-top: 5px;
     width: 50px;
@@ -150,10 +159,10 @@
     background-color: rgb(209, 101, 0);
     padding: 0;
 }
-#spend-btn:hover {
+.spend-btn:hover {
     background-color: rgb(102, 85, 0);
 }
-#credit-btn {
+.credit-btn {
     margin:0;
     margin-top: 5px;
     width: 50px;
@@ -162,7 +171,7 @@
     background-color: rgb(0, 170, 0);
     padding: 0;
 }
-#credit-btn:hover {
+.credit-btn:hover {
     background-color: rgb(0, 102, 0);
 }
 

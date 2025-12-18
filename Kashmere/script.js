@@ -24,6 +24,9 @@ const expenseDetails_Model = document.getElementById("modal-content-pad");
 const allocatedProgressRing = document.getElementById("progress-ring-allocated");
 const remainingProgressionRing = document.getElementById("progress-ring-remaining");
 
+const enterSubDetailName = document.getElementById('enter-sub-detail-name-btn')
+const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn')
+
 // App state
 let totalBalance = 0;
 
@@ -32,6 +35,7 @@ let partitions = JSON.parse(localStorage.getItem("partitions")) || [];
 
 // Track which partition index the expense modal is currently adding to
 let activePartitionIndex = null;
+let activeExpenseIndex = null;
 
 // Load data on page load
 window.onload = () => {
@@ -41,51 +45,56 @@ window.onload = () => {
         totalBalanceDisplay.innerText = `Total Balance: ${(totalBalance).toLocaleString('en-IN')}`;
     }
 
-    //Ensure any old-format partitions (strings) become objects
+    // Ensure any old-format partitions become objects
     partitions = partitions.map(p => {
 
-        //Normalize partition name
+        // Normalize partition name
         const name = p.name ?? p;
 
-        //Normalize allocated amount
+        // Normalize allocated amount
         const allocatedAmount = p.allocatedAmount ?? 0;
 
-        //Normalize expenses
+        // Normalize expenses
         let expenses = [];
 
         if (Array.isArray(p.expenses)) {
             expenses = p.expenses.map(expense => {
 
-                // Old format: expense is a string
+                // Normalize expense details
+                let expenseDetails = [];
+
+                if (Array.isArray(expense.expenseDetails)) {
+                    expenseDetails = expense.expenseDetails.map(detail => ({
+                        subDetailName: detail.subDetailName ?? "",
+                        subDetailList: Array.isArray(detail.subDetailList)
+                            ? detail.subDetailList
+                            : [],
+                        subDetailTotal: detail.subDetailTotal ?? 0
+                    }));
+                }
+
+                // Old format: expense was a string
                 if (typeof expense === "string") {
                     return {
                         expenseName: expense,
-                        expenseAllocatedAmount: 0, 
-                        expenseRemainingAmount: 0, 
-                        expenseDetails: []  // will be array of objects
+                        expenseAllocatedAmount: 0,
+                        expenseRemainingAmount: 0,
+                        expenseDetails,
+                        expenseDetailsTotal: 0
                     };
                 }
 
-                // New format: expense is an object
+                // New format: expense is already an object
                 return {
                     expenseName: expense.expenseName ?? "",
-                    expenseAllocatedAmount: expense.expenseAllocatedAmount ?? 0, 
-                    expenseRemainingAmount: expense.expenseRemainingAmount ?? 0, 
-                    expenseDetails : [],
+                    expenseAllocatedAmount: expense.expenseAllocatedAmount ?? 0,
+                    expenseRemainingAmount: expense.expenseRemainingAmount ?? 0,
+                    expenseDetails,
                     expenseDetailsTotal: expense.expenseDetailsTotal ?? 0
                 };
             });
-
-            if(Array.isArray(p.expenses.expenseDetails)) {
-                expenseDetails = p.expense.expenseDetails.map(detail => {
-                    return {
-                        subDetailName: detail.subDetailName ?? "",
-                        subDetailList: [],  // list of strings
-                        subDetailTotal: detail.subDetailTotal ?? 0
-                    }
-                });
-            }
         }
+
         // Return normalized partition object
         return {
             name,
@@ -93,6 +102,7 @@ window.onload = () => {
             expenses
         };
     });
+
 
 
     renderAllPartitions();
@@ -184,6 +194,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
         });
 
         myExpenseContainer.appendChild(card);
+
     });
 
     // Add-expense button opens modal for THIS partition
@@ -201,7 +212,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
         const idx = Number(e.currentTarget.dataset.index);
         deletePartition(idx);
     });
-};
+}
 
 // Delete a partition
 const deletePartition = (partIndex) => {
@@ -318,7 +329,13 @@ const handleExpenseCardClick = (expenseName, partitionIndex, expenseIndex) => {
     expenseDetails_Model.offsetHeight;
     expenseDetails_Model.style.transform = "translate(50%, -50%)";
 
+
+    activePartitionIndex = partitionIndex;
+    activeExpenseIndex = expenseIndex;
+    renderAllExpenseDetails()
+
     loadProgressionBars()
+
 };
 
 // close expense-details modal if it exists
@@ -397,11 +414,22 @@ const loadProgressionBars = () => {
     });
 }
 
+// Show spend modal (evenmt delegation)
+document.querySelector(".detail").addEventListener("click", (e) => {
+    const subDetailEl = e.target.closest(".sub-details");
+    if (!subDetailEl) return;
 
-// Show spend modal
-document.getElementById("spend-btn").addEventListener("click", () => {
-    const spendModal = document.querySelector(".spend-modal")
-    spendModal.classList.remove("hide");
+    const subIndex = Number(subDetailEl.dataset.subIndex);
+
+    if (e.target.classList.contains("spend-btn")) {
+        console.log("Spend clicked on subDetail:", subIndex);
+        document.querySelector(".spend-modal").classList.remove("hide");
+        
+    }
+
+    if (e.target.classList.contains("credit-btn")) {
+        console.log("Credit clicked on subDetail:", subIndex);
+    }
 });
 
 // Cancel spend
@@ -410,19 +438,103 @@ document.getElementById("cancel-spend-btn").addEventListener("click", () => {
 });
 
 
+// Add-subdetail button
+const addSubDetailModal = document.querySelector(".add-sub-detail-modal")
+const addSubDetailBtn = document.querySelector(".add-sub-detail-btn")
+const detail = document.querySelector(".detail")
+
+if (addSubDetailBtn) {
+    addSubDetailBtn.addEventListener("click", () => {
+        setTimeout(() => {
+            addSubDetailModal.classList.remove("hide")
+        }, 200)
+    })
+}
 
 
+enterSubDetailName.addEventListener('click', (e) => {
+    if (
+        activePartitionIndex === null ||
+        activeExpenseIndex === null
+    ) {
+        alert("No active expense selected");
+        return;
+    }
+    const subDetailName = document.getElementById("input-sub-detail-name").value
+
+    //save in the storage
+    const subDetailObject = {
+        subDetailName: `${subDetailName}`,
+        subDetailList: [],
+        subDetailTotal: 0
+    }
+    partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails.push(subDetailObject)
+
+    //save to the local storage back
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+    
+    const expense =
+        partitions[activePartitionIndex].expenses[activeExpenseIndex];
+
+    const subDetailIndex = expense.expenseDetails.length - 1;
+    const detailContainer = document.querySelector(".detail");
+    createSubExpense(subDetailObject, subDetailIndex, detailContainer);
+
+})
+
+const createSubExpense = (subDetailObject, subDetailIndex, container) => {
+    const subDetailContent = `
+        <div class="sub-details" data-sub-index="${subDetailIndex}">
+            <div class="sub-detail-name">
+                <h5>${subDetailObject.subDetailName}</h5>
+            </div>
+            <div class="sub-detail-list"></div>
+            <h5 class="sub-detail-total">
+                Total: ${subDetailObject.subDetailTotal}
+            </h5>
+            <div class="sub-detail-btns">
+                <button class="spend-btn">Spend</button>
+                <button class="credit-btn">Credit</button>
+            </div>
+        </div>
+    `;
+
+    container.insertAdjacentHTML("beforeend", subDetailContent);
+};
+
+
+const renderAllExpenseDetails = () => {
+    const detailContainer = document.querySelector(".detail");
+    detailContainer.innerHTML = ""; // clear old
+
+    const expenseDetails = partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex]
+        .expenseDetails
+    
+    if(expenseDetails) {
+        expenseDetails.forEach((subDetailObject, i) => {
+            createSubExpense(subDetailObject, i, detailContainer);
+        });
+    }
+};
+
+
+cancelSubDetailName.addEventListener("click", () => {
+    setTimeout(() => {
+        addSubDetailModal.classList.add("hide");
+    }, 100);
+})
 
 // Add expense entry
 document.getElementById("enter-spend-btn").addEventListener("click", () => {
     let spendingAmount = parseInt(document.getElementById("spending-amount").value);
     let remarks = document.getElementById("remark").value;
     let detail = document.querySelector(".detail");
-    let remaining = Number(remainingProgressionRing.getAttribute('data-spent')) 
+    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
 
     if (!isNaN(spendingAmount) && spendingAmount > 0 && spendingAmount <= remaining) {
         remaining -= spendingAmount;
-        remainingProgressionRing.setAttribute('data-spent',`${remaining}`);
+        remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
         loadProgressionBars()
 
         let detailText = `<div class="sub-detail">

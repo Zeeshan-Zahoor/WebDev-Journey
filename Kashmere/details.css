@@ -1,7 +1,7 @@
 .sub-details {
     width: 100%;
     height: fit-content;
-    background-color: #01002d1a;
+    background-color: #ffe9001a;
     border: 1px solid #01002d33;
     border-radius: 8px;
     padding: 0.5rem;
@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+    margin-bottom: 1%;
 }
 
 .sub-detail-name {

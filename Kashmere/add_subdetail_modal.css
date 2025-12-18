@@ -48,9 +48,10 @@
     background-color: rgba(149, 149, 149, 0.499);
     font-weight: bold;
 }
-#cancel-sub-detail-name-btn:hover {
-    background-color: rgba(128, 128, 128, 0.825);
+#cancel-sub-detail-name-btn:active {
+    background-color: rgb(128 128 128 / 13%);
     color: black;
+    border: 2px solid #060446;
 }
 
 #enter-sub-detail-name-btn:active {
