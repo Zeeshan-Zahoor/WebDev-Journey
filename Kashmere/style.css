@@ -73,12 +73,7 @@
   display: none;            /* Chrome, Safari */
 }
   
-hr {
-    width: 100%;
-    height: 0.5px;
-    background-color: #00000017;
-    border-radius: 100%;;
-}
+
   .top-shadow {
     width: min(100dvw, 820px);
     margin: auto;

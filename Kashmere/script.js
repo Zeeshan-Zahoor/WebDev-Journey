@@ -481,7 +481,8 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
             "beforeend", `<div class="individual-detail">
                         <span>-₹${spendingAmount} (${remarks})</span>
                         <button class="clear-detail" data-spent-amount = "${spendingAmount}">Clear</button>
-                    </div>`
+                    </div>
+                    <div class="line"></div>`
         );
 
         //update
@@ -582,7 +583,7 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
                         <span>-₹${expenseEntry.amount} (${expenseEntry.remark})</span>
                         <button class="clear-detail" data-spent-amount = "${expenseEntry.amount}">Clear</button>
                     </div> 
-                    <hr>`
+                    <div class="line"></div>`
         )
     })
 };

@@ -24,6 +24,12 @@
     flex-direction: column;
     justify-content: space-between;
 }
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: #00000012;
+    border-radius: 100%;
+}
 
 .sub-detail-total {
     margin-top: 7px;
