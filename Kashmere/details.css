@@ -16,3 +16,23 @@
     width: 100%;
     text-align: center;
 }
+
+.sub-detail-list {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sub-detail-total {
+    margin-top: 7px;
+}
+
+.individual-detail {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

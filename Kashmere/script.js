@@ -30,7 +30,7 @@ const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn'
 // App state
 let totalBalance = 0;
 
-// IMPORTANT: partitions are objects { name: string, allocatedAmount: number, expenses: [objs...] }
+// IMPORTANT: partitions are objects {}
 let partitions = JSON.parse(localStorage.getItem("partitions")) || [];
 
 // Track which partition index the expense modal is currently adding to
@@ -42,10 +42,10 @@ window.onload = () => {
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
         totalBalance = parseInt(savedBalance, 10);
-        totalBalanceDisplay.innerText = `Total Balance: ${(totalBalance).toLocaleString('en-IN')}`;
+        totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
     }
 
-    // Ensure any old-format partitions become objects
+    // Ensure partitions become objects
     partitions = partitions.map(p => {
 
         // Normalize partition name
@@ -53,6 +53,8 @@ window.onload = () => {
 
         // Normalize allocated amount
         const allocatedAmount = p.allocatedAmount ?? 0;
+
+        const remainingAmount = p.remainingAmount ?? 0;
 
         // Normalize expenses
         let expenses = [];
@@ -73,23 +75,12 @@ window.onload = () => {
                     }));
                 }
 
-                // Old format: expense was a string
-                if (typeof expense === "string") {
-                    return {
-                        expenseName: expense,
-                        expenseAllocatedAmount: 0,
-                        expenseRemainingAmount: 0,
-                        expenseDetails,
-                        expenseDetailsTotal: 0
-                    };
-                }
-
                 // New format: expense is already an object
                 return {
                     expenseName: expense.expenseName ?? "",
                     expenseAllocatedAmount: expense.expenseAllocatedAmount ?? 0,
                     expenseRemainingAmount: expense.expenseRemainingAmount ?? 0,
-                    expenseDetails,
+                    expenseDetails: expenseDetails,
                     expenseDetailsTotal: expense.expenseDetailsTotal ?? 0
                 };
             });
@@ -99,6 +90,7 @@ window.onload = () => {
         return {
             name,
             allocatedAmount,
+            remainingAmount,
             expenses
         };
     });
@@ -124,7 +116,7 @@ const editAmount = () => {
     let enteredAmount = enteredAmountInput.value;
     if (enteredAmount) {
         totalBalance = parseInt(enteredAmount, 10);
-        totalBalanceDisplay.innerText = `Total Balance: ${(totalBalance).toLocaleString('en-IN')}`;
+        totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
         localStorage.setItem("totalBalance", totalBalance);
     }
     editAmount_Win.classList.add("hide");
@@ -141,15 +133,15 @@ const createPartitionCard = (partitionObj, partIndex) => {
     partitionObj.expenses.forEach((expense) => {
         total += expense.expenseAllocatedAmount
     })
-    const unassingned = partitionObj.allocatedAmount - total;
+    const unassingned = partitionObj.remainingAmount - total;
 
 
     partitionCard.innerHTML = `
         <div class="partition-details">
             <h3>${partitionObj.name}</h3>
             <div class="partition-details-inner">
-                <h4>Balance: ${(partitionObj.allocatedAmount).toLocaleString('en-IN')}</h4>
-                <h5>Not yet assigned: ${unassingned.toLocaleString('en-IN')}</h5> 
+                <h4>Balance: ₹${(partitionObj.remainingAmount).toLocaleString('en-IN')}</h4>
+                <h5>Not yet assigned: ₹${unassingned.toLocaleString('en-IN')}</h5> 
             </div>
         </div>
         <div class="expense-container"></div>
@@ -175,7 +167,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
         card.innerHTML = `
             <div class="expense-details"> 
                 <h4>${expense.expenseName}</h4>
-                <h5>Balance: ${(expense.expenseAllocatedAmount).toLocaleString('en-IN')}</h5>
+                <h5>Balance: ₹${(expense.expenseRemainingAmount).toLocaleString('en-IN')}</h5>
             </div>
             <button class="delete-expense-btn" data-exp-index="${expenseIndex}">Delete</button>
         `;
@@ -240,7 +232,7 @@ savePartitionBtn.addEventListener("click", () => {
             total += partition.allocatedAmount;
         })
         if (partitionAmount + total <= totalBalance) {
-            partitions.push({ name: partitionName, allocatedAmount: partitionAmount, expenses: [] });
+            partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
             localStorage.setItem("partitions", JSON.stringify(partitions));
             renderAllPartitions();
             partitionInputName.value = "";
@@ -275,7 +267,9 @@ saveExpenseBtn.addEventListener("click", () => {
             partitions[activePartitionIndex].expenses.push({
                 expenseName: expenseName,
                 expenseAllocatedAmount: expenseAmount,
-                expenseRemainingAmount: expenseAmount
+                expenseRemainingAmount: expenseAmount,
+                expenseDetails: [], 
+                expenseDetailsTotal: 0
             });
             localStorage.setItem("partitions", JSON.stringify(partitions));
 
@@ -347,6 +341,7 @@ if (closeModalBtn) {
             expenseDetails_Model.style.transform = "translate(50%, -50%)";
             expenseDetails_Model.offsetHeight;
             expenseDetails_Model.style.transform = "translate(350%, -50%)";
+            window.reloadPage();
             setTimeout(() => {
                 expenseDetails_Model.classList.add("hide");
             }, 300)
@@ -414,6 +409,10 @@ const loadProgressionBars = () => {
     });
 }
 
+//globals
+let activeSubDetailIndex = null;
+let activeSubDetailElement = null;
+
 // Show spend modal (evenmt delegation)
 document.querySelector(".detail").addEventListener("click", (e) => {
     const subDetailEl = e.target.closest(".sub-details");
@@ -423,12 +422,83 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
     if (e.target.classList.contains("spend-btn")) {
         console.log("Spend clicked on subDetail:", subIndex);
+        activeSubDetailIndex = subIndex;
+        activeSubDetailElement = subDetailEl;
         document.querySelector(".spend-modal").classList.remove("hide");
-        
+
     }
 
     if (e.target.classList.contains("credit-btn")) {
         console.log("Credit clicked on subDetail:", subIndex);
+    }
+});
+
+// Add expense entry
+document.getElementById("enter-spend-btn").addEventListener("click", () => {
+    if (
+        activePartitionIndex === null ||
+        activeExpenseIndex === null ||
+        activeSubDetailIndex === null
+    ) {
+        alert("No active sub detail selected");
+        return;
+    }
+    const spendingAmount = parseInt(document.getElementById("spending-amount").value);
+    const remarks = document.getElementById("remark").value;
+    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
+    const listContainer = activeSubDetailElement.querySelector(".sub-detail-list")
+
+    if (!isNaN(spendingAmount) && spendingAmount > 0 && spendingAmount <= remaining) {
+        remaining -= spendingAmount;
+
+        //subtract from totalBalance
+        totalBalance -= spendingAmount
+
+        // add to total of expense details
+        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetailsTotal += spendingAmount;
+
+        //subtract from partition remaining amount
+        partitions[activePartitionIndex].remainingAmount -= spendingAmount
+
+        partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
+        totalBalance -= spendingAmount;
+        remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
+        loadProgressionBars()
+        
+
+        const subDetail = partitions[activePartitionIndex]
+            .expenses[activeExpenseIndex]
+            .expenseDetails[activeSubDetailIndex];
+        subDetail.subDetailList.push(
+            {
+                amount: spendingAmount,
+                remark: remarks
+            }
+        )
+
+        listContainer.insertAdjacentHTML(
+            "beforeend", `<div class="individual-detail">
+                        <span>-₹${spendingAmount} (${remarks})</span>
+                        <button class="clear-detail" data-spent-amount = "${spendingAmount}">Clear</button>
+                    </div>`
+        );
+
+        //update
+        subDetail.subDetailTotal += spendingAmount;
+        activeSubDetailElement.querySelector('.sub-detail-total').textContent = `Total: ₹${subDetail.subDetailTotal}`
+
+        //save to the local storage back
+        localStorage.setItem("partitions", JSON.stringify(partitions));
+        localStorage.setItem("totalBalance", totalBalance);
+
+
+        //Close modal and Clear input fields
+        document.querySelector(".spend-modal").classList.add("hide");
+        document.getElementById("spending-amount").value = "";
+        document.getElementById("remark").value = "";
+    } else {
+        alert("Invalid or excessive amount!");
     }
 });
 
@@ -472,7 +542,7 @@ enterSubDetailName.addEventListener('click', (e) => {
 
     //save to the local storage back
     localStorage.setItem("partitions", JSON.stringify(partitions));
-    
+
     const expense =
         partitions[activePartitionIndex].expenses[activeExpenseIndex];
 
@@ -486,11 +556,11 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     const subDetailContent = `
         <div class="sub-details" data-sub-index="${subDetailIndex}">
             <div class="sub-detail-name">
-                <h5>${subDetailObject.subDetailName}</h5>
+                <h4>${subDetailObject.subDetailName}</h4>
             </div>
             <div class="sub-detail-list"></div>
             <h5 class="sub-detail-total">
-                Total: ${subDetailObject.subDetailTotal}
+                Total: ₹${subDetailObject.subDetailTotal}
             </h5>
             <div class="sub-detail-btns">
                 <button class="spend-btn">Spend</button>
@@ -499,7 +569,22 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
         </div>
     `;
 
+    // console.log(container)
     container.insertAdjacentHTML("beforeend", subDetailContent);
+
+    const subDetailEl = container.querySelector(`.sub-details[data-sub-index="${subDetailIndex}"]`)
+
+    const listContainer = subDetailEl.querySelector(".sub-detail-list")
+
+    subDetailObject.subDetailList.forEach((expenseEntry) => {
+        listContainer.insertAdjacentHTML(
+            "beforeend", `<div class="individual-detail">
+                        <span>-₹${expenseEntry.amount} (${expenseEntry.remark})</span>
+                        <button class="clear-detail" data-spent-amount = "${expenseEntry.amount}">Clear</button>
+                    </div> 
+                    <hr>`
+        )
+    })
 };
 
 
@@ -510,12 +595,13 @@ const renderAllExpenseDetails = () => {
     const expenseDetails = partitions[activePartitionIndex]
         .expenses[activeExpenseIndex]
         .expenseDetails
-    
-    if(expenseDetails) {
+
+    if (expenseDetails) {
         expenseDetails.forEach((subDetailObject, i) => {
             createSubExpense(subDetailObject, i, detailContainer);
         });
     }
+    loadProgressionBars()
 };
 
 
@@ -525,43 +611,17 @@ cancelSubDetailName.addEventListener("click", () => {
     }, 100);
 })
 
-// Add expense entry
-document.getElementById("enter-spend-btn").addEventListener("click", () => {
-    let spendingAmount = parseInt(document.getElementById("spending-amount").value);
-    let remarks = document.getElementById("remark").value;
-    let detail = document.querySelector(".detail");
-    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
-
-    if (!isNaN(spendingAmount) && spendingAmount > 0 && spendingAmount <= remaining) {
-        remaining -= spendingAmount;
-        remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
-        loadProgressionBars()
-
-        let detailText = `<div class="sub-detail">
-                            <span>-${spendingAmount} (${remarks})</span>
-                            <button id="clear-detail">Clear</button>
-                          </div>`;
-        detail.innerHTML += detailText;
-        document.querySelector(".spend-modal").classList.add("hide");
-
-        // Clear input fields
-        document.getElementById("spending-amount").value = "";
-        document.getElementById("remark").value = "";
-    } else {
-        alert("Invalid or excessive amount!");
-    }
-});
 
 // Clear individual expense (event delegation)
-document.querySelector(".detail").addEventListener("click", (e) => {
-    if (e.target.classList.contains("clear-detail")) {
-        const expenseDiv = e.target.parentElement;
-        const text = expenseDiv.querySelector("span").innerText;
-        const amount = parseInt(text.match(/-(\d+)/)[1]); // extract number
-        totalSpent -= amount;
-        remaining += amount;
-        document.getElementById("remaining-amount").innerText = remaining;
-        expenseDiv.remove();
-    }
-});
+// document.querySelector(".detail").addEventListener("click", (e) => {
+//     if (e.target.classList.contains("clear-detail")) {
+//         const expenseDiv = e.target.parentElement;
+//         const text = expenseDiv.querySelector("span").innerText;
+//         const amount = parseInt(text.match(/-(\d+)/)[1]); // extract number
+//         totalSpent -= amount;
+//         remaining += amount;
+//         document.getElementById("remaining-amount").innerText = remaining;
+//         expenseDiv.remove();
+//     }
+// });
 
