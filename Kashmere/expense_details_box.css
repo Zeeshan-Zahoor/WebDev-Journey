@@ -76,7 +76,8 @@
     transition: ease 0.2s;
 }
 .add-sub-detail-btn:active {
-    padding: 0.6rem;
+    /* padding: 0.6rem; */
+    scale: 0.9;
     transition: ease 0.1s;
 }
 
@@ -148,6 +149,10 @@
 
 .clear-detail:hover {
     background-color: rgb(185, 37, 7);
+}
+.clear-detail:active {
+    scale: 0.8;
+    transition: ease 0.2s;
 }
 .spend-btn {
     margin:0;

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="helpers.css">
     <link rel="stylesheet" href="expense_model.css">
     <link rel="stylesheet" href="expense_details_box.css">
-    <link rel="stylesheet" href="spend_modal.css">
+    <link rel="stylesheet" href="spend_credit_modals.css">
     <link rel="stylesheet" href="partition_modal.css">
     <link rel="stylesheet" href="partition_card.css">
     <link rel="stylesheet" href="expense_container.css">
@@ -197,6 +197,19 @@
             <div class="spend-modal-btns">
                 <button id="enter-spend-btn">Enter</button>
                 <button id="cancel-spend-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- credit modal -->
+    <div class="credit-modal hide">
+
+        <div class="credit-modal-inner">
+            <input type="number" id="crediting-amount" placeholder="Amount crediting">
+            
+            <div class="credit-modal-btns">
+                <button id="enter-credit-btn">Enter</button>
+                <button id="cancel-credit-btn">Cancel</button>
             </div>
         </div>
     </div>

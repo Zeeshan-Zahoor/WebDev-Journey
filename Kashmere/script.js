@@ -141,7 +141,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
             <h3>${partitionObj.name}</h3>
             <div class="partition-details-inner">
                 <h4>Balance: ₹${(partitionObj.remainingAmount).toLocaleString('en-IN')}</h4>
-                <h5>Not yet assigned: ₹${unassingned.toLocaleString('en-IN')}</h5> 
+                <h5>Not yet assigned: ₹${(unassingned > 0 ? unassingned : 0).toLocaleString('en-IN')}</h5> 
             </div>
         </div>
         <div class="expense-container"></div>
@@ -430,6 +430,9 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
     if (e.target.classList.contains("credit-btn")) {
         console.log("Credit clicked on subDetail:", subIndex);
+        activeSubDetailIndex = subIndex;
+        activeSubDetailElement = subDetailEl;
+        document.querySelector(".credit-modal").classList.remove("hide");
     }
 });
 
@@ -462,7 +465,6 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
 
         partitions[activePartitionIndex]
         .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
-        totalBalance -= spendingAmount;
         remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
         loadProgressionBars()
         
@@ -503,9 +505,38 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
     }
 });
 
+//Add credit amount
+document.getElementById("enter-credit-btn").addEventListener("click", () => {
+    const creditedAmount = Number(document.getElementById("crediting-amount").value)
+    const previousAllocatedAmount = Number(allocatedProgressRing.getAttribute("data-total"))
+    const previousRemainingAmount = Number(remainingProgressionRing.getAttribute("data-spent"))
+    allocatedProgressRing.setAttribute('data-total', `${previousAllocatedAmount + creditedAmount}`)
+    allocatedProgressRing.setAttribute('data-spent', `${previousAllocatedAmount + creditedAmount}`)
+
+    remainingProgressionRing.setAttribute('data-spent',`${previousRemainingAmount + creditedAmount}`)
+    remainingProgressionRing.setAttribute('data-total',`${previousAllocatedAmount + creditedAmount}`)
+
+    //update in storage data
+    const currExpense = partitions[activePartitionIndex].expenses[activeExpenseIndex]
+    currExpense.expenseAllocatedAmount += creditedAmount
+    currExpense.expenseRemainingAmount += creditedAmount
+    partitions[activePartitionIndex].remainingAmount += creditedAmount
+    totalBalance += creditedAmount
+
+    loadProgressionBars()
+
+    //save back to storage
+    localStorage.setItem("partitions", JSON.stringify(partitions))
+    localStorage.setItem("totalBalance", totalBalance)
+})
+
 // Cancel spend
 document.getElementById("cancel-spend-btn").addEventListener("click", () => {
     document.querySelector(".spend-modal").classList.add("hide");
+});
+// Cancel credit
+document.getElementById("cancel-credit-btn").addEventListener("click", () => {
+    document.querySelector(".credit-modal").classList.add("hide");
 });
 
 
