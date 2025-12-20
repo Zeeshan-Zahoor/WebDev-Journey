@@ -136,7 +136,7 @@
     align-items: center;
 }
 
-.clear-detail {
+.clear-detail-btn {
     margin: 1px;
     width: 50px;
     height: 20px;
@@ -147,10 +147,10 @@
     padding: 4px;
 }
 
-.clear-detail:hover {
+.clear-detail-btn:hover {
     background-color: rgb(185, 37, 7);
 }
-.clear-detail:active {
+.clear-detail-btn:active {
     scale: 0.8;
     transition: ease 0.2s;
 }

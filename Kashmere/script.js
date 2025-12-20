@@ -1,4 +1,4 @@
-console.log("Let's Write Some JavaScript (refactor)");
+console.log("Let's Write Some JavaScript");
 
 // DOM Elements that are global/static
 const editAmount_Win = document.getElementsByClassName("edit-amount-window")[0];
@@ -272,7 +272,7 @@ saveExpenseBtn.addEventListener("click", () => {
                 expenseName: expenseName,
                 expenseAllocatedAmount: expenseAmount,
                 expenseRemainingAmount: expenseAmount,
-                expenseDetails: [], 
+                expenseDetails: [],
                 expenseDetailsTotal: 0
             });
             localStorage.setItem("partitions", JSON.stringify(partitions));
@@ -345,7 +345,7 @@ if (closeModalBtn) {
             expenseDetails_Model.style.transform = "translate(50%, -50%)";
             expenseDetails_Model.offsetHeight;
             expenseDetails_Model.style.transform = "translate(350%, -50%)";
-            
+
             renderTotalBalance()
             renderAllPartitions()
             setTimeout(() => {
@@ -470,10 +470,10 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
         partitions[activePartitionIndex].remainingAmount -= spendingAmount
 
         partitions[activePartitionIndex]
-        .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
+            .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
         remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
         loadProgressionBars()
-        
+
 
         const subDetail = partitions[activePartitionIndex]
             .expenses[activeExpenseIndex]
@@ -486,9 +486,9 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
         )
 
         listContainer.insertAdjacentHTML(
-            "beforeend", `<div class="individual-detail">
+            "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
                         <span>-₹${spendingAmount} (${remarks})</span>
-                        <button class="clear-detail" data-spent-amount = "${spendingAmount}">Clear</button>
+                        <button class="clear-detail-btn">Clear</button>
                     </div>
                     <div class="line"></div>`
         );
@@ -519,8 +519,8 @@ document.getElementById("enter-credit-btn").addEventListener("click", () => {
     allocatedProgressRing.setAttribute('data-total', `${previousAllocatedAmount + creditedAmount}`)
     allocatedProgressRing.setAttribute('data-spent', `${previousAllocatedAmount + creditedAmount}`)
 
-    remainingProgressionRing.setAttribute('data-spent',`${previousRemainingAmount + creditedAmount}`)
-    remainingProgressionRing.setAttribute('data-total',`${previousAllocatedAmount + creditedAmount}`)
+    remainingProgressionRing.setAttribute('data-spent', `${previousRemainingAmount + creditedAmount}`)
+    remainingProgressionRing.setAttribute('data-total', `${previousAllocatedAmount + creditedAmount}`)
 
     //update in storage data
     const currExpense = partitions[activePartitionIndex].expenses[activeExpenseIndex]
@@ -588,6 +588,8 @@ enterSubDetailName.addEventListener('click', (e) => {
     const detailContainer = document.querySelector(".detail");
     createSubExpense(subDetailObject, subDetailIndex, detailContainer);
 
+    addSubDetailModal.classList.add("hide");
+
 })
 
 const createSubExpense = (subDetailObject, subDetailIndex, container) => {
@@ -614,15 +616,18 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
 
     const listContainer = subDetailEl.querySelector(".sub-detail-list")
 
+    let idx = 0
+
     subDetailObject.subDetailList.forEach((expenseEntry) => {
         listContainer.insertAdjacentHTML(
-            "beforeend", `<div class="individual-detail">
+            "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
                         <span>-₹${expenseEntry.amount} (${expenseEntry.remark})</span>
-                        <button class="clear-detail" data-spent-amount = "${expenseEntry.amount}">Clear</button>
+                        <button class="clear-detail-btn">Clear</button>
                     </div> 
                     <div class="line"></div>`
         )
     })
+
 };
 
 
@@ -651,15 +656,42 @@ cancelSubDetailName.addEventListener("click", () => {
 
 
 // Clear individual expense (event delegation)
-// document.querySelector(".detail").addEventListener("click", (e) => {
-//     if (e.target.classList.contains("clear-detail")) {
-//         const expenseDiv = e.target.parentElement;
-//         const text = expenseDiv.querySelector("span").innerText;
-//         const amount = parseInt(text.match(/-(\d+)/)[1]); // extract number
-//         totalSpent -= amount;
-//         remaining += amount;
-//         document.getElementById("remaining-amount").innerText = remaining;
-//         expenseDiv.remove();
-//     }
-// });
+document.querySelector(".detail").addEventListener("click", (e) => {
+    if (e.target.classList.contains("clear-detail-btn")) {
+    
+        const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
+        const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))
+        const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
+        
+        const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
+
+        //subtract from sub detail total
+        currSubDetail.subDetailTotal -= deletableAmount
+
+        //add to partition balance
+        partitions[activePartitionIndex].remainingAmount += deletableAmount
+
+        //add to active expense balance
+        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount += deletableAmount
+
+        //update progression ring
+        const remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
+        remainingProgressionRing.setAttribute('data-spent',`${remaining + deletableAmount}`)
+
+        totalBalance += deletableAmount
+
+        // remove from the list
+        currSubDetail.subDetailList.splice(currSubListIndex, 1)
+
+        //save back to storage
+        localStorage.setItem("partitions", JSON.stringify(partitions))
+        localStorage.setItem("totalBalance", totalBalance)
+
+        loadProgressionBars()
+        renderAllPartitions()
+        renderAllExpenseDetails()
+        renderTotalBalance()
+
+    }
+});
 
