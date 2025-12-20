@@ -221,6 +221,10 @@ const renderAllPartitions = () => {
     partitions.forEach((partitionObj, i) => createPartitionCard(partitionObj, i));
 };
 
+const renderTotalBalance = () => {
+    document.getElementById("total-balance").innerText = `Total Balance: ₹${totalBalance}`
+}
+
 // handle adding partition
 savePartitionBtn.addEventListener("click", () => {
     const partitionName = partitionInputName.value.trim();
@@ -341,7 +345,9 @@ if (closeModalBtn) {
             expenseDetails_Model.style.transform = "translate(50%, -50%)";
             expenseDetails_Model.offsetHeight;
             expenseDetails_Model.style.transform = "translate(350%, -50%)";
-            window.reloadPage();
+            
+            renderTotalBalance()
+            renderAllPartitions()
             setTimeout(() => {
                 expenseDetails_Model.classList.add("hide");
             }, 300)
