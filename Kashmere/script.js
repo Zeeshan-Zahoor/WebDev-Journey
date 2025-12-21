@@ -632,11 +632,15 @@ enterSubDetailName.addEventListener('click', (e) => {
 
 })
 
+
+const svg = `<svg width="20px" height="20px" class="cross" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M6.96967 16.4697C6.67678 16.7626 6.67678 17.2374 6.96967 17.5303C7.26256 17.8232 7.73744 17.8232 8.03033 17.5303L6.96967 16.4697ZM13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697L13.0303 12.5303ZM11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303L11.9697 11.4697ZM18.0303 7.53033C18.3232 7.23744 18.3232 6.76256 18.0303 6.46967C17.7374 6.17678 17.2626 6.17678 16.9697 6.46967L18.0303 7.53033ZM13.0303 11.4697C12.7374 11.1768 12.2626 11.1768 11.9697 11.4697C11.6768 11.7626 11.6768 12.2374 11.9697 12.5303L13.0303 11.4697ZM16.9697 17.5303C17.2626 17.8232 17.7374 17.8232 18.0303 17.5303C18.3232 17.2374 18.3232 16.7626 18.0303 16.4697L16.9697 17.5303ZM11.9697 12.5303C12.2626 12.8232 12.7374 12.8232 13.0303 12.5303C13.3232 12.2374 13.3232 11.7626 13.0303 11.4697L11.9697 12.5303ZM8.03033 6.46967C7.73744 6.17678 7.26256 6.17678 6.96967 6.46967C6.67678 6.76256 6.67678 7.23744 6.96967 7.53033L8.03033 6.46967ZM8.03033 17.5303L13.0303 12.5303L11.9697 11.4697L6.96967 16.4697L8.03033 17.5303ZM13.0303 12.5303L18.0303 7.53033L16.9697 6.46967L11.9697 11.4697L13.0303 12.5303ZM11.9697 12.5303L16.9697 17.5303L18.0303 16.4697L13.0303 11.4697L11.9697 12.5303ZM13.0303 11.4697L8.03033 6.46967L6.96967 7.53033L11.9697 12.5303L13.0303 11.4697Z" fill="#1306747e"></path> </g></svg>`
 const createSubExpense = (subDetailObject, subDetailIndex, container) => {
+
     const subDetailContent = `
         <div class="sub-details" data-sub-index="${subDetailIndex}">
             <div class="sub-detail-name">
                 <h4>${subDetailObject.subDetailName}</h4>
+                ${svg}
             </div>
             <div class="sub-detail-list"></div>
             <h5 class="sub-detail-total">
@@ -737,3 +741,26 @@ document.querySelector(".detail").addEventListener("click", (e) => {
     }
 });
 
+
+// delete sub-details
+document.querySelector(".detail").addEventListener("click", (e) => {
+    if (e.target.classList.contains("cross")) {
+        const subDetail = e.target.parentElement.parentElement;
+        const subIndex = Number(subDetail.dataset.subIndex);
+
+        // remove from data
+        partitions[activePartitionIndex]
+            .expenses[activeExpenseIndex]
+            .expenseDetails.splice(subIndex, 1);
+
+        subDetail.style.transition = "transform 0.2s ease, opacity 0.2s ease";
+        subDetail.style.transform = "scale(0.5)";
+        subDetail.style.opacity = "0";
+
+        subDetail.addEventListener("transitionend", () => {
+            localStorage.setItem("partitions", JSON.stringify(partitions));
+            renderAllExpenseDetails()
+        }, { once: true });
+        
+    }
+});

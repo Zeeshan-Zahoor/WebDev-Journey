@@ -15,10 +15,9 @@
 .sub-detail-name {
     width: 100%;
     text-align: center;
-}
-
-.erase-icon {
-    width: 10;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
 }
 
 .sub-detail-list {
@@ -33,6 +32,11 @@
     height: 1px;
     background-color: #00000012;
     border-radius: 100%;
+}
+
+.cross {
+    border-radius: 100%;
+    margin: -8px;
 }
 
 .sub-detail-total {
