@@ -97,12 +97,18 @@
     color: #003366;
   }
   
-  #edit-amount-btn {
-    width: 52px;
+  .edit-amount-btn {
+    width: 25px;
     height: 21px;
     font-size: 11px;
     margin: 0;
   }
+
+  .edit-amount-btn:active {
+    scale: 0.8;
+    transition: ease  0.2s;
+  }
+
   /* Expense Card */
   .expense-card {
     border: 0.5px solid rgba(0, 0, 0, 0.241);

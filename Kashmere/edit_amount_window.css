@@ -8,16 +8,19 @@
     width: 70%;
     padding: 20px 5px;
     background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 140px 0px black;
     border-radius: 12px;
+    position: relative;
+    z-index: 1001;
 
 }
 
 #entered-amount {
     text-align: center;
     padding: 5px;
-    font-size: 20px;
-    font-weight: bold;
-    width: 110px;
+    font-size: 18px;
+    font-weight: 200;
+    width: 140px;
     height: 35px;
     max-width: 100%;
     background-color: transparent;
@@ -26,12 +29,24 @@
     
 }
 
-#enter-btn {
+.enter-btn, .cancel-btn {
     width: 70px;
     font-size: 13px;
     border-radius: 20px;
 }
+.cancel-btn {
+    background-color: rgba(128, 128, 128, 0.415);
+    color: black;
+    font-weight: 600;
+}
+.cancel-btn:active {
+    background-color: rgba(176, 176, 176, 0.415);
+}
 
+.enter-btn:active, .cancel-btn:active {
+    scale: 0.8;
+    transition: ease 0.2s;
+}
 
 .modal {
     position: fixed;

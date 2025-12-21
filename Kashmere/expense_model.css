@@ -22,6 +22,28 @@
     height: 33%;
     z-index: 1100;
 }
+
+.expense-modal-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.5rem;
+}
+
+#save-expense-btn, #cancel-expense-btn {
+    border-radius: 20px;
+}
+#cancel-expense-btn {
+    background-color: #c5c5c5cc;
+    color: black;
+    font-weight: 600;
+}
+
+#save-expense-btn:active, #cancel-expense-btn:active {
+    scale: 0.9;
+    transition: ease 0.2s;
+}
+
 .hide {
     display: none;
 }

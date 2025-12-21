@@ -17,7 +17,6 @@ const cancelExpenseBtn = document.getElementById("cancel-expense-btn");
 const partitionModal = document.getElementById("partition-modal");
 const partitionInputName = document.getElementById("partition-input-name");
 const partitionInputAmount = document.getElementById("partition-input-amount");
-const savePartitionBtn = document.getElementById("save-partition-btn");
 
 // Expense details modal (existing)
 const expenseDetails_Model = document.getElementById("modal-content-pad");
@@ -111,7 +110,28 @@ function hide_partition_modal() {
 // Show edit amount window
 function show_Edit_Amount_Window() {
     editAmount_Win.classList.remove("hide");
+    enteredAmountInput.value = `${totalBalance}`
 }
+
+document.querySelector(".edit-amount-window-btns").addEventListener("click", (e) => {
+    setTimeout(() => {
+        if (e.target.classList.contains("enter-btn")) {
+            editAmount()
+        }
+        if (e.target.classList.contains("cancel-btn")) {
+            editAmount_Win.classList.add("hide")
+        }
+    }, 200)
+})
+
+document.querySelector(".add-partition-section").addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-partition-btn")) {
+        setTimeout(() => {
+            show_Add_Partition_Modal()
+        }, 200)
+    }
+})
+
 const editAmount = () => {
     let enteredAmount = enteredAmountInput.value;
     if (enteredAmount) {
@@ -120,7 +140,6 @@ const editAmount = () => {
         localStorage.setItem("totalBalance", totalBalance);
     }
     editAmount_Win.classList.add("hide");
-    enteredAmountInput.value = "";
 };
 
 // Create partition card (renders the partition and its own expenses)
@@ -226,39 +245,53 @@ const renderTotalBalance = () => {
 }
 
 // handle adding partition
-savePartitionBtn.addEventListener("click", () => {
-    const partitionName = partitionInputName.value.trim();
-    const partitionAmount = Number(partitionInputAmount.value);
-    if (partitionName && partitionAmount) {
-        // check if the allocated amount gets beyond the balance
-        let total = 0;
-        partitions.forEach((partition) => {
-            total += partition.allocatedAmount;
-        })
-        if (partitionAmount + total <= totalBalance) {
-            partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
-            localStorage.setItem("partitions", JSON.stringify(partitions));
-            renderAllPartitions();
-            partitionInputName.value = "";
-            partitionInputAmount.value = "";
+partitionModal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("save-partition-btn")) {
+        const partitionName = partitionInputName.value.trim();
+        const partitionAmount = Number(partitionInputAmount.value);
+        if (partitionName && partitionAmount) {
+            // check if the allocated amount gets beyond the balance
+            let total = 0;
+            partitions.forEach((partition) => {
+                total += partition.allocatedAmount;
+            })
+            if (partitionAmount + total <= totalBalance) {
+                partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
+                localStorage.setItem("partitions", JSON.stringify(partitions));
+                renderAllPartitions();
+                partitionInputName.value = "";
+                partitionInputAmount.value = "";
 
-            partitionModal.classList.add("hide");
-        } else {
-            window.alert("Opps! No enough balance.")
+                setTimeout(() => {   //add a delay for button animation
+                    partitionModal.classList.add("hide");
+                }, 200)
+            } else {
+                window.alert("Opps! No enough balance.")
+            }
         }
     }
-    // partitionModal.classList.add("hide");
+
+    if (e.target.classList.contains("cancel-partition-btn")) {
+        setTimeout(() => {   //add a delay for button animation
+            partitionModal.classList.add("hide");
+        }, 200)
+    }
+
 });
 
 // Save expense inside the active partition
-saveExpenseBtn.addEventListener("click", () => {
+saveExpenseBtn.addEventListener("click", (e) => {
     const expenseName = expenseInput.value.trim();
     const expenseAmount = Number(expenseInputAmount.value)
 
     if (activePartitionIndex === null || activePartitionIndex < 0 || activePartitionIndex >= partitions.length) {
         // No valid target partition selected
         alert("Please open the Add button inside a partition to add an expense.");
-        expenseModal.classList.add("hide");
+
+        setTimeout(() => {
+            expenseModal.classList.add("hide");
+        }, 200)
+
         return;
     }
     //check if the allocation exceeds the partition amount
@@ -282,7 +315,9 @@ saveExpenseBtn.addEventListener("click", () => {
         }
         expenseInput.value = "";
         expenseInputAmount.value = "";
-        expenseModal.classList.add("hide");
+        setTimeout(() => {
+            expenseModal.classList.add("hide");
+        }, 200)
 
     } else {
         window.alert("Opps! No enough balance in the current partition.")
@@ -292,7 +327,9 @@ saveExpenseBtn.addEventListener("click", () => {
 
 // Cancel expense modal
 cancelExpenseBtn.addEventListener("click", () => {
-    expenseModal.classList.add("hide");
+    setTimeout(() => {
+        expenseModal.classList.add("hide");
+    }, 200)
     activePartitionIndex = null;
 });
 
@@ -341,15 +378,16 @@ const closeModalBtn = document.getElementById("close-modal-btn");
 if (closeModalBtn) {
     closeModalBtn.addEventListener("click", () => {
         if (expenseDetails_Model) {
-            expenseDetails_Model.style.transition = "transform 0.2s ease";
-            expenseDetails_Model.style.transform = "translate(50%, -50%)";
-            expenseDetails_Model.offsetHeight;
-            expenseDetails_Model.style.transform = "translate(350%, -50%)";
-
-            renderTotalBalance()
-            renderAllPartitions()
             setTimeout(() => {
-                expenseDetails_Model.classList.add("hide");
+                expenseDetails_Model.style.transition = "transform 0.2s ease";
+                expenseDetails_Model.style.transform = "translate(50%, -50%)";
+                expenseDetails_Model.offsetHeight;
+                expenseDetails_Model.style.transform = "translate(350%, -50%)";
+                renderTotalBalance()
+                renderAllPartitions()
+                setTimeout(() => {
+                    expenseDetails_Model.classList.add("hide");
+                }, 200)
             }, 300)
         }
 
@@ -488,7 +526,7 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
                         <span>-₹${spendingAmount} (${remarks})</span>
-                        <button class="clear-detail-btn">Clear</button>
+                        <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
                     </div>
                     <div class="line"></div>`
         );
@@ -588,7 +626,9 @@ enterSubDetailName.addEventListener('click', (e) => {
     const detailContainer = document.querySelector(".detail");
     createSubExpense(subDetailObject, subDetailIndex, detailContainer);
 
-    addSubDetailModal.classList.add("hide");
+    setTimeout(() => {
+        addSubDetailModal.classList.add("hide");
+    }, 200)
 
 })
 
@@ -622,7 +662,7 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
                         <span>-₹${expenseEntry.amount} (${expenseEntry.remark})</span>
-                        <button class="clear-detail-btn">Clear</button>
+                        <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
                     </div> 
                     <div class="line"></div>`
         )
@@ -651,18 +691,18 @@ const renderAllExpenseDetails = () => {
 cancelSubDetailName.addEventListener("click", () => {
     setTimeout(() => {
         addSubDetailModal.classList.add("hide");
-    }, 100);
+    }, 200);
 })
 
 
 // Clear individual expense (event delegation)
 document.querySelector(".detail").addEventListener("click", (e) => {
     if (e.target.classList.contains("clear-detail-btn")) {
-    
+        console.log("press clear")
         const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
         const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))
         const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
-        
+
         const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
 
         //subtract from sub detail total
@@ -676,7 +716,7 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
         //update progression ring
         const remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
-        remainingProgressionRing.setAttribute('data-spent',`${remaining + deletableAmount}`)
+        remainingProgressionRing.setAttribute('data-spent', `${remaining + deletableAmount}`)
 
         totalBalance += deletableAmount
 
@@ -687,10 +727,12 @@ document.querySelector(".detail").addEventListener("click", (e) => {
         localStorage.setItem("partitions", JSON.stringify(partitions))
         localStorage.setItem("totalBalance", totalBalance)
 
-        loadProgressionBars()
-        renderAllPartitions()
-        renderAllExpenseDetails()
-        renderTotalBalance()
+        setTimeout(() => {
+            loadProgressionBars()
+            renderAllPartitions()
+            renderAllExpenseDetails()
+            renderTotalBalance()
+        }, 200)
 
     }
 });

@@ -138,21 +138,24 @@
 
 .clear-detail-btn {
     margin: 1px;
-    width: 50px;
+    width: 23px;
     height: 20px;
     border-radius: 5px;
-    background-color: rgb(255, 64, 0);
+    background-color: rgb(255 64 0 / 0%);
     color: #ffffff;
     font-size: 10px;
-    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .clear-detail-btn:hover {
-    background-color: rgb(185, 37, 7);
+    background-color: rgba(185, 37, 7, 0);
 }
 .clear-detail-btn:active {
     scale: 0.8;
     transition: ease 0.2s;
+    filter: invert(0.5) invert(0.3);
 }
 .spend-btn {
     margin:0;
@@ -179,17 +182,15 @@
     background-color: rgb(0, 102, 0);
 }
 
-#close-modal-btn:hover {
-    background-color: #03017ab0;
-    transition: 0.2s ease;
-    font-size: 1.1rem;   
-}
 #close-modal-btn:active {
-    background-color: rgb(9, 2, 72);
+    background-color: rgba(10, 3, 66, 0.633);
+    scale: 0.8;
+    transition: ease 0.2s;
 }
 
 #close-modal-btn {
     width: 6rem;
-    border-radius: 20px;
+    border-radius: 9px;
     margin: 10px;
+    font-size: small;
 }
