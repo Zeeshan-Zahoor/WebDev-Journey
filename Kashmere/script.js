@@ -116,7 +116,7 @@ function show_Edit_Amount_Window() {
 }
 
 document.getElementById("entered-amount").addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         editAmount()
         editAmount_Win.classList.add("hide")
     }
@@ -124,7 +124,7 @@ document.getElementById("entered-amount").addEventListener("keydown", (e) => {
 
 document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
     if (e.target.classList.contains("edit-amount-modal")) {
-            editAmount_Win.classList.add("hide")
+        editAmount_Win.classList.add("hide")
     }
     setTimeout(() => {
         if (e.target.classList.contains("enter-btn")) {
@@ -154,7 +154,6 @@ const editAmount = () => {
     }
     editAmount_Win.classList.add("hide");
 };
-
 
 // Create partition card (renders the partition and its own expenses)
 const createPartitionCard = (partitionObj, partIndex) => {
@@ -209,23 +208,27 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
         // When clicking the expense card (not the delete button) show details
         card.addEventListener("click", (e) => {
-            if (!e.target.classList.contains('delete-expense-btn')) {
+            if (!e.target.closest(".delete-expense-btn")) {
                 openExpense(expense.expenseName, partIndex, expenseIndex);
             }
         });
 
         // Delete button for the expense (within this partition)
-        card.querySelector(".delete-expense-btn").addEventListener("click", (e) => {
+        card.querySelector(".delete-expense-btn").addEventListener("click", async (e) => {
             e.stopPropagation();
-            card.style.transition = "transform 0.5s ease, opacity 0.2s ease";
-            card.style.transform = "scale(0.5)";
-            card.style.opacity = "0";
+            const confirmed = await confirmDelete();
+            if (confirmed) {
+                card.style.transition = "transform 0.5s ease, opacity 0.2s ease";
+                card.style.transform = "scale(0.5)";
+                card.style.opacity = "0";
 
-            card.addEventListener("transitionend", () => {
-                deleteExpense(partIndex, expenseIndex);
-        }, { once: true });
+                card.addEventListener("transitionend", () => {
+                    deleteExpense(partIndex, expenseIndex);
+                }, { once: true });
+            } else {
+                return;
+            }
 
-            
         });
 
         myExpenseContainer.appendChild(card);
@@ -244,16 +247,22 @@ const createPartitionCard = (partitionObj, partIndex) => {
     });
 
     // Delete partition button
-    partitionCard.querySelector(".delete-btn").addEventListener("click", (e) => {
+    partitionCard.querySelector(".delete-btn").addEventListener("click", async (e) => {
         e.stopPropagation();
         const idx = Number(e.currentTarget.dataset.index);
+
+        const confirmed = await confirmDelete();
+        if (!confirmed) return;
+
         partitionCard.style.transition = "transform 0.5s ease, opacity 0.2s ease";
         partitionCard.style.transform = "scale(0.5)";
         partitionCard.style.opacity = "0";
         partitionCard.addEventListener("transitionend", () => {
-                deletePartition(idx);
+            deletePartition(idx);
         }, { once: true });
-        
+    
+
+
     });
 }
 
@@ -278,32 +287,32 @@ const renderTotalBalance = () => {
 
 function addPartition() {
     const partitionName = partitionInputName.value.trim();
-        const partitionAmount = Number(partitionInputAmount.value);
-        if (partitionName && partitionAmount) {
-            // check if the allocated amount gets beyond the balance
-            let total = 0;
-            partitions.forEach((partition) => {
-                total += partition.allocatedAmount;
-            })
-            if (partitionAmount + total <= totalBalance) {
-                partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
-                localStorage.setItem("partitions", JSON.stringify(partitions));
-                renderAllPartitions();
-                partitionInputName.value = "";
-                partitionInputAmount.value = "";
+    const partitionAmount = Number(partitionInputAmount.value);
+    if (partitionName && partitionAmount) {
+        // check if the allocated amount gets beyond the balance
+        let total = 0;
+        partitions.forEach((partition) => {
+            total += partition.allocatedAmount;
+        })
+        if (partitionAmount + total <= totalBalance) {
+            partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
+            localStorage.setItem("partitions", JSON.stringify(partitions));
+            renderAllPartitions();
+            partitionInputName.value = "";
+            partitionInputAmount.value = "";
 
-                setTimeout(() => {   //add a delay for button animation
-                    partitionModal.classList.add("hide");
-                }, 200)
-            } else {
-                window.alert("Opps! No enough balance.")
-            }
+            setTimeout(() => {   //add a delay for button animation
+                partitionModal.classList.add("hide");
+            }, 200)
+        } else {
+            window.alert("Opps! No enough balance.")
         }
+    }
 }
 
 // handle adding partition
 partitionModal.addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         addPartition()
     }
 })
@@ -370,7 +379,7 @@ saveExpenseBtn.addEventListener("click", () => {
 });
 
 document.querySelector(".modal-content").addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         saveExpense()
     }
 })
@@ -422,31 +431,31 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
 
     loadProgressionBars()
 
-    history.pushState({modal: true}, "")
+    history.pushState({ modal: true }, "")
 
 };
 
 
 function closeExpense() {
     if (expenseDetails_Model) {
+        setTimeout(() => {
+            expenseDetails_Model.style.transition = "transform 0.8s ease";
+            expenseDetails_Model.style.transform = "translate(50%, -50%)";
+            expenseDetails_Model.offsetHeight;
+            expenseDetails_Model.style.transform = "translate(350%, -50%)";
+            renderTotalBalance()
+            renderAllPartitions()
             setTimeout(() => {
-                expenseDetails_Model.style.transition = "transform 0.8s ease";
-                expenseDetails_Model.style.transform = "translate(50%, -50%)";
-                expenseDetails_Model.offsetHeight;
-                expenseDetails_Model.style.transform = "translate(350%, -50%)";
-                renderTotalBalance()
-                renderAllPartitions()
-                setTimeout(() => {
-                    expenseDetails_Model.classList.add("hide");
-                }, 500)
-            }, 100)
-        }
+                expenseDetails_Model.classList.add("hide");
+            }, 500)
+        }, 100)
+    }
 }
 
 //close on mobiles back navigation
 window.addEventListener("popstate", (event) => {
     event.preventDefault()
-    if(!event.state && !expenseDetails_Model.classList.contains("hide")) {
+    if (!event.state && !expenseDetails_Model.classList.contains("hide")) {
         closeExpense()
     }
 })
@@ -623,7 +632,7 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
 });
 
 document.querySelector(".spend-modal-inner").addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         addExpenseEntry();
     }
 })
@@ -661,7 +670,7 @@ document.getElementById("enter-credit-btn").addEventListener("click", () => {
     addCreditAmount();
 })
 document.querySelector(".credit-modal-inner").addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         addCreditAmount();
     }
 })
@@ -724,13 +733,13 @@ function saveSubDetail() {
 }
 
 document.getElementById("input-sub-detail-name").addEventListener("keydown", (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         saveSubDetail()
     }
 })
 
 enterSubDetailName.addEventListener('click', (e) => {
-        saveSubDetail()
+    saveSubDetail()
 })
 
 
@@ -844,11 +853,13 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
 
 // delete sub-details
-document.querySelector(".detail").addEventListener("click", (e) => {
+document.querySelector(".detail").addEventListener("click", async (e) => {
     if (e.target.classList.contains("cross")) {
         const subDetail = e.target.parentElement.parentElement;
         const subIndex = Number(subDetail.dataset.subIndex);
 
+        const confirmed = await confirmDelete()
+        if(!confirmed) return
         // remove from data
         partitions[activePartitionIndex]
             .expenses[activeExpenseIndex]
@@ -865,3 +876,29 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
     }
 });
+
+const confirmOverlay = document.querySelector(".confirm-overlay");
+
+function confirmDelete() {
+    return new Promise((resolve) => {
+        confirmOverlay.classList.remove('hide');
+
+        const onClick = (e) => {
+            if (e.target.classList.contains("btn-delete")) {
+                cleanup();
+                resolve(true);
+            }
+            else if (e.target.classList.contains("btn-cancel") || e.target === confirmOverlay) {
+                cleanup();
+                resolve(false);
+            }
+        };
+
+        function cleanup() {
+            confirmOverlay.classList.add("hide");
+            confirmOverlay.removeEventListener("click", onClick);
+        }
+
+        confirmOverlay.addEventListener("click", onClick);
+    })
+}

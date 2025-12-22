@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="progress_circle.css">
     <link rel="stylesheet" href="details.css">
     <link rel="stylesheet" href="add_subdetail_modal.css">
+    <link rel="stylesheet" href="delete_confirmation.css">
 </head>
 
 <body>
@@ -240,6 +241,26 @@
             </div>
         </div>
     </div>
+
+
+    <!-- deletion confirmation modal  -->
+    <div class="confirm-overlay hide">
+        <div class="confirm-modal">
+            <div class="confirm-icon">⚠️</div>
+
+            <h3>Delete Item?</h3>
+            <p>
+                This action cannot be undone.<br>
+                Are you sure you want to continue?
+            </p>
+
+            <div class="confirm-actions">
+                <button class="btn-cancel">Cancel</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="script.js"></script>
 </body>
