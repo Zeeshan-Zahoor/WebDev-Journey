@@ -247,7 +247,13 @@ const createPartitionCard = (partitionObj, partIndex) => {
     partitionCard.querySelector(".delete-btn").addEventListener("click", (e) => {
         e.stopPropagation();
         const idx = Number(e.currentTarget.dataset.index);
-        deletePartition(idx);
+        partitionCard.style.transition = "transform 0.5s ease, opacity 0.2s ease";
+        partitionCard.style.transform = "scale(0.5)";
+        partitionCard.style.opacity = "0";
+        partitionCard.addEventListener("transitionend", () => {
+                deletePartition(idx);
+        }, { once: true });
+        
     });
 }
 
