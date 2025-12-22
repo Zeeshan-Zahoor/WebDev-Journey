@@ -217,7 +217,15 @@ const createPartitionCard = (partitionObj, partIndex) => {
         // Delete button for the expense (within this partition)
         card.querySelector(".delete-expense-btn").addEventListener("click", (e) => {
             e.stopPropagation();
-            deleteExpense(partIndex, expenseIndex);
+            card.style.transition = "transform 0.5s ease, opacity 0.2s ease";
+            card.style.transform = "scale(0.5)";
+            card.style.opacity = "0";
+
+            card.addEventListener("transitionend", () => {
+                deleteExpense(partIndex, expenseIndex);
+        }, { once: true });
+
+            
         });
 
         myExpenseContainer.appendChild(card);
@@ -629,6 +637,8 @@ function addCreditAmount() {
     currExpense.expenseAllocatedAmount += creditedAmount
     currExpense.expenseRemainingAmount += creditedAmount
     partitions[activePartitionIndex].remainingAmount += creditedAmount
+    totalBalance += creditedAmount
+    partitions[activePartitionIndex].allocatedAmount += creditedAmount
     totalBalance += creditedAmount
 
     loadProgressionBars()
