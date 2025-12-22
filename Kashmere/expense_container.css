@@ -17,7 +17,9 @@
     width: 97%;
     min-height: 50px;
     background-color: #000ef72e;
-    margin: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .expense-card:hover {
@@ -31,14 +33,19 @@
 }
 
 .expense-container .expense-card .delete-expense-btn {
-    width: 3rem;
-    height: 1.2rem;
-    font-size: 0.6rem;
-    padding: 0;
+    margin-bottom: 0;
+    transition: transform 0.2s ease-in-out;
 }
 
+.delete-expense-btn:active {
+    transform: scale(0.8);
+}
 .expense-details {
+    width: 100%;
+    height: 85%;
+    margin-left: 5px;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
     justify-content: space-between;
 }

@@ -1,7 +1,7 @@
 console.log("Let's Write Some JavaScript");
 
 // DOM Elements that are global/static
-const editAmount_Win = document.getElementsByClassName("edit-amount-window")[0];
+const editAmount_Win = document.getElementsByClassName("edit-amount-modal")[0];
 const totalBalanceDisplay = document.getElementById("total-balance");
 const enteredAmountInput = document.getElementById("entered-amount");
 const partitionContainer = document.getElementsByClassName("partition-container")[0]; // this is the wrapper that holds partition cards
@@ -109,11 +109,23 @@ function hide_partition_modal() {
 
 // Show edit amount window
 function show_Edit_Amount_Window() {
-    editAmount_Win.classList.remove("hide");
-    enteredAmountInput.value = `${totalBalance}`
+    setTimeout(() => {
+        editAmount_Win.classList.remove("hide");
+        enteredAmountInput.value = `${totalBalance}`
+    }, 150)
 }
 
-document.querySelector(".edit-amount-window-btns").addEventListener("click", (e) => {
+document.getElementById("entered-amount").addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        editAmount()
+        editAmount_Win.classList.add("hide")
+    }
+})
+
+document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
+    if (e.target.classList.contains("edit-amount-modal")) {
+            editAmount_Win.classList.add("hide")
+    }
     setTimeout(() => {
         if (e.target.classList.contains("enter-btn")) {
             editAmount()
@@ -121,6 +133,7 @@ document.querySelector(".edit-amount-window-btns").addEventListener("click", (e)
         if (e.target.classList.contains("cancel-btn")) {
             editAmount_Win.classList.add("hide")
         }
+
     }, 200)
 })
 
@@ -141,6 +154,7 @@ const editAmount = () => {
     }
     editAmount_Win.classList.add("hide");
 };
+
 
 // Create partition card (renders the partition and its own expenses)
 const createPartitionCard = (partitionObj, partIndex) => {
@@ -165,9 +179,10 @@ const createPartitionCard = (partitionObj, partIndex) => {
         </div>
         <div class="expense-container"></div>
         <div class="partition-card-btns"> 
-            <button class="statue-delete-btn" data-index="${partIndex}">Delete</button>
-            <button class="add-expense-btn" data-index="${partIndex}">Add</button>
-            <button class="delete-btn" data-index="${partIndex}">Delete</button>
+            <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 20 20" height="40px" class="add-expense-btn" data-index="${partIndex}" viewBox="0 0 20 20" width="48px" fill="#000451c5"><g><rect fill="none" height="20" width="20"/></g><g><g><rect height="1.5" width="9" x="3" y="5"/><rect height="1.5" width="6" x="3" y="11.25"/><rect height="1.5" width="9" x="3" y="8.12"/><polygon points="14.75,11.25 14.75,8 13.25,8 13.25,11.25 10,11.25 10,12.75 13.25,12.75 13.25,16 14.75,16 14.75,12.75 18,12.75 18,11.25"/></g></g></svg>
+
+            
+            <svg xmlns="http://www.w3.org/2000/svg" height="30px" class="delete-btn" data-index="${partIndex}" viewBox="0 0 24 24" width="30px" fill="#000451a6"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M15 16h4v2h-4zm0-8h7v2h-7zm0 4h6v2h-6zM3 18c0 1.1.9 2 2 2h6c1.1 0 2-.9 2-2V8H3v10zm2-8h6v8H5v-8zm5-6H6L5 5H2v2h12V5h-3z"/></svg>
         </div>
     `;
 
@@ -188,13 +203,14 @@ const createPartitionCard = (partitionObj, partIndex) => {
                 <h4>${expense.expenseName}</h4>
                 <h5>Balance: ₹${(expense.expenseRemainingAmount).toLocaleString('en-IN')}</h5>
             </div>
-            <button class="delete-expense-btn" data-exp-index="${expenseIndex}">Delete</button>
+            
+            <svg fill="#33236fe3" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="delete-expense-btn" data-exp-index="${expenseIndex}" viewBox="0 0 560.801 560.801" width="25px" xml:space="preserve" stroke="#000000" stroke-width="0.005608010000000001"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <path d="M560.801,124.997c0-9.33-7.562-16.891-16.893-16.891H314.182c-9.33,0-22.24-1.971-28.834-8.565l-50.435-47.057 c-6.598-6.597-19.508-11.943-28.834-11.943H16.891C7.561,40.541,0,48.102,0,57.432v371.615c0,9.33,7.561,16.893,16.891,16.893 h225.207c-10.015-22.791-15.75-47.869-15.75-74.322c0-102.449,83.361-185.806,185.806-185.806 c61.004,0,114.75,29.939,148.646,75.484V124.997z"></path> <path d="M412.154,222.969c-82.088,0-148.646,66.596-148.646,148.646S330.064,520.26,412.154,520.26 c82.127,0,148.646-66.592,148.646-148.645C560.801,289.561,494.281,222.969,412.154,222.969z M512.143,398.312h-199.98v-50.674 h199.98V398.312z"></path> </g> </g> </g></svg>
         `;
 
         // When clicking the expense card (not the delete button) show details
         card.addEventListener("click", (e) => {
             if (!e.target.classList.contains('delete-expense-btn')) {
-                handleExpenseCardClick(expense.expenseName, partIndex, expenseIndex);
+                openExpense(expense.expenseName, partIndex, expenseIndex);
             }
         });
 
@@ -212,9 +228,11 @@ const createPartitionCard = (partitionObj, partIndex) => {
     partitionCard.querySelector(".add-expense-btn").addEventListener("click", (e) => {
         const idx = Number(e.currentTarget.dataset.index);
         activePartitionIndex = idx;
-        expenseInput.value = "";
-        expenseModal.classList.remove("hide");
-        expenseInput.focus();
+        setTimeout(() => {
+            expenseInput.value = "";
+            expenseModal.classList.remove("hide");
+            expenseInput.focus();
+        }, 200)
     });
 
     // Delete partition button
@@ -244,10 +262,8 @@ const renderTotalBalance = () => {
     document.getElementById("total-balance").innerText = `Total Balance: ₹${totalBalance}`
 }
 
-// handle adding partition
-partitionModal.addEventListener("click", (e) => {
-    if (e.target.classList.contains("save-partition-btn")) {
-        const partitionName = partitionInputName.value.trim();
+function addPartition() {
+    const partitionName = partitionInputName.value.trim();
         const partitionAmount = Number(partitionInputAmount.value);
         if (partitionName && partitionAmount) {
             // check if the allocated amount gets beyond the balance
@@ -269,6 +285,18 @@ partitionModal.addEventListener("click", (e) => {
                 window.alert("Opps! No enough balance.")
             }
         }
+}
+
+// handle adding partition
+partitionModal.addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        addPartition()
+    }
+})
+
+partitionModal.addEventListener("click", (e) => {
+    if (e.target.classList.contains("save-partition-btn")) {
+        addPartition()
     }
 
     if (e.target.classList.contains("cancel-partition-btn")) {
@@ -276,11 +304,10 @@ partitionModal.addEventListener("click", (e) => {
             partitionModal.classList.add("hide");
         }, 200)
     }
-
 });
 
 // Save expense inside the active partition
-saveExpenseBtn.addEventListener("click", (e) => {
+function saveExpense() {
     const expenseName = expenseInput.value.trim();
     const expenseAmount = Number(expenseInputAmount.value)
 
@@ -322,8 +349,18 @@ saveExpenseBtn.addEventListener("click", (e) => {
     } else {
         window.alert("Opps! No enough balance in the current partition.")
     }
+}
 
+saveExpenseBtn.addEventListener("click", () => {
+    saveExpense()
 });
+
+document.querySelector(".modal-content").addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        saveExpense()
+    }
+})
+
 
 // Cancel expense modal
 cancelExpenseBtn.addEventListener("click", () => {
@@ -343,7 +380,7 @@ const deleteExpense = (partitionIndex, expenseIndex) => {
 };
 
 // Expense details (open modal when expense clicked)
-const handleExpenseCardClick = (expenseName, partitionIndex, expenseIndex) => {
+const openExpense = (expenseName, partitionIndex, expenseIndex) => {
     console.log(`Card clicked: ${expenseName} in partition ${partitionIndex} expenseIndex ${expenseIndex}`);
 
     //In case of allocated ring, there should be no change (both value should be same)
@@ -371,15 +408,15 @@ const handleExpenseCardClick = (expenseName, partitionIndex, expenseIndex) => {
 
     loadProgressionBars()
 
+    history.pushState({modal: true}, "")
+
 };
 
-// close expense-details modal if it exists
-const closeModalBtn = document.getElementById("close-modal-btn");
-if (closeModalBtn) {
-    closeModalBtn.addEventListener("click", () => {
-        if (expenseDetails_Model) {
+
+function closeExpense() {
+    if (expenseDetails_Model) {
             setTimeout(() => {
-                expenseDetails_Model.style.transition = "transform 0.2s ease";
+                expenseDetails_Model.style.transition = "transform 0.8s ease";
                 expenseDetails_Model.style.transform = "translate(50%, -50%)";
                 expenseDetails_Model.offsetHeight;
                 expenseDetails_Model.style.transform = "translate(350%, -50%)";
@@ -387,12 +424,30 @@ if (closeModalBtn) {
                 renderAllPartitions()
                 setTimeout(() => {
                     expenseDetails_Model.classList.add("hide");
-                }, 200)
-            }, 300)
+                }, 500)
+            }, 100)
         }
+}
 
+//close on mobiles back navigation
+window.addEventListener("popstate", (event) => {
+    event.preventDefault()
+    if(!event.state && !expenseDetails_Model.classList.contains("hide")) {
+        closeExpense()
+    }
+})
+
+// close expense-details modal if it exists
+const closeModalBtn = document.getElementById("close-modal-btn");
+if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => {
+        closeExpense()
+        history.back()
     });
 }
+
+
+
 
 // Expense Datails Model 
 
@@ -480,8 +535,7 @@ document.querySelector(".detail").addEventListener("click", (e) => {
     }
 });
 
-// Add expense entry
-document.getElementById("enter-spend-btn").addEventListener("click", () => {
+function addExpenseEntry() {
     if (
         activePartitionIndex === null ||
         activeExpenseIndex === null ||
@@ -547,10 +601,20 @@ document.getElementById("enter-spend-btn").addEventListener("click", () => {
     } else {
         alert("Invalid or excessive amount!");
     }
+}
+
+// Add expense entry
+document.getElementById("enter-spend-btn").addEventListener("click", () => {
+    addExpenseEntry();
 });
 
-//Add credit amount
-document.getElementById("enter-credit-btn").addEventListener("click", () => {
+document.querySelector(".spend-modal-inner").addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        addExpenseEntry();
+    }
+})
+
+function addCreditAmount() {
     const creditedAmount = Number(document.getElementById("crediting-amount").value)
     const previousAllocatedAmount = Number(allocatedProgressRing.getAttribute("data-total"))
     const previousRemainingAmount = Number(remainingProgressionRing.getAttribute("data-spent"))
@@ -572,7 +636,20 @@ document.getElementById("enter-credit-btn").addEventListener("click", () => {
     //save back to storage
     localStorage.setItem("partitions", JSON.stringify(partitions))
     localStorage.setItem("totalBalance", totalBalance)
+
+    document.querySelector(".credit-modal").classList.add("hide");
+}
+
+//Add credit amount
+document.getElementById("enter-credit-btn").addEventListener("click", () => {
+    addCreditAmount();
 })
+document.querySelector(".credit-modal-inner").addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        addCreditAmount();
+    }
+})
+
 
 // Cancel spend
 document.getElementById("cancel-spend-btn").addEventListener("click", () => {
@@ -597,8 +674,7 @@ if (addSubDetailBtn) {
     })
 }
 
-
-enterSubDetailName.addEventListener('click', (e) => {
+function saveSubDetail() {
     if (
         activePartitionIndex === null ||
         activeExpenseIndex === null
@@ -628,8 +704,17 @@ enterSubDetailName.addEventListener('click', (e) => {
 
     setTimeout(() => {
         addSubDetailModal.classList.add("hide");
-    }, 200)
+    }, 100)
+}
 
+document.getElementById("input-sub-detail-name").addEventListener("keydown", (e) => {
+    if(e.key == "Enter") {
+        saveSubDetail()
+    }
+})
+
+enterSubDetailName.addEventListener('click', (e) => {
+        saveSubDetail()
 })
 
 
@@ -761,6 +846,6 @@ document.querySelector(".detail").addEventListener("click", (e) => {
             localStorage.setItem("partitions", JSON.stringify(partitions));
             renderAllExpenseDetails()
         }, { once: true });
-        
+
     }
 });

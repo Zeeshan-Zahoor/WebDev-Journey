@@ -28,34 +28,28 @@
 
 
 .partition-container .partition-card .partition-card-btns .delete-btn {
-    background-color: #8c0000ad;
-    width: fit-content;
-    margin: 0;
+    margin-right: 5px;
+    transition: transform 0.3s ease-in-out;
+    transform: rotateY(180deg);
+    cursor: pointer;
+    border-radius: 25px;
 }
-.statue-delete-btn {
-    background-color: #8c0000ad;
-    width: fit-content;
-    margin: 0;
-    padding: 4px 10px;
-    font-size: 10px;
-    color: transparent;
-    background-color: transparent;
+
+.partition-container .partition-card .partition-card-btns .delete-btn:active {
+    transform: scale(1.2);
 }
 
 .add-expense-btn {
-    padding: 1px 12px 0 12px;
-    width: 3rem;
-    height: 1.5rem;
-    font-size: 0.8rem;
-    margin: 0;
-    background-color: #000451a6;
+    transition: transform 0.1s ease-in;
+}
+
+.add-expense-btn:active {
+    transform: scale(1.1);
 }
 
 .partition-card .partition-card-btns {
     display: flex;
     width: 100%;
-    margin: 10px 0px;
-    padding: 0 10px;
     justify-content: space-between;
     align-items: center;
     

@@ -112,10 +112,9 @@
   /* Expense Card */
   .expense-card {
     border: 0.5px solid rgba(0, 0, 0, 0.241);
-    padding: 15px;
+    padding: 8px;
     border-radius: 8px;
     margin-top: 10px;
-    margin-bottom: 20px;
     text-align: center;
     height: 70px;
     min-height: 60px;
@@ -143,24 +142,6 @@
   
   button:hover {
     background-color: #020077;
-  }
-  
-
-  .delete-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: #ff4d4d;
-    color: white;
-    padding: 4px 10px;
-    font-size: 10px;
-    cursor: pointer;
-    
-  }
-  
-  .delete-btn:hover {
-    background-color: #e60000;
-    transform: scale(1.05);
   }
   
   .expense-card:hover {

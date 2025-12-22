@@ -7,7 +7,7 @@
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     z-index: 1000;
 }
 #expense-input {
@@ -17,10 +17,12 @@
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    max-width: 500px;
+    max-width: 300px;
     width: 83%;
     height: 33%;
+    max-height: 225px;
     z-index: 1100;
+    margin-top: 30%;
 }
 
 .expense-modal-btns {

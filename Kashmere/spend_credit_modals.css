@@ -2,6 +2,7 @@
     position: fixed;
     display: flex;
     justify-content: center;
+    align-items: center;
     top: 0;
     left: 0;
     height: 100%;
@@ -11,7 +12,7 @@
 }
 
 .spend-modal-inner, .credit-modal-inner {
-    transform: translateY(100%);
+    margin-top: -20%;
     height: fit-content;
     width: 80%;
     padding: 30px;
@@ -40,6 +41,7 @@
 #enter-spend-btn, #cancel-spend-btn, #enter-credit-btn, #cancel-credit-btn {
     border-radius: 30px;
     width: 48%;
+    font-size: small;
 }
 
 #cancel-spend-btn, #cancel-credit-btn {
