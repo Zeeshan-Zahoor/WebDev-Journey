@@ -902,3 +902,22 @@ function confirmDelete() {
         confirmOverlay.addEventListener("click", onClick);
     })
 }
+
+
+// install as PWA
+let deferredPrompt;
+
+window.addEventListener("beforeinstallprompt", (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  document.getElementById("install-btn").style.display = "block";
+});
+
+document.getElementById("install-btn").addEventListener("click", async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+});

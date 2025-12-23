@@ -18,6 +18,17 @@
     <link rel="stylesheet" href="details.css">
     <link rel="stylesheet" href="add_subdetail_modal.css">
     <link rel="stylesheet" href="delete_confirmation.css">
+
+    <link rel="manifest" href="manifest.json">
+
+    <meta name="theme-color" content="#000451">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Sumio">
+
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+
 </head>
 
 <body>
@@ -274,6 +285,18 @@
 
 
     <script src="script.js"></script>
+
+    <!-- register service worker  -->
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("./service-worker.js")
+                    .then(() => console.log("Service Worker registered"))
+                    .catch(err => console.error("SW registration failed", err));
+            });
+        }
+    </script>
+
 </body>
 
 </html>
