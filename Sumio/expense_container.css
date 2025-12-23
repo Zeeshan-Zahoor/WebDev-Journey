@@ -1,0 +1,51 @@
+.expense-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    max-height: 300px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.expense-container::-webkit-slider-thumb {
+    display: none;
+}
+
+.expense-container .expense-card {
+    width: 97%;
+    min-height: 50px;
+    background-color: #000ef72e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.expense-card:hover {
+    background-color: #5e69e1c1;
+    transition: ease 0.2s;
+}
+
+.expense-card:active {
+    scale: 1.03;
+    transition: ease 0.2s;
+}
+
+.expense-container .expense-card .delete-expense-btn {
+    margin-bottom: 0;
+    transition: transform 0.2s ease-in-out;
+}
+
+.delete-expense-btn:active {
+    transform: scale(0.8);
+}
+.expense-details {
+    width: 100%;
+    height: 85%;
+    margin-left: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}

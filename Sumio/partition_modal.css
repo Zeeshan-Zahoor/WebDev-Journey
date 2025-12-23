@@ -1,0 +1,81 @@
+.partition {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+}
+
+.partition-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    margin-top: 35%;
+    max-height: fit-content;
+    text-align: center;
+}
+
+.partition-modal-btns{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.partition-content input {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.partition-content button {
+    margin: 5px;
+    margin-top: 30px;
+    width: 45%;
+    font-size: 13px;
+}
+
+.add-partition-section {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#add-partition-btn {
+    height: 28px;
+    width: 82px;
+    margin:0;
+    font-size: 11px;
+    padding: 2px;
+    background-color: #060d7f;
+}
+.add-partition-btn:active {
+    scale: 0.8;
+    transition: ease 0.4s;
+}
+
+#save-partition-btn, #cancel-partition-btn {
+    border-radius: 20px;
+}
+#cancel-partition-btn {
+    background-color: #dfdfdf;
+    color: black;
+    font-weight: 600;
+}
+
+#save-partition-btn:active, #cancel-partition-btn:active {
+    scale: 0.9;
+    transition: ease 0.2s;
+}
+
+.hide{
+    display: none;
+}

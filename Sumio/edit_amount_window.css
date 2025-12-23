@@ -1,0 +1,98 @@
+.edit-amount-window {
+    margin-top: 50%;    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    width: 60%;
+    padding: 20px 5px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 140px 0px black;
+    border-radius: 12px;
+    position: relative;
+    z-index: 1001;
+
+}
+
+#entered-amount {
+    text-align: center;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 200;
+    width: 140px;
+    height: 35px;
+    max-width: 100%;
+    background-color: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.229);
+    border-radius: 12px;
+    
+}
+
+.enter-btn, .cancel-btn {
+    width: 70px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+.cancel-btn {
+    background-color: rgba(128, 128, 128, 0.415);
+    color: black;
+    font-weight: 600;
+}
+.cancel-btn:active {
+    background-color: rgba(176, 176, 176, 0.415);
+}
+
+.enter-btn:active, .cancel-btn:active {
+    scale: 0.8;
+    transition: ease 0.2s;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+.modal-content input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.modal-content button {
+    margin: 5px;
+    width: 45%;
+    font-size: 13px;
+}
+
+.edit-amount-modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #cccccc15;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
