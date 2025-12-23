@@ -728,6 +728,7 @@ function saveSubDetail() {
     createSubExpense(subDetailObject, subDetailIndex, detailContainer);
 
     setTimeout(() => {
+        subDetailName.value = "";
         addSubDetailModal.classList.add("hide");
     }, 100)
 }
