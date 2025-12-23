@@ -694,6 +694,7 @@ const detail = document.querySelector(".detail")
 if (addSubDetailBtn) {
     addSubDetailBtn.addEventListener("click", () => {
         setTimeout(() => {
+            document.getElementById("input-sub-detail-name").value = "";
             addSubDetailModal.classList.remove("hide")
         }, 200)
     })
@@ -727,14 +728,16 @@ function saveSubDetail() {
     const detailContainer = document.querySelector(".detail");
     createSubExpense(subDetailObject, subDetailIndex, detailContainer);
 
+
     setTimeout(() => {
-        subDetailName.value = "";
+        document.getElementById("input-sub-detail-name").value = "";
         addSubDetailModal.classList.add("hide");
     }, 100)
 }
 
 document.getElementById("input-sub-detail-name").addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
+        preventDefault();
         saveSubDetail()
     }
 })
