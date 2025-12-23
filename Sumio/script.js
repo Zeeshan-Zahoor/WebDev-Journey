@@ -737,7 +737,7 @@ function saveSubDetail() {
 
 document.getElementById("input-sub-detail-name").addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
-        preventDefault();
+        e.preventDefault();
         saveSubDetail()
     }
 })
