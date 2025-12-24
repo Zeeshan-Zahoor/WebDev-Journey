@@ -953,32 +953,45 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 let newWorker;
 
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js").then(reg => {
+  navigator.serviceWorker.register("/service-worker.js").then(reg => {
 
-        reg.addEventListener("updatefound", () => {
-            newWorker = reg.installing;
+    // If there's already a waiting SW on load
+    if (reg.waiting) {
+      newWorker = reg.waiting;
+      showUpdateBanner();
+    }
 
-            newWorker.addEventListener("statechange", () => {
-                if (
-                    newWorker.state === "installed" &&
-                    navigator.serviceWorker.controller
-                ) {
-                    // New update available
-                    document
-                        .getElementById("update-banner")
-                        .classList.remove("hide");
-                }
-            });
-        });
+    reg.addEventListener("updatefound", () => {
+      newWorker = reg.installing;
+
+      newWorker.addEventListener("statechange", () => {
+        if (
+          newWorker.state === "installed" &&
+          navigator.serviceWorker.controller
+        ) {
+          showUpdateBanner();
+        }
+      });
     });
+  });
+
+  // important
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    console.log("New SW controlling page → reloading");
+    window.location.reload();
+  });
 }
+
+function showUpdateBanner() {
+  document.getElementById("update-banner")?.classList.remove("hide");
+}
+
 
 // When user clicks Update
 document.getElementById("update-btn")?.addEventListener("click", () => {
     if (newWorker) {
         newWorker.postMessage("SKIP_WAITING");
     }
-    window.location.reload();
 });
 
 
