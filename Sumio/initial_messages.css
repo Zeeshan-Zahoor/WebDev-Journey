@@ -1,0 +1,30 @@
+.partition-message-outer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+}
+.partition-message-inner{
+    width: 80%;
+    font-size: larger;
+    text-align: center;
+    color: rgba(168, 168, 173, 0.17);
+}
+
+.expense-message {
+    height: fit-content;
+    width: 100%;
+    padding: 1rem;
+    font-size: larger;
+    text-align: center;
+    color: rgba(42, 42, 152, 0.151);
+}
+
+.hide {
+    display: none;
+}

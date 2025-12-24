@@ -11,6 +11,7 @@
     width: min(100dvw, 820px);
     height: 100dvh;
     background-color: white;
+    z-index: 2;
 }
 #modal-expense-name {
     color: white;

@@ -15,7 +15,7 @@
 
 .expense-container .expense-card {
     width: 97%;
-    min-height: 50px;
+    min-height: 70px;
     background-color: #000ef72e;
     display: flex;
     justify-content: space-between;

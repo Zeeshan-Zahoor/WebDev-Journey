@@ -1,0 +1,86 @@
+.about-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.328);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.about-card {
+  background: #0b0f2d;
+  color: #fff;
+  width: 90%;
+  max-width: 400px;
+  padding: 20px;
+  border-radius: 14px;
+  position: relative;
+  animation: scaleIn 0.25s ease;
+}
+
+.about-close {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 18px;
+}
+
+.app-name {
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.app-tagline {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.about-section {
+  margin-bottom: 16px;
+}
+
+.about-section h3 {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 6px;
+}
+
+.about-section p {
+  font-size: 13px;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.about-section.links a {
+  color: #8ab4ff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.about-footer {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+  margin-top: 16px;
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hide {
+  display: none;
+}

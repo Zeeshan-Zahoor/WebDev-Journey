@@ -1,0 +1,79 @@
+.drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 99;
+}
+
+.drawer-overlay.hide {
+    display: none;
+}
+
+
+.drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: fit-content;
+    border-bottom-left-radius: 10px;
+    width: 260px;
+    background: #0d165d;
+    color: white;
+    z-index: 100;
+    padding: 20px;
+
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+}
+
+.drawer-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.drawer-cross-btn {
+    margin-top: -10px;
+    margin-right: -8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 35px;
+    width: 35px;
+}
+
+.drawer-cross-btn:active {
+    background-color: rgb(23, 29, 130);
+}
+
+.drawer.open {
+    transform: translateX(0);
+}
+
+.drawer.close {
+    transform: translateX(100%);
+}
+
+.drawer-title {
+    margin-bottom: 20px;
+}
+
+.drawer-item {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.drawer-item:hover {
+    background: rgba(255, 255, 255, 0.323);
+}
+
+.drawer-item.danger {
+    color: #ff6b6b;
+}

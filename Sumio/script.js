@@ -40,7 +40,7 @@ let activeExpenseIndex = null;
 window.onload = () => {
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
-        totalBalance = parseInt(savedBalance, 10);
+        totalBalance = parseFloat(savedBalance, 10);
         totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
     }
 
@@ -111,7 +111,7 @@ function hide_partition_modal() {
 function show_Edit_Amount_Window() {
     setTimeout(() => {
         editAmount_Win.classList.remove("hide");
-        enteredAmountInput.value = `${totalBalance}`
+        enteredAmountInput.value = `${(totalBalance)}`
     }, 150)
 }
 
@@ -138,7 +138,7 @@ document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
 })
 
 document.querySelector(".add-partition-section").addEventListener("click", (e) => {
-    if (e.target.classList.contains("add-partition-btn")) {
+    if (e.target.closest(".add-partition-btn")) {
         setTimeout(() => {
             show_Add_Partition_Modal()
         }, 200)
@@ -148,7 +148,12 @@ document.querySelector(".add-partition-section").addEventListener("click", (e) =
 const editAmount = () => {
     let enteredAmount = enteredAmountInput.value;
     if (enteredAmount) {
-        totalBalance = parseInt(enteredAmount, 10);
+        totalBalance = parseFloat(enteredAmount, 10);
+        if(totalBalance > 99999999999) {
+            editAmount_Win.classList.add("hide");
+            showToast("❌ Invalid Amount!")
+            return;
+        }
         totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
         localStorage.setItem("totalBalance", totalBalance);
     }
@@ -191,6 +196,15 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
     // Find this card's own expense-container to render its expenses inside it
     const myExpenseContainer = partitionCard.querySelector(".expense-container");
+
+
+    if (partitionObj.expenses.length === 0) {
+        const message = document.createElement("div");
+        message.className = "expense-message";
+        message.textContent = "Add expenses and allocate amounts";
+        myExpenseContainer.appendChild(message);
+    }
+
 
     // Render each expense belonging to this partition in this container
     partitionObj.expenses.forEach((expense, expenseIndex) => {
@@ -260,7 +274,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
         partitionCard.addEventListener("transitionend", () => {
             deletePartition(idx);
         }, { once: true });
-    
+
 
 
     });
@@ -278,11 +292,18 @@ const renderAllPartitions = () => {
     // Clear old DOM
     partitionContainer.innerHTML = "";
     // Re-create
+
+    if (partitions.length === 0) { // show initial partitions message
+        document.querySelector(".partition-message-outer").classList.remove("hide");
+    } else {
+        document.querySelector(".partition-message-outer").classList.add("hide");
+    }
+
     partitions.forEach((partitionObj, i) => createPartitionCard(partitionObj, i));
 };
 
 const renderTotalBalance = () => {
-    document.getElementById("total-balance").innerText = `Total Balance: ₹${totalBalance}`
+    document.getElementById("total-balance").innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`
 }
 
 function addPartition() {
@@ -305,7 +326,7 @@ function addPartition() {
                 partitionModal.classList.add("hide");
             }, 200)
         } else {
-            window.alert("Opps! No enough balance.")
+            showToast("Opps! No enough balance.", "error");
         }
     }
 }
@@ -336,7 +357,7 @@ function saveExpense() {
 
     if (activePartitionIndex === null || activePartitionIndex < 0 || activePartitionIndex >= partitions.length) {
         // No valid target partition selected
-        alert("Please open the Add button inside a partition to add an expense.");
+        showToast("Please open the Add button inside a partition to add an expense.", "error");
 
         setTimeout(() => {
             expenseModal.classList.add("hide");
@@ -370,7 +391,7 @@ function saveExpense() {
         }, 200)
 
     } else {
-        window.alert("Opps! No enough balance in the current partition.")
+        showToast("Opps! No enough balance in the current partition.", "error");
     }
 }
 
@@ -564,10 +585,10 @@ function addExpenseEntry() {
         activeExpenseIndex === null ||
         activeSubDetailIndex === null
     ) {
-        alert("No active sub detail selected");
+        showToast("No active sub detail selected", "error");
         return;
     }
-    const spendingAmount = parseInt(document.getElementById("spending-amount").value);
+    const spendingAmount = parseFloat(document.getElementById("spending-amount").value);
     const remarks = document.getElementById("remark").value;
     let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
     const listContainer = activeSubDetailElement.querySelector(".sub-detail-list")
@@ -622,7 +643,7 @@ function addExpenseEntry() {
         document.getElementById("spending-amount").value = "";
         document.getElementById("remark").value = "";
     } else {
-        alert("Invalid or excessive amount!");
+        showToast("Invalid or excessive amount!", "error");
     }
 }
 
@@ -705,7 +726,7 @@ function saveSubDetail() {
         activePartitionIndex === null ||
         activeExpenseIndex === null
     ) {
-        alert("No active expense selected");
+        showToast("No active expense selected", "error");
         return;
     }
     const subDetailName = document.getElementById("input-sub-detail-name").value
@@ -858,12 +879,12 @@ document.querySelector(".detail").addEventListener("click", (e) => {
 
 // delete sub-details
 document.querySelector(".detail").addEventListener("click", async (e) => {
-    if (e.target.classList.contains("cross")) {
+    if (e.target.closest(".cross")) {
         const subDetail = e.target.parentElement.parentElement;
         const subIndex = Number(subDetail.dataset.subIndex);
 
         const confirmed = await confirmDelete()
-        if(!confirmed) return
+        if (!confirmed) return
         // remove from data
         partitions[activePartitionIndex]
             .expenses[activeExpenseIndex]
@@ -912,16 +933,211 @@ function confirmDelete() {
 let deferredPrompt;
 
 window.addEventListener("beforeinstallprompt", (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
+    e.preventDefault();
+    deferredPrompt = e;
 
-  document.getElementById("install-btn").style.display = "block";
+    document.getElementById("install-btn").style.display = "block";
 });
 
 document.getElementById("install-btn").addEventListener("click", async () => {
-  if (!deferredPrompt) return;
+    if (!deferredPrompt) return;
 
-  deferredPrompt.prompt();
-  await deferredPrompt.userChoice;
-  deferredPrompt = null;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
 });
+
+
+
+//update version pop up
+let newWorker;
+
+if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/service-worker.js").then(reg => {
+
+        reg.addEventListener("updatefound", () => {
+            newWorker = reg.installing;
+
+            newWorker.addEventListener("statechange", () => {
+                if (
+                    newWorker.state === "installed" &&
+                    navigator.serviceWorker.controller
+                ) {
+                    // New update available
+                    document
+                        .getElementById("update-banner")
+                        .classList.remove("hide");
+                }
+            });
+        });
+    });
+}
+
+// When user clicks Update
+document.getElementById("update-btn")?.addEventListener("click", () => {
+    if (newWorker) {
+        newWorker.postMessage("SKIP_WAITING");
+    }
+    window.location.reload();
+});
+
+
+//slide bar (drawer)
+const drawerOverlay = document.querySelector(".drawer-overlay");
+const drawer = document.querySelector(".drawer");
+const hamburger = document.querySelector(".hamburger");
+const drawerCloseBtn = document.querySelector(".drawer-cross-btn");
+
+function openDrawer() {
+    drawerOverlay.classList.remove("hide");
+    drawer.classList.remove("close");
+    drawer.classList.add("open");
+}
+
+function closeDrawer() {
+    drawer.classList.remove("add");
+    drawer.classList.add("close");
+    drawerOverlay.classList.add("hide");
+}
+
+drawerOverlay.addEventListener("click", closeDrawer);
+hamburger.addEventListener("click", openDrawer);
+drawerCloseBtn.addEventListener("click", closeDrawer);
+
+
+
+//Export and Import Data functionality
+document.getElementById("export-btn").addEventListener("click", () => {
+    const data = {
+        partitions,
+        totalBalance
+    }
+
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "sumio-data-backup.json";
+
+    a.click();
+    URL.revokeObjectURL(url);
+
+    setTimeout(() => {
+        showToast("Data Exported Successfully!", "success");
+    }, 1000)
+})
+
+document.getElementById("import-btn").addEventListener("click", () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = ".json";
+
+    input.onchange = () => {
+        const file = input.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            try {
+                const data = JSON.parse(reader.result);
+
+                partitions = data.partitions || [];
+                totalBalance = data.totalBalance || 0;
+
+                localStorage.setItem("partitions", JSON.stringify(partitions));
+                localStorage.setItem("totalBalance", totalBalance);
+
+                // flag for toast after reload
+                localStorage.setItem("importSuccess", "true");
+
+                location.reload();
+            } catch (err) {
+                showToast("Invalid file format ❌");
+            }
+        }
+
+        reader.readAsText(file);
+    }
+    input.click();
+})
+
+window.addEventListener("load", () => {
+    if (localStorage.getItem("importSuccess") === "true") {
+        showToast("Data imported successfully!");
+        localStorage.removeItem("importSuccess");
+    }
+});
+
+
+// reset app data
+function clearAllData() {
+    const warningModal = document.querySelector(".reset-overlay");
+    warningModal.classList.remove("hide");
+    const resetModal = document.querySelector(".reset-modal");
+    resetModal.addEventListener("click", (e) => {
+        if (e.target.classList.contains("btn-reset")) {
+            setTimeout(() => {
+                partitions.splice(0);
+                totalBalance = 0;
+                localStorage.setItem("partitions", JSON.stringify(partitions));
+                localStorage.setItem("totalBalance", totalBalance);
+                warningModal.classList.add("hide");
+                location.reload();
+            }, 100)
+        }
+
+        if (e.target.classList.contains("btn-cancel")) {
+            setTimeout(() => {
+                warningModal.classList.add("hide");
+            }, 100)
+        }
+    })
+}
+
+document.getElementById("reset-btn").addEventListener("click", () => {
+    clearAllData();
+})
+
+
+// toast logic
+let toastTimeout;
+
+function showToast(message, type = "info", duration = 2000) {
+    const toast = document.getElementById("toast");
+
+    toast.className = `toast ${type}`;
+    toast.innerHTML = `<span id="toast-text">${message}</span>`;
+    toast.classList.remove("hide");
+
+    requestAnimationFrame(() => {
+        toast.classList.add("show");
+    })
+
+    //auto hide
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => {
+            toast.classList.add("hide");
+        }, 300)
+    }, duration)
+}
+
+
+//about section
+const aboutModal = document.querySelector(".about-modal");
+const aboutClose = document.querySelector(".about-close");
+
+document.getElementById("about-btn").addEventListener("click", () => {
+    aboutModal.classList.remove("hide");
+})
+
+aboutClose.addEventListener("click", () => {
+    aboutModal.classList.add("hide");
+})
+
+aboutModal.addEventListener("click", (e) => {
+    if(e.target === aboutModal) {
+        aboutModal.classList.add("hide");
+    }
+})

@@ -12,6 +12,7 @@ const STATIC_ASSETS = [
   "./expense_container.css",
   "./progress_circle.css",
   "./helpers.css",
+  "./initial_messages.css",
 
   // Icons
   "./icons/icon-192.png",
@@ -80,3 +81,10 @@ self.addEventListener("fetch", (event) => {
     )
   );
 });
+
+self.addEventListener("message", (event) => {
+  if (event.data === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+});
+
