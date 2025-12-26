@@ -1,4 +1,4 @@
-.spend-modal, .credit-modal {
+.spend-modal, .credit-modal, .add-modal{
     position: fixed;
     display: flex;
     justify-content: center;
@@ -11,7 +11,7 @@
     z-index: 2000;
 }
 
-.spend-modal-inner, .credit-modal-inner {
+.spend-modal-inner, .credit-modal-inner, .add-modal-inner {
     margin-top: -35%;
     height: fit-content;
     width: 80%;
@@ -24,14 +24,14 @@
     gap: 10px;
 }
 
-.spend-modal-inner input , .credit-modal-inner input{
+.spend-modal-inner input , .credit-modal-inner input, .add-modal-inner input{
     width: 100%;
     height: 40px;
     border: 1px solid rgba(0, 0, 0, 0.371);
     border-radius: 12px;
     padding-left: 10px;
 }
-.spend-modal-btns, .credit-modal-btns {
+.spend-modal-btns, .credit-modal-btns , .add-modal-btns{
     width: 100%;
     display: flex;
     
@@ -40,19 +40,19 @@
     margin-top: 1rem;
 
 }
-#enter-spend-btn, #cancel-spend-btn, #enter-credit-btn, #cancel-credit-btn {
+#enter-spend-btn, #cancel-spend-btn, #enter-credit-btn, #cancel-credit-btn, #enter-add-btn, #cancel-add-btn {
     border-radius: 30px;
     width: 48%;
     height: 2rem;
     font-size: 0.9rem;
 }
 
-#cancel-spend-btn, #cancel-credit-btn {
+#cancel-spend-btn, #cancel-credit-btn , #cancel-add-btn{
     color: rgb(94, 94, 94);
     background-color: rgba(149, 149, 149, 0.31);
     font-weight: bold;
 }
-#cancel-spend-btn:hover, #cancel-credit-btn:hover {
+#cancel-spend-btn:hover, #cancel-credit-btn:hover , #cancel-add-btn:hover{
     background-color: rgba(128, 128, 128, 0.825);
     color: black;
 }

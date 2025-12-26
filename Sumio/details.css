@@ -50,3 +50,13 @@
     justify-content: space-between;
     align-items: center;
 }
+
+.sub-detail-title:focus {
+    outline: none;
+    border: none;
+}
+
+#modal-expense-name:focus {
+    outline: none;
+    border: none;
+}

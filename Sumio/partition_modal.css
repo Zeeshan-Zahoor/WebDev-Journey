@@ -51,16 +51,16 @@
 }
 
 #add-partition-btn {
-    height: 28px;
-    width: 82px;
+    height: 33px;
+    width: 87px;
     margin:0;
     font-size: 11px;
     padding: 2px;
     background-color: rgb(16, 27, 118);
 }
 .add-partition-btn:active {
-    scale: 0.8;
-    transition: ease 0.4s;
+    scale: 0.9;
+    transition: ease 0.2s;
 }
 
 #save-partition-btn, #cancel-partition-btn {

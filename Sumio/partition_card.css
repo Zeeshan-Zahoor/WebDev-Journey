@@ -11,17 +11,17 @@
     background-color: white;
 }
 
+.partition-title:focus {
+    outline: none;
+    border: none;
+}
+
 .partition-container {
     background-color: #f5faff;
     display: flex;
     flex-direction: column;
-    min-height: 65dvh;
-    height: calc(99dvh - 9.6rem);
-    overflow-y: auto;
-
-    /* Hide scrollbar for Chrome, Edge, Safari */
-    scrollbar-width: none;          /* Firefox */
-    -ms-overflow-style: none;       /* Internet Explorer & Edge */
+    justify-content: center;
+    align-items: center;
 }
 .partition-container::-webkit-scrollbar {
   display: none;            /* Chrome, Safari */

@@ -1,5 +1,4 @@
 .edit-amount-window {
-    margin-top: 50%;    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -96,5 +95,20 @@
     background-color: #cccccc15;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
+}
+
+.amount-actions {
+    display: flex;
+    justify-content: baseline;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.add-amount-icon {
+    transition: transform 0.2s ease;
+}
+
+.add-amount-icon:active {
+    transform: scale(0.9);
 }

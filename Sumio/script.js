@@ -3,6 +3,7 @@ console.log("Let's Write Some JavaScript");
 // DOM Elements that are global/static
 const editAmount_Win = document.getElementsByClassName("edit-amount-modal")[0];
 const totalBalanceDisplay = document.getElementById("total-balance");
+const unSectionedBalanceDisplay = document.getElementById("un-sectioned");
 const enteredAmountInput = document.getElementById("entered-amount");
 const partitionContainer = document.getElementsByClassName("partition-container")[0]; // this is the wrapper that holds partition cards
 const addPartitionBtn = document.getElementById("add-partition-btn");
@@ -36,12 +37,17 @@ let partitions = JSON.parse(localStorage.getItem("partitions")) || [];
 let activePartitionIndex = null;
 let activeExpenseIndex = null;
 
+let unSectionedBalance;
+
+
 // Load data on page load
 window.onload = () => {
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
         totalBalance = parseFloat(savedBalance, 10);
+        unSectionedBalance = totalBalance;
         totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
+        unSectionedBalanceDisplay.innerText = `Un-sectioned: ₹${(unSectionedBalance).toLocaleString('en-IN')}`;
     }
 
     // Ensure partitions become objects
@@ -137,6 +143,62 @@ document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
     }, 200)
 })
 
+document.querySelector(".add-amount-icon").addEventListener("click", (e) => {
+    if (e.target.closest(".add-amount-icon")) {
+        const addAmountModal = document.querySelector(".add-modal");
+        setTimeout(() => {
+            addAmountModal.classList.remove("hide");
+        }, 200)
+    }
+})
+
+document.querySelector(".add-modal")?.addEventListener("click", (e) => {
+    if (e.target.closest(".enter-add-btn")) {
+        setTimeout(() => {
+            addTotalAmount();
+        }, 200);
+    }
+
+    if (e.target.closest(".cancel-add-btn")) {
+        setTimeout(() => {
+            document.querySelector(".add-modal").classList.add("hide");
+        }, 200)
+    }
+
+    if(e.target.classList.contains("add-modal")) {
+        document.querySelector(".add-modal").classList.add("hide");
+    }
+
+})
+document.querySelector(".add-modal")?.addEventListener("keydown", (e)=> {
+    if(e.target.closest(".enter-add-btn") || e.key == "Enter") {
+        setTimeout(() => {
+            addTotalAmount();
+        }, 200);
+    }
+})
+
+
+//add amount 
+function addTotalAmount() {
+    const amount = Number(document.getElementById("adding-amount").value);
+
+    if (amount == NaN) {
+        showToast("❌ Invalid Amount!", "error");
+        document.querySelector(".add-modal").classList.add("hide");
+        return;
+    }
+
+    totalBalance += amount;
+    localStorage.setItem("totalBalance", totalBalance);
+    renderTotalBalance();
+
+    //close modal
+    document.querySelector(".add-modal").classList.add("hide");
+}
+
+
+
 document.querySelector(".add-partition-section").addEventListener("click", (e) => {
     if (e.target.closest(".add-partition-btn")) {
         setTimeout(() => {
@@ -149,13 +211,14 @@ const editAmount = () => {
     let enteredAmount = enteredAmountInput.value;
     if (enteredAmount) {
         totalBalance = parseFloat(enteredAmount, 10);
-        if(totalBalance > 99999999999) {
+        if (totalBalance > 99999999999) {
             editAmount_Win.classList.add("hide");
             showToast("❌ Invalid Amount!")
             return;
         }
         totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
         localStorage.setItem("totalBalance", totalBalance);
+        renderTotalBalance()
     }
     editAmount_Win.classList.add("hide");
 };
@@ -174,8 +237,8 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
 
     partitionCard.innerHTML = `
-        <div class="partition-details">
-            <h3>${partitionObj.name}</h3>
+        <div  class="partition-details">
+            <h3 class="partition-title" contenteditable="true" >${partitionObj.name}</h3>
             <div class="partition-details-inner">
                 <h4>Balance: ₹${(partitionObj.remainingAmount).toLocaleString('en-IN')}</h4>
                 <h5>Not yet assigned: ₹${(unassingned > 0 ? unassingned : 0).toLocaleString('en-IN')}</h5> 
@@ -193,6 +256,20 @@ const createPartitionCard = (partitionObj, partIndex) => {
     // Append card to the wrapper that holds all partitions
     // NOTE: partitionContainer is the element that contains all partition cards
     partitionContainer.appendChild(partitionCard);
+
+    ["keydown", "blur"].forEach((evt) => {
+        partitionCard.querySelector(".partition-title").addEventListener(evt , (e) => {
+            if(evt === "keydown" && e.key == "Enter") {
+                e.preventDefault();
+                e.target.blur();
+                updatePartitionTitle(partitionCard, partIndex);
+            }
+
+            if(evt == "blur") {
+                updatePartitionTitle(partitionCard, partIndex);
+            }
+        })
+    })
 
     // Find this card's own expense-container to render its expenses inside it
     const myExpenseContainer = partitionCard.querySelector(".expense-container");
@@ -245,6 +322,8 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
         });
 
+        
+
         myExpenseContainer.appendChild(card);
 
     });
@@ -280,6 +359,16 @@ const createPartitionCard = (partitionObj, partIndex) => {
     });
 }
 
+function updatePartitionTitle(partitionCard, partIndex) {
+    const newName = partitionCard.querySelector(".partition-title").innerText.trim();
+
+    //update data
+    partitions[partIndex].name = newName;
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+}
+
+
+
 // Delete a partition
 const deletePartition = (partIndex) => {
     partitions.splice(partIndex, 1);
@@ -289,6 +378,8 @@ const deletePartition = (partIndex) => {
 
 // Render (clear + create) all partitions
 const renderAllPartitions = () => {
+    renderTotalBalance()
+
     // Clear old DOM
     partitionContainer.innerHTML = "";
     // Re-create
@@ -303,19 +394,31 @@ const renderAllPartitions = () => {
 };
 
 const renderTotalBalance = () => {
-    document.getElementById("total-balance").innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`
+    totalBalanceDisplay.innerText = `Total Balance: ₹${(totalBalance).toLocaleString('en-IN')}`;
+
+    unSectionedBalance = totalBalance; //reset to totalBalance first
+    if (partitions.length !== 0) {
+        partitions.forEach((partition) => {
+            unSectionedBalance -= partition.remainingAmount;
+        })
+    } else {
+        unSectionedBalance = totalBalance;
+    }
+
+    unSectionedBalanceDisplay.innerText = `Un-sectioned: ₹${(unSectionedBalance).toLocaleString('en-IN')}`;
+
 }
 
 function addPartition() {
     const partitionName = partitionInputName.value.trim();
     const partitionAmount = Number(partitionInputAmount.value);
-    if (partitionName && partitionAmount) {
+    if (partitionName && partitionAmount >= 0) {
         // check if the allocated amount gets beyond the balance
         let total = 0;
         partitions.forEach((partition) => {
             total += partition.allocatedAmount;
         })
-        if (partitionAmount + total <= totalBalance) {
+        if (partitionAmount + total <= totalBalance) { // intentionally allowed 0 amount allocation
             partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
             localStorage.setItem("partitions", JSON.stringify(partitions));
             renderAllPartitions();
@@ -371,7 +474,7 @@ function saveExpense() {
         total += expense.expenseAllocatedAmount
     })
     if (total + expenseAmount <= partitions[activePartitionIndex].allocatedAmount) {
-        if (expenseName && expenseAmount) {
+        if (expenseName && expenseAmount >= 0) {  //intentionally allowed 0 amount allocation
             partitions[activePartitionIndex].expenses.push({
                 expenseName: expenseName,
                 expenseAllocatedAmount: expenseAmount,
@@ -438,6 +541,19 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
     if (!expenseDetails_Model) return;
     expenseDetails_Model.classList.remove("hide");
     document.getElementById("modal-expense-name").innerText = `${expenseName}`;
+
+    //make the name editable
+    document.getElementById("modal-expense-name").addEventListener("blur", () => {
+        updateExpenseTitle(expenseIndex);
+    }, true)
+    document.getElementById("modal-expense-name").addEventListener("keydown", (e) => {
+        if(e.key == "Enter") {
+            e.preventDefault();
+            updateExpenseTitle(expenseIndex);
+            e.target.blur();
+        }
+    }, true)
+
     expenseDetails_Model.classList.remove("hide");
 
     expenseDetails_Model.style.transition = "transform 0.2s ease";
@@ -455,6 +571,15 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
     history.pushState({ modal: true }, "")
 
 };
+
+function updateExpenseTitle(expenseIndex) {
+    const newName = document.getElementById("modal-expense-name").innerText.trim();
+
+    //update in memory
+    partitions[activePartitionIndex].expenses[expenseIndex].expenseName = newName;
+
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+}
 
 
 function closeExpense() {
@@ -623,7 +748,7 @@ function addExpenseEntry() {
 
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
-                        <span>-₹${spendingAmount} (${remarks})</span>
+                        <span>-₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
                         <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
                     </div>
                     <div class="line"></div>`
@@ -631,7 +756,7 @@ function addExpenseEntry() {
 
         //update
         subDetail.subDetailTotal += spendingAmount;
-        activeSubDetailElement.querySelector('.sub-detail-total').textContent = `Total: ₹${subDetail.subDetailTotal}`
+        activeSubDetailElement.querySelector('.sub-detail-total').textContent = `Total: ₹${(subDetail.subDetailTotal).toLocaleString("en-IN")}`
 
         //save to the local storage back
         localStorage.setItem("partitions", JSON.stringify(partitions));
@@ -669,13 +794,12 @@ function addCreditAmount() {
     remainingProgressionRing.setAttribute('data-total', `${previousAllocatedAmount + creditedAmount}`)
 
     //update in storage data
-    const currExpense = partitions[activePartitionIndex].expenses[activeExpenseIndex]
-    currExpense.expenseAllocatedAmount += creditedAmount
-    currExpense.expenseRemainingAmount += creditedAmount
-    partitions[activePartitionIndex].remainingAmount += creditedAmount
-    totalBalance += creditedAmount
-    partitions[activePartitionIndex].allocatedAmount += creditedAmount
-    totalBalance += creditedAmount
+    const currExpense = partitions[activePartitionIndex].expenses[activeExpenseIndex];
+    currExpense.expenseAllocatedAmount += creditedAmount;
+    currExpense.expenseRemainingAmount += creditedAmount;
+    partitions[activePartitionIndex].remainingAmount += creditedAmount;
+    partitions[activePartitionIndex].allocatedAmount += creditedAmount;
+    totalBalance += creditedAmount;
 
     loadProgressionBars()
 
@@ -774,12 +898,12 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     const subDetailContent = `
         <div class="sub-details" data-sub-index="${subDetailIndex}">
             <div class="sub-detail-name">
-                <h4>${subDetailObject.subDetailName}</h4>
+                <h4 contenteditable="true" class="sub-detail-title">${subDetailObject.subDetailName}</h4>
                 ${svg}
             </div>
             <div class="sub-detail-list"></div>
             <h5 class="sub-detail-total">
-                Total: ₹${subDetailObject.subDetailTotal}
+                Total: ₹${(subDetailObject.subDetailTotal).toLocaleString('en-IN')}
             </h5>
             <div class="sub-detail-btns">
                 <button class="spend-btn">Spend</button>
@@ -800,7 +924,7 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     subDetailObject.subDetailList.forEach((expenseEntry) => {
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
-                        <span>-₹${expenseEntry.amount} (${expenseEntry.remark})</span>
+                        <span>-₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
                         <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
                     </div> 
                     <div class="line"></div>`
@@ -808,6 +932,39 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     })
 
 };
+
+
+// for inline name editing
+function updateSubDetailTitle(e) {
+    const newName = e.target.innerText.trim();
+    const subDetailEl = e.target.closest(".sub-details");
+    if (!subDetailEl) return;
+
+    const subIndex = Number(subDetailEl.dataset.subIndex);
+
+    // Update data
+    partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex]
+        .expenseDetails[subIndex]
+        .subDetailName = newName;
+
+
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+}
+
+document.querySelector(".detail").addEventListener("blur", (e) => {
+    if (!e.target.classList.contains("sub-detail-title")) return;
+    updateSubDetailTitle(e);
+}, true);// for blur
+
+document.querySelector(".detail").addEventListener("keydown", (e) => {
+    if (!e.target.classList.contains("sub-detail-title")) return;
+    if (e.key == "Enter") {
+        e.preventDefault();
+        updateSubDetailTitle(e);
+        e.target.blur(); //remve focus
+    }
+})
 
 
 const renderAllExpenseDetails = () => {
@@ -953,37 +1110,37 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 let newWorker;
 
 if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("/service-worker.js").then(reg => {
+    navigator.serviceWorker.register("/service-worker.js").then(reg => {
 
-    // If there's already a waiting SW on load
-    if (reg.waiting) {
-      newWorker = reg.waiting;
-      showUpdateBanner();
-    }
-
-    reg.addEventListener("updatefound", () => {
-      newWorker = reg.installing;
-
-      newWorker.addEventListener("statechange", () => {
-        if (
-          newWorker.state === "installed" &&
-          navigator.serviceWorker.controller
-        ) {
-          showUpdateBanner();
+        // If there's already a waiting SW on load
+        if (reg.waiting) {
+            newWorker = reg.waiting;
+            showUpdateBanner();
         }
-      });
-    });
-  });
 
-  // important
-  navigator.serviceWorker.addEventListener("controllerchange", () => {
-    console.log("New SW controlling page → reloading");
-    window.location.reload();
-  });
+        reg.addEventListener("updatefound", () => {
+            newWorker = reg.installing;
+
+            newWorker.addEventListener("statechange", () => {
+                if (
+                    newWorker.state === "installed" &&
+                    navigator.serviceWorker.controller
+                ) {
+                    showUpdateBanner();
+                }
+            });
+        });
+    });
+
+    // important
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+        console.log("New SW controlling page → reloading");
+        window.location.reload();
+    });
 }
 
 function showUpdateBanner() {
-  document.getElementById("update-banner")?.classList.remove("hide");
+    document.getElementById("update-banner")?.classList.remove("hide");
 }
 
 
@@ -1150,7 +1307,7 @@ aboutClose.addEventListener("click", () => {
 })
 
 aboutModal.addEventListener("click", (e) => {
-    if(e.target === aboutModal) {
+    if (e.target === aboutModal) {
         aboutModal.classList.add("hide");
     }
 })
