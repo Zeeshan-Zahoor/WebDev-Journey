@@ -10,14 +10,13 @@
 
 html {
   height: clamp(0px, 100dvh, 100dvh);
+  background: var(--bg-main);
   overflow: hidden;
 }
 
 /* Body styling */
 body {
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color: #f5faff;
-  color: #002750;
   height: clamp(0px, 100dvh, 100dvh);
   /* important: don't lock height to 100vh*/
   max-width: 100dvw;
@@ -124,7 +123,7 @@ main {
 
 /* Container box */
 .container {
-  background-color: #f5faff;
+  /* background-color: #f5faff; */
   padding: 0 0.5rem;
   border-top: 1px solid rgba(0, 0, 0, 0.26);
   width: min(100dvw, 820px);
@@ -136,9 +135,7 @@ main {
   /* smooth srolling  */
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
-  overscroll-behavior: contain;
-  touch-action: pan-y;
-  will-change: scroll-position;
+  overscroll-behavior: contain; 
 
   /* Hide scrollbar for Chrome, Edge, Safari */
   scrollbar-width: none;
@@ -176,7 +173,8 @@ main {
   margin-bottom: 10px;
   font-size: 20px;
   display: inline;
-  color: #003366;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .edit-amount-btn {
@@ -286,4 +284,41 @@ footer {
 
 .hide {
   display: none;
+}
+
+
+/* theme  */
+button,
+.add-expense-btn {
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 0.4rem 0.4rem;
+  font-weight: 500;
+  transition: transform 0.15s ease;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+.container {
+  background-color: var(--bg-main);
+}
+
+header {
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.top-shadow {
+  background:linear-gradient(180deg, var(--bg-elevated-inverted), var(--bg-surface));
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-primary);
+}
+#un-sectioned {
+  color: var(--text-muted);
 }

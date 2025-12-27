@@ -1,0 +1,29 @@
+:root {
+  /* Backgrounds */
+  --bg-main: #1c1c1c;
+  --bg-surface: #262626;
+  --bg-card: #222222;
+  --bg-elevated: #424242;
+  --bg-elevated-inverted: rgb(31, 31, 31);
+  --bg-elevated-section: #0000002e;
+  --bg-surface-section: #6363638a;
+
+  /* Text */
+  --text-primary: #f4f6ff;
+  --text-secondary: #aeb6ff;
+  --text-muted: #b0b0b0;
+
+  /* Accent */
+  --accent-primary: #2c2d2d;
+  --accent-secondary: #000000;
+  --accent-danger: #ff6b6b;
+
+  /* Borders & shadows */
+  --border-soft: rgba(168, 168, 168, 0.206);
+  --shadow-soft: 0 10px 30px rgba(28, 28, 28, 0.105);
+  --shadow-soft-I : 1px 2px 4px 0px #0000008c;
+
+  /* Radius */
+  --radius-lg: 18px;
+  --radius-md: 14px;
+}

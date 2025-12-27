@@ -165,13 +165,13 @@ document.querySelector(".add-modal")?.addEventListener("click", (e) => {
         }, 200)
     }
 
-    if(e.target.classList.contains("add-modal")) {
+    if (e.target.classList.contains("add-modal")) {
         document.querySelector(".add-modal").classList.add("hide");
     }
 
 })
-document.querySelector(".add-modal")?.addEventListener("keydown", (e)=> {
-    if(e.target.closest(".enter-add-btn") || e.key == "Enter") {
+document.querySelector(".add-modal")?.addEventListener("keydown", (e) => {
+    if (e.target.closest(".enter-add-btn") || e.key == "Enter") {
         setTimeout(() => {
             addTotalAmount();
         }, 200);
@@ -258,14 +258,14 @@ const createPartitionCard = (partitionObj, partIndex) => {
     partitionContainer.appendChild(partitionCard);
 
     ["keydown", "blur"].forEach((evt) => {
-        partitionCard.querySelector(".partition-title").addEventListener(evt , (e) => {
-            if(evt === "keydown" && e.key == "Enter") {
+        partitionCard.querySelector(".partition-title").addEventListener(evt, (e) => {
+            if (evt === "keydown" && e.key == "Enter") {
                 e.preventDefault();
                 e.target.blur();
                 updatePartitionTitle(partitionCard, partIndex);
             }
 
-            if(evt == "blur") {
+            if (evt == "blur") {
                 updatePartitionTitle(partitionCard, partIndex);
             }
         })
@@ -322,7 +322,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
         });
 
-        
+
 
         myExpenseContainer.appendChild(card);
 
@@ -469,7 +469,7 @@ function saveExpense() {
         return;
     }
     //check if the allocation exceeds the partition amount
-    total = 0;
+    let total = 0;
     partitions[activePartitionIndex].expenses.forEach((expense) => {
         total += expense.expenseAllocatedAmount
     })
@@ -547,7 +547,7 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
         updateExpenseTitle(expenseIndex);
     }, true)
     document.getElementById("modal-expense-name").addEventListener("keydown", (e) => {
-        if(e.key == "Enter") {
+        if (e.key == "Enter") {
             e.preventDefault();
             updateExpenseTitle(expenseIndex);
             e.target.blur();
@@ -1311,3 +1311,5 @@ aboutModal.addEventListener("click", (e) => {
         aboutModal.classList.add("hide");
     }
 })
+
+

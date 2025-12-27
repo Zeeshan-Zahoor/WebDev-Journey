@@ -5,10 +5,11 @@
     align-items: center;
     width: 100%;
     height: auto;
-    border: 1px  solid #060d7f2e;
-    border-radius: 8px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-lg);
     margin-top: 10px;
-    background-color: white;
+    background-color: var(--bg-card);
+    /* box-shadow: var(--shadow-soft); */
 }
 
 .partition-title:focus {
@@ -17,7 +18,7 @@
 }
 
 .partition-container {
-    background-color: #f5faff;
+    background-color: var(--bg-main);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -53,17 +54,24 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
-    
 }
 
 
 .partition-details {
-    background-color: #060d7f2e;
+    background: linear-gradient(90deg, var(--bg-surface), var(--bg-elevated), var(--bg-surface));;
     width: 100%;
     text-align: center;
     padding-bottom: 3px;
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+}
+
+.partition-details-inner h4 {
+    color: var(--text-primary);
+}
+
+.partition-details-inner h5 {
+    color: var(--text-muted);
 }
 
 .partition-details-inner {
@@ -72,4 +80,30 @@
     justify-content: space-between;
     padding: 5px 15px 5px 15px;
 
+}
+.partition-add-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(
+    140deg,
+    var(--bg-elevated-section),
+    var(--bg-surface-section));
+    height: 35px;
+    box-shadow: var(--shadow-soft-I);
+    /* border-radius: var(--radius-md); */
+    border-radius: 34px;
+    corner-shape: squircle;
+}
+.partition-add-btn:active {
+    scale: 0.96;
+    transition: 0.2s ease-in-out;
+}
+
+.add-partition-btn {
+    margin-left: 4px;
+}
+
+#add-section-icon {
+    stroke: var(--text-muted);
 }
