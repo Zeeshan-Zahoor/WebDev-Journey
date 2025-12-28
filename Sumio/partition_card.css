@@ -35,6 +35,7 @@
     transform: rotateY(180deg);
     cursor: pointer;
     border-radius: 25px;
+    fill: var(--text-muted-I);
 }
 
 .partition-container .partition-card .partition-card-btns .delete-btn:active {
@@ -92,8 +93,9 @@
     height: 35px;
     box-shadow: var(--shadow-soft-I);
     /* border-radius: var(--radius-md); */
-    border-radius: 34px;
+    border-radius: 15px;
     corner-shape: squircle;
+    border: 1px solid var(--border-soft);
 }
 .partition-add-btn:active {
     scale: 0.96;

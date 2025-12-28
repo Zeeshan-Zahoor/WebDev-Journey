@@ -11,12 +11,12 @@
 }
 
 .partition-content {
-    background: #ffffff;
+    background: var(--bg-modal);
     padding: 20px;
     border-radius: 12px;
     width: 80%;
     max-width: 300px;
-    margin-top: 45%;
+    margin-top: 10rem;
     max-height: fit-content;
     text-align: center;
 }
@@ -33,7 +33,7 @@
     margin-bottom: 0;
     margin-top: 10px;
     border-radius: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid rgba(255, 255, 255, 0.432);
 }
 
 .partition-content button {
@@ -64,12 +64,17 @@
 #save-partition-btn,
 #cancel-partition-btn {
     border-radius: 20px;
+    background: var(--bg-modal-btns-save);
+    color: var(--text-primary-inverted);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft-I);
+    
 }
 
 #cancel-partition-btn {
-    background-color: #dfdfdf;
-    color: black;
-    font-weight: 600;
+    background-color: var(--bg-modal-btns-cancel);
+    color: var(--text-primary);
+    border: 1px solid var(--border-soft);
 }
 
 #save-partition-btn:active,

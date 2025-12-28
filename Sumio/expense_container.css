@@ -77,3 +77,10 @@
 .expense-details h5 {
   color: var(--text-secondary);
 }
+
+.delete-expense-btn-folder {
+  fill: var(--folder-fill);
+}
+.delete-expense-btn-minus {
+  fill: var(--text-muted);
+}

@@ -22,7 +22,7 @@
     padding: 1rem;
     font-size: larger;
     text-align: center;
-    color: rgba(42, 42, 152, 0.151);
+    color: var(--text-muted-I);
 }
 
 .hide {

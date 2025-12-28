@@ -107,6 +107,7 @@
 
 .add-amount-icon {
     transition: transform 0.2s ease;
+    fill: var(--text-muted);
 }
 
 .add-amount-icon:active {
