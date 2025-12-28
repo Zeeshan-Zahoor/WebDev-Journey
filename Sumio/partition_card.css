@@ -5,11 +5,10 @@
     align-items: center;
     width: 100%;
     height: auto;
-    border: 1px solid var(--border-soft);
-    border-radius: var(--radius-lg);
     margin-top: 10px;
+    border-radius: var(--radius-lg);
     background-color: var(--bg-card);
-    /* box-shadow: var(--shadow-soft); */
+    box-shadow: var(--shadow-soft);
 }
 
 .partition-title:focus {

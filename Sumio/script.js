@@ -113,6 +113,10 @@ function hide_partition_modal() {
     partitionModal.classList.add("hide");
 }
 
+document.querySelector(".edit-amount-btn").addEventListener("click", () => {
+    show_Edit_Amount_Window();
+})
+
 // Show edit amount window
 function show_Edit_Amount_Window() {
     setTimeout(() => {

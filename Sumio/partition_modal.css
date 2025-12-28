@@ -33,7 +33,7 @@
     margin-bottom: 0;
     margin-top: 10px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.432);
+    border: 1px solid var(--border-input);
 }
 
 .partition-content button {
@@ -57,7 +57,6 @@
     margin-right: 10px;
     font-size: 11px;
     padding: 2px;
-    fill:rgba(243, 148, 5, 0.86);
     background-color: transparent;
 }
 

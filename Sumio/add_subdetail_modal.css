@@ -15,18 +15,18 @@
     height: fit-content;
     width: 80%;
     padding: 30px;
-    background-color: white;
+    background-color: var(--bg-modal);
     border-radius: 13px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-top: 55%;
+    box-shadow: var(--shadow-soft-I);
 }
 
 .add-sub-detail-modal-inner input {
     width: 100%;
     height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.371);
     border-radius: 12px;
     padding-left: 10px;
 }
@@ -37,7 +37,7 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
-
+    
 }
 
 #enter-sub-detail-name-btn,
@@ -46,6 +46,10 @@
     border-radius: 30px;
     height: 2rem;
     width: 48%;
+    background-color: var(--bg-modal-btns-save);
+    color: var(--text-primary-inverted);
+    box-shadow: var(--shadow-soft-I);
+    font-weight: 600;
 }
 
 #enter-sub-detail-name-btn:active,
@@ -55,8 +59,9 @@
 }
 
 #cancel-sub-detail-name-btn {
-    color: rgb(67, 67, 67);
-    background-color: rgba(149, 149, 149, 0.499);
+    color: var(--text-primary);
+    background-color: var(--bg-modal-btns-cancel);
+    border: 1px solid var(--border-soft);
     font-weight: bold;
 }
 

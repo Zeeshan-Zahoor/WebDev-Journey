@@ -14,7 +14,7 @@
     margin-bottom: 0px;
 }
 .modal-content {
-    background-color: white;
+    background-color: var(--bg-modal);
     padding: 20px;
     border-radius: 8px;
     max-width: 300px;
@@ -34,11 +34,16 @@
 
 #save-expense-btn, #cancel-expense-btn {
     border-radius: 20px;
+    background: var(--bg-modal-btns-save);
+    color: var(--text-primary-inverted);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft-I);
 }
 #cancel-expense-btn {
-    background-color: #c5c5c5cc;
-    color: black;
+    background-color: var(--bg-modal-btns-cancel);
+    color: var(--text-primary);
     font-weight: 600;
+    
 }
 
 #save-expense-btn:active, #cancel-expense-btn:active {

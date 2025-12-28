@@ -16,28 +16,29 @@
     height: fit-content;
     width: 80%;
     padding: 30px;
-    background-color: white;
     border-radius: 13px;
     display: flex;
+    background-color: var(--bg-modal);
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    
 }
 
 .spend-modal-inner input , .credit-modal-inner input, .add-modal-inner input{
     width: 100%;
     height: 40px;
-    border: 1px solid rgba(0, 0, 0, 0.371);
     border-radius: 12px;
     padding-left: 10px;
-}
+} 
 .spend-modal-btns, .credit-modal-btns , .add-modal-btns{
     width: 100%;
     display: flex;
-    
+
     justify-content: space-between;
     align-items: center;
     margin-top: 1rem;
+    
 
 }
 #enter-spend-btn, #cancel-spend-btn, #enter-credit-btn, #cancel-credit-btn, #enter-add-btn, #cancel-add-btn {
@@ -45,11 +46,15 @@
     width: 48%;
     height: 2rem;
     font-size: 0.9rem;
+    background: var(--bg-modal-btns-save);
+    color: var(--text-primary-inverted);
+    font-weight: 600;
+    box-shadow: var(--shadow-soft-I);
 }
 
 #cancel-spend-btn, #cancel-credit-btn , #cancel-add-btn{
-    color: rgb(94, 94, 94);
-    background-color: rgba(149, 149, 149, 0.31);
+    color: var(--text-primary);
+    background-color: var(--bg-modal-btns-cancel);
     font-weight: bold;
 }
 #cancel-spend-btn:hover, #cancel-credit-btn:hover , #cancel-add-btn:hover{

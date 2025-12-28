@@ -1,16 +1,18 @@
+
 .edit-amount-window {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 10px;
     align-items: center;
-    width: 60%;
+    width: 70%;
+    max-width: 340px;
     padding: 20px 5px;
-    background-color: rgb(255, 255, 255);
-    box-shadow: 0 0 140px 0px black;
+    background-color: var(--bg-modal);
     border-radius: 12px;
     position: relative;
     z-index: 1001;
+    box-shadow: var(--shadow-soft-I);
 
 }
 
@@ -18,25 +20,38 @@
     text-align: center;
     padding: 5px;
     font-size: 18px;
-    color: #002750;
+    color: var(--text-primary);
     font-weight: 600;
-    width: 140px;
+    width: 90%;
     height: 35px;
     max-width: 100%;
     background-color: transparent;
-    border: 1px solid rgba(23, 17, 105, 0.512);
     border-radius: 12px;
     
 }
 
+.edit-amount-window-btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    margin-top: 0.5rem;
+    gap: 0.5rem;
+}
+
 .enter-btn, .cancel-btn {
-    width: 70px;
-    font-size: 13px;
-    border-radius: 11px;
+    flex: 1;
+    font-size: 0.9rem;
+    height: 2rem;
+    border-radius: var(--radius-md);
+    background: var(--bg-modal-btns-save);
+    box-shadow: var(--shadow-soft-I);
+    color: var(--text-primary-inverted);
+    font-weight: bold;
 }
 .cancel-btn {
-    background-color: rgba(128, 128, 128, 0.415);
-    color: black;
+    background-color: var(--bg-modal-btns-cancel);
+    color: var(--text-primary);
     font-weight: 600;
 }
 .cancel-btn:active {
@@ -92,7 +107,7 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: #cccccc15;
+    background-color: #00000073;
     display: flex;
     justify-content: center;
     align-items: center;
