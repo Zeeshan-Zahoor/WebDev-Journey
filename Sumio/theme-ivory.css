@@ -1,0 +1,50 @@
+:root {
+  /* Backgrounds */
+  --bg-main: #f3efe9;                 /* app background */
+  --bg-surface: #f7f4ee;              /* sections */
+  --bg-card: #f9f6f1;                 /* cards */
+  --bg-elevated: #ffffffcc;           /* elevated surfaces */
+  --bg-elevated-inverted: #1f1f1f;
+  --bg-elevated-section: #0000000d;
+  --bg-surface-section: #00000012;
+  --bg-modal: #fbf9f5;
+
+  --bg-menu-btns: #e9e4db;
+  --bg-modal-btns-save: #d6b36a;       /* gold */
+  --bg-modal-btns-cancel: #e0dbd3;
+
+  --bg-sub-detail: #efe8dc;
+
+  /* Text */
+  --text-primary: #2a2a2a;
+  --text-primary-inverted: #ffffff;
+
+  --text-secondary: #5b5b5b;
+  --text-muted: #7a7a7a;
+  --text-muted-I: #00000040;
+
+  /* Accent Colors */
+  --accent-primary: #d6b36a;           /* soft gold */
+  --accent-secondary: #3a3a3a;
+  --accent-danger: #d65a5a;
+
+  /* Icons / Fills */
+  --folder-fill: #c9a457;
+
+  /* Borders & Shadows */
+  --border-soft: rgba(0, 0, 0, 0.08);
+  --border-input: rgba(0, 0, 0, 0.18);
+
+  --shadow-soft: 0 12px 30px rgba(0, 0, 0, 0.08);
+  --shadow-soft-I: 0 2px 6px rgba(0, 0, 0, 0.18);
+
+  --outline-I: rgba(0, 0, 0, 0.25);
+
+  /* Radius*/
+  --radius-lg: 18px;
+  --radius-md: 14px;
+  --radius-sm: 8px;
+
+  /* Links*/
+  --link-color: #8a6f3e;
+}
