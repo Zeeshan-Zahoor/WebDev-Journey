@@ -17,8 +17,7 @@
     height: fit-content;
     border-bottom-left-radius: 10px;
     width: 260px;
-    background: #0d165d;
-    color: white;
+    background: var(--bg-surface);
     z-index: 100;
     padding: 20px;
 
@@ -41,9 +40,8 @@
     height: 35px;
     width: 35px;
 }
-
-.drawer-cross-btn:active {
-    background-color: rgb(23, 29, 130);
+.drawer-cross-btn-icon {
+    fill: var(--text-muted);
 }
 
 .drawer.open {
@@ -64,7 +62,7 @@
     margin-bottom: 10px;
     background: none;
     border: none;
-    color: white;
+    color: var(--text-primary);
     text-align: left;
     font-size: 15px;
     cursor: pointer;

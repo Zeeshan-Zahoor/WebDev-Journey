@@ -13,10 +13,11 @@
     width: 80%;
     max-width: 360px;
     height: fit-content;
-    background: #1d0d67e3;
+    background: var(--text-primary-inverted);
     border-radius: 16px;
     padding: 20px;
-    box-shadow: 0 20px 40px rgba(255, 255, 255, 0.173);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-soft);
     animation: scaleIn 0.2s ease;
 }
 
@@ -33,7 +34,7 @@
 }
 
 .reset-tip {
-    background: #263473;
+    background: var(--border-soft);
     color: #c0c0c0;
     padding: 8px;
     border-radius: 10px;
@@ -52,8 +53,8 @@
     padding: 8px;
     border-radius: 10px;
     border: none;
-    background: #342592;
-    color: #b9b9b9;
+    background: var(--bg-modal-btns-cancel);
+    color: var(--text-muted);
 }
 
 .btn-reset {
@@ -62,8 +63,8 @@
     padding: 8px;
     border-radius: 10px;
     border: none;
-    background: #ef4444;
-    color: white;
+    background: var(--accent-danger);
+    color: var(--text-primary);
 }
 
 .hide {

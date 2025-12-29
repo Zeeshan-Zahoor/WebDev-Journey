@@ -10,7 +10,7 @@
 
 .progress-ring__background {
   fill: none;
-  stroke: #0a2b6d;
+  stroke: var(--bg-elevated);
   stroke-width: 7;
 }
 
@@ -32,7 +32,7 @@
 .progress-text {
   position: absolute;
   inset: 0;
-  color: white;
+  color: var(--text-primary);
   font-family:'Times New Roman', Times, serif;
   display: flex;
   align-items: center;

@@ -11,6 +11,7 @@
   --bg-menu-btns : #3f3e3e8a;
   --bg-modal-btns-save: #e5e5e5;
   --bg-modal-btns-cancel: #5f5d5d54;
+  --bg-sub-detail: rgb(189, 189, 189);
 
   /* Text */
   --text-primary: #f4f6ff;
@@ -20,9 +21,9 @@
   --text-muted-I: #ffffff35;
 
   /* Accent */
-  --accent-primary: #2c2d2d;
+  --accent-primary: #00e6f7;
   --accent-secondary: #000000;
-  --accent-danger: #ff6b6b;
+  --accent-danger: #fc4c4c;
 
   /* fills  */
   --folder-fill: rgba(126, 62, 191, 0.833);
@@ -39,4 +40,7 @@
   --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 6px;
+
+  /* links  */
+  --link-color: #8ab4ff;
 }

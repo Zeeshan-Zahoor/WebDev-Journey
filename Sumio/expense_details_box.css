@@ -10,7 +10,7 @@
     align-items: center;
     width: min(100dvw, 820px);
     height: 100dvh;
-    background-color: white;
+    background-color: var(--bg-main);
     z-index: 2;
 
 }
@@ -19,7 +19,7 @@
 }
 
 #modal-expense-name {
-    color: white;
+    color: var(--text-primary);
     font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     font-size: 1.4rem;
     margin: 0;
@@ -37,9 +37,8 @@
     width: 97%;
     /* background-color: #010028; */
 
-    background: linear-gradient(180deg, #01002d 0%, #040037 40%, #001235 100%);
-
-
+    background: linear-gradient(180deg, var(--bg-elevated-inverted), var(--bg-surface));
+    border: 1px solid var(--border-soft);
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -51,14 +50,15 @@
     height: 92%;
     overflow-y: auto;
     width: 97%;
-    background-color: rgb(251, 251, 251);
+    background-color: var(--bg-elevated-inverted);
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.486);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--border-soft);
+    box-shadow: var(--shadow-soft);
     padding: 1% 1% 1% 1%;
     text-align: left;
     scrollbar-width: thin;          /* Firefox */
     -ms-overflow-style: thin;   
+
 }
 
 #detials-box::-webkit-scrollbar {
@@ -71,8 +71,8 @@
     width: fit-content;
     height: fit-content;
     padding: 0.5rem;
-    background-color: #141289;
-    box-shadow: -1px -1px 13px #000000d4;
+    background-color: var(--bg-modal-btns-save);
+    box-shadow: -var(--shadow-soft);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -82,19 +82,13 @@
     right: 5dvw;
 }
 
-.add-sub-detail-btn:hover {
-    background-color: #262493db;
-    transition: ease 0.2s;
-}
 .add-sub-detail-btn:active {
-    /* padding: 0.6rem; */
     scale: 0.9;
     transition: ease 0.1s;
 }
 
-.plus {
-    width: 2rem;
-    filter: invert(100);
+.add-sub-detail-btn-plus {
+    fill: var(--text-primary-inverted);
 }
 
 .boxes {
@@ -118,7 +112,7 @@
     text-align: center;
 }
 .label {
-    color: white;
+    color: var(--text-primary);
     font-size: 0.8rem;
     font-weight: 400;
 }
@@ -200,6 +194,10 @@
 }
 
 #close-modal-btn {
+    background-color: var(--bg-surface-section);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-soft);
+    
     width: 6rem;
     border-radius: 9px;
     margin: 10px;

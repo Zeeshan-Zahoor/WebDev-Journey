@@ -9,8 +9,9 @@
 }
 
 .about-card {
-  background: #0b0f2d;
-  color: #fff;
+  background: var(--text-primary-inverted);
+  color: var(--text-primary);
+  border: 1px solid var(--border-soft);
   width: 90%;
   max-width: 400px;
   padding: 20px;
@@ -25,7 +26,7 @@
   right: 14px;
   background: none;
   border: none;
-  color: #aaa;
+  color: var(--text-muted);
   font-size: 18px;
 }
 
@@ -58,7 +59,7 @@
 }
 
 .about-section.links a {
-  color: #8ab4ff;
+  color: var(--link-color);
   text-decoration: none;
   font-size: 14px;
 }
@@ -75,6 +76,7 @@
     transform: scale(0.9);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
