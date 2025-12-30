@@ -27,6 +27,9 @@ const remainingProgressionRing = document.getElementById("progress-ring-remainin
 const enterSubDetailName = document.getElementById('enter-sub-detail-name-btn')
 const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn')
 
+
+
+
 // App state
 let totalBalance = 0;
 
@@ -38,10 +41,20 @@ let activePartitionIndex = null;
 let activeExpenseIndex = null;
 
 let unSectionedBalance;
-
+let appTheme;
 
 // Load data on page load
 window.onload = () => {
+    appTheme = localStorage.getItem("theme");
+
+    if (!appTheme) {
+        appTheme = "dark";
+        localStorage.setItem("theme", appTheme);
+        document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d')
+    }
+
+    document.getElementById("theme-link").href = `theme-${appTheme}.css`;
+
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
         totalBalance = parseFloat(savedBalance, 10);
@@ -1317,3 +1330,25 @@ aboutModal.addEventListener("click", (e) => {
 })
 
 
+//theme change functionality
+const drawerItem = document.querySelector(".drawer-item-theme");
+const themeBox = document.querySelector(".theme-box");
+
+drawerItem?.addEventListener("click", () => {
+    drawerItem.classList.toggle("active");
+    themeBox.classList.toggle("open");
+});
+
+document.getElementById("dark").addEventListener("click", () => {
+    appTheme = "dark";
+    document.getElementById("theme-link").href = "theme-dark.css";
+    localStorage.setItem("theme", appTheme);
+    document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d');
+});
+
+document.getElementById("ivory").addEventListener("click", () => {
+    appTheme = "ivory";
+    document.getElementById("theme-link").href = "theme-ivory.css";
+    localStorage.setItem("theme", appTheme);
+    document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
+});

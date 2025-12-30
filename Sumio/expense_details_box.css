@@ -72,7 +72,7 @@
     height: fit-content;
     padding: 0.5rem;
     background-color: var(--bg-modal-btns-save);
-    box-shadow: -var(--shadow-soft);
+    box-shadow: var(--shadow-soft-I);
     display: flex;
     justify-content: center;
     align-items: center;

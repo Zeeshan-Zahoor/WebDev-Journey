@@ -11,7 +11,7 @@
 html {
   height: clamp(0px, 100dvh, 100dvh);
   background: var(--bg-main);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* Body styling */
@@ -22,6 +22,7 @@ body {
   max-width: 100dvw;
   touch-action: manipulation;
   overflow: hidden;
+  background-color: var(--bg-main);
 }
 
 
@@ -38,7 +39,9 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 0.4rem;
-  z-index: 1;
+  z-index: 2;
+  box-shadow: var(--shadow-soft);
+  border-bottom: 1px solid var(--border-soft);
 
 }
 
@@ -67,7 +70,7 @@ input::placeholder {
 }
 
 #hero {
-  color: #ffffff;
+  color: var(--text-primary);
   font-size: larger;
 }
 
@@ -148,8 +151,7 @@ main {
 /* Container box */
 .container {
   /* background-color: #f5faff; */
-  padding: 0 0.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.26);
+  /* padding: 0 0.5rem; */
   width: min(100dvw, 820px);
   margin: auto;
   max-height: calc(99dvh - 10.6rem);
@@ -238,7 +240,7 @@ button {
   padding: 6px;
   margin-bottom: 5px;
   font-size: 16px;
-  background-color: #020077;
+  /* background-color: #020077; */
   color: white;
   border: none;
   border-radius: 8px;
@@ -246,9 +248,9 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #020077;
-}
+/* button:hover { */
+  /* background-color: #020077; */
+/* } */
 
 .expense-card:hover {
   background-color: #a1bee1;
@@ -279,14 +281,14 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(177, 177, 177, 0);
+  background-color: rgba(10, 10, 10, 0.445);
   backdrop-filter: blur(1px);
   z-index: 2;
 }
 
 .update-banner {
-  background: #070e93;
-  color: white;
+  background: var(--bg-modal);
+  color: var(--text-primary);
   padding: 10px 16px;
   border-radius: 12px;
   display: flex;
@@ -296,11 +298,13 @@ footer {
   gap: 12px;
   align-items: center;
   z-index: 9999;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
 }
 
 .update-banner button {
-  background: #2158fe;
+  background: var(--bg-modal-btns-save);
+  color: var(--text-primary-inverted);
   border: none;
   padding: 6px 12px;
   border-radius: 8px;

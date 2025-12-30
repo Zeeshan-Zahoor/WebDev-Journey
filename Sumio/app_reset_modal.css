@@ -24,18 +24,18 @@
 .reset-modal h3 {
     margin: 0 0 10px;
     font-size: 15px;
-    color: rgb(254, 254, 254);
+    color: var(--text-primary);
 }
 
 .reset-warning {
     font-size: 13px;
-    color: #cbcbcb;
+    color: var(--text-muted);
     margin-bottom: 12px;
 }
 
 .reset-tip {
     background: var(--border-soft);
-    color: #c0c0c0;
+    color: var(--text-primary);
     padding: 8px;
     border-radius: 10px;
     font-size: 11px;

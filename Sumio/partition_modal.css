@@ -51,6 +51,7 @@
 }
 
 #add-partition-btn {
+    color: var(--text-muted);
     height: 33px;
     width: 64px;
     margin: 0;
