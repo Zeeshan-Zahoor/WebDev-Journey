@@ -11,7 +11,7 @@
 html {
   height: clamp(0px, 100dvh, 100dvh);
   background: var(--bg-main);
-  /* overflow: hidden; */
+  overflow: hidden;
 }
 
 /* Body styling */
@@ -21,8 +21,9 @@ body {
   /* important: don't lock height to 100vh*/
   max-width: 100dvw;
   touch-action: manipulation;
-  overflow: hidden;
+  /* overflow: hidden; */
   background-color: var(--bg-main);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 

@@ -33,8 +33,13 @@ const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn'
 // App state
 let totalBalance = 0;
 
-// IMPORTANT: partitions are objects {}
-let partitions = JSON.parse(localStorage.getItem("partitions")) || [];
+let partitions;
+try {
+    partitions = JSON.parse(localStorage.getItem("partitions")) || [];
+} catch {
+    partitions = [];
+}
+
 
 // Track which partition index the expense modal is currently adding to
 let activePartitionIndex = null;
@@ -50,9 +55,15 @@ window.onload = () => {
     if (!appTheme) {
         appTheme = "dark";
         localStorage.setItem("theme", appTheme);
+        document.querySelector(".menu-theme").innerHTML = darkModeIcon;
         document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d')
     }
 
+    if (appTheme === "ivory") {
+        document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
+        document.querySelector(".menu-theme").innerHTML = lightModeIcon;
+
+    }
     document.getElementById("theme-link").href = `theme-${appTheme}.css`;
 
     const savedBalance = localStorage.getItem("totalBalance");
@@ -165,6 +176,7 @@ document.querySelector(".add-amount-icon").addEventListener("click", (e) => {
         const addAmountModal = document.querySelector(".add-modal");
         setTimeout(() => {
             addAmountModal.classList.remove("hide");
+            document.getElementById("adding-amount").value = "";
         }, 200)
     }
 })
@@ -433,7 +445,7 @@ function addPartition() {
         // check if the allocated amount gets beyond the balance
         let total = 0;
         partitions.forEach((partition) => {
-            total += partition.allocatedAmount;
+            total += partition.remainingAmount;
         })
         if (partitionAmount + total <= totalBalance) { // intentionally allowed 0 amount allocation
             partitions.push({ name: partitionName, allocatedAmount: partitionAmount, remainingAmount: partitionAmount, expenses: [] });
@@ -1185,6 +1197,9 @@ function closeDrawer() {
     drawer.classList.remove("add");
     drawer.classList.add("close");
     drawerOverlay.classList.add("hide");
+    if (document.querySelector(".theme-box").classList.contains("open")) {
+        document.querySelector(".theme-box").classList.remove("open");
+    }
 }
 
 drawerOverlay.addEventListener("click", closeDrawer);
@@ -1333,16 +1348,38 @@ aboutModal.addEventListener("click", (e) => {
 //theme change functionality
 const drawerItem = document.querySelector(".drawer-item-theme");
 const themeBox = document.querySelector(".theme-box");
+const themeBtn = document.getElementById("theme-btn");
 
 drawerItem?.addEventListener("click", () => {
     drawerItem.classList.toggle("active");
-    themeBox.classList.toggle("open");
+    if (themeBox.classList.contains("open")) {
+        themeBox.classList.remove("open");
+        setTimeout(() => {
+            themeBtn.style.borderRadius = "8px";
+        }, 180);
+
+    } else {
+        themeBox.classList.add("open");
+        themeBtn.style.borderBottomLeftRadius = "0px";
+        themeBtn.style.borderBottomRightRadius = "0px";
+    }
 });
+
+const lightModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon"height="24px" viewBox="0 -960 960 960" width="24px" fill="#EFEFEF"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"/></svg>`;
+
+const darkModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon" height="24px" viewBox="0 -960 960 960"
+                    width="24px" fill="#EFEFEF">
+                    <path
+                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
+                </svg>`;
+
 
 document.getElementById("dark").addEventListener("click", () => {
     appTheme = "dark";
     document.getElementById("theme-link").href = "theme-dark.css";
     localStorage.setItem("theme", appTheme);
+    document.querySelector(".menu-theme").innerHTML = darkModeIcon;
+
     document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d');
 });
 
@@ -1350,5 +1387,7 @@ document.getElementById("ivory").addEventListener("click", () => {
     appTheme = "ivory";
     document.getElementById("theme-link").href = "theme-ivory.css";
     localStorage.setItem("theme", appTheme);
+    document.querySelector(".menu-theme").innerHTML = lightModeIcon;
+
     document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
 });

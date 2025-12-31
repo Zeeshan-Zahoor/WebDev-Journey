@@ -87,9 +87,11 @@
     flex-direction: column;
     align-items: flex-start;
 }
-.drawer-item-theme:active {
-    scale: none;
+
+#theme-btn:active {
+    transform: scale(1);
 }
+
 .theme {
     padding: 5px 10px;
     height: 2.4rem;
@@ -102,8 +104,7 @@
 
 .theme:focus {
     background-color: var(--accent-primary);
-    color: var(--text-primary-inverted)
-;
+    color: var(--text-primary-inverted);
 }
 
 .export-btn {
@@ -113,8 +114,8 @@
 
 #theme-btn {
     margin-bottom: 0;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
+    /* border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px; */
 }
 
 .theme-box {
@@ -139,11 +140,14 @@
     margin-top: -10px;
     margin-bottom: 10px;
 }
+
 .theme-box.open {
-    max-height: 200px; /* set to a value big enough for content */
+    max-height: 200px;
+    /* set to a value big enough for content */
     border: 1px solid var(--border-soft);
 }
 
-#theme-btn.focus {
-    background: var(--bg-modal-btns-save);
+#theme-btn:focus {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px; 
 }
