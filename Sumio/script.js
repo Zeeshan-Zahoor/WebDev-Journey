@@ -55,13 +55,13 @@ window.onload = () => {
     if (!appTheme) {
         appTheme = "dark";
         localStorage.setItem("theme", appTheme);
-        document.querySelector(".menu-theme").innerHTML = darkModeIcon;
+        document.getElementById("theme-icon").innerHTML = darkModeIcon;
         document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d')
     }
 
     if (appTheme === "ivory") {
         document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
-        document.querySelector(".menu-theme").innerHTML = lightModeIcon;
+        document.getElementById("theme-icon").innerHTML = lightModeIcon;
 
     }
     document.getElementById("theme-link").href = `theme-${appTheme}.css`;
@@ -1378,7 +1378,7 @@ document.getElementById("dark").addEventListener("click", () => {
     appTheme = "dark";
     document.getElementById("theme-link").href = "theme-dark.css";
     localStorage.setItem("theme", appTheme);
-    document.querySelector(".menu-theme").innerHTML = darkModeIcon;
+    document.getElementById("theme-icon").innerHTML = darkModeIcon;
 
     document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d');
 });
@@ -1387,7 +1387,7 @@ document.getElementById("ivory").addEventListener("click", () => {
     appTheme = "ivory";
     document.getElementById("theme-link").href = "theme-ivory.css";
     localStorage.setItem("theme", appTheme);
-    document.querySelector(".menu-theme").innerHTML = lightModeIcon;
+    document.getElementById("theme-icon").innerHTML = lightModeIcon;
 
     document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
 });
