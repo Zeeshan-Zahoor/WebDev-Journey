@@ -46,7 +46,6 @@ Sumio sits in the middle — structured, flexible, and calm to use.
 
 ## 🖼️ Screenshots
 
-```markdown
 ![Dashboard](./screenshots/dashboard-dark.jpeg)
 ![Expense Details](./screenshots/expense-details.jpeg)
 ![Ivory Theme](./screenshots/dashboard-ivory.jpeg)
