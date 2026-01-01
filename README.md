@@ -65,13 +65,20 @@ A Clone of the Spotify Website using **HTML**, **CSS** and **JAVASCRIPT** . This
   - Footer Section and more.
 
 
-### 6. Kashmere
-An Expense tracking Web App made by using **HTML**, **CSS** and **JAVASCRIPT** . This project focuses on creating an app for tracking your daily expenses.
-- **Status**: In Progress. 
-- **Features**: 
-  - Custom Names
-  - Multiple Expense handling
-  - Detailes Modals of Expenses
+### 6. Sumio
+Sumio is a personal expense-tracking Progressive Web App (PWA) built for clarity and long-term use.  
+I created it to replace messy manual expense tracking and gradually evolved it into a clean, offline-first budgeting app.
+
+**Features**
+- Section-based budgeting
+- Expense & sub-expense tracking
+- Real-time balance calculations
+- Multiple themes
+- Offline support (PWA)
+- Export / Import data
+
+**Built with:** HTML, CSS, JavaScript  
+**Status:** Actively evolving
 
 
 ---
