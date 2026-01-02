@@ -12,6 +12,8 @@ const STATIC_ASSETS = [
   "./progress_circle.css",
   "./helpers.css",
   "./initial_messages.css",
+  "./theme-dark.css",
+  "./theme-ivory.css",
 
   "./icons/icon-192.png",
   "./icons/icon-512.png",
