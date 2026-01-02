@@ -3,18 +3,10 @@
 
     <head>
     <meta name="theme-color" content="#2d2d2d" id="theme-color-meta">
-    <meta name="Background" content="#fbefd5" id="background-color-meta">
     <script>
         (function () {
             const theme = localStorage.getItem("theme") || "dark";
             document.documentElement.setAttribute("data-theme", theme);
-            const meta_background = document.querySelector('meta[name="Background"]');
-            if(meta_background) {
-                meta_background.setAttribute(
-                    "content", 
-                    theme === "ivory" ? "#fbefd5" : "#2d2d2d"
-                );
-            }
 
             const meta_theme = document.querySelector('meta[name="theme-color"]');
             if (meta_theme) {
