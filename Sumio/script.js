@@ -52,7 +52,7 @@ let appTheme;
 window.onload = () => {
     appTheme = localStorage.getItem("theme");
 
-    if (!appTheme) {
+    if (!appTheme || appTheme === "dark") {
         appTheme = "dark";
         localStorage.setItem("theme", appTheme);
         document.getElementById("theme-icon").innerHTML = darkModeIcon;
