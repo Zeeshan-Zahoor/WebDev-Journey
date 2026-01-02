@@ -11,7 +11,7 @@
 html {
   height: clamp(0px, 100dvh, 100dvh);
   background: var(--bg-main);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 /* Body styling */

@@ -3,8 +3,8 @@
     "short_name": "Sumio",
     "start_url": "./index.html",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#101B76",
+    "background_color": "#fbefd5",
+    "theme_color": "#fbefd5",
     "orientation": "portrait",
     "icons": [
         {
