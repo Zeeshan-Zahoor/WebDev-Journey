@@ -50,21 +50,10 @@ let appTheme;
 
 // Load data on page load
 window.onload = () => {
-    appTheme = localStorage.getItem("theme");
+    appTheme = localStorage.getItem("theme") || "dark";
 
-    if (!appTheme || appTheme === "dark") {
-        appTheme = "dark";
-        localStorage.setItem("theme", appTheme);
-        document.getElementById("theme-icon").innerHTML = darkModeIcon;
-        document.getElementById("theme-color-meta").setAttribute('content', '#2d2d2d')
-    }
-
-    if (appTheme === "ivory") {
-        document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
-        document.getElementById("theme-icon").innerHTML = lightModeIcon;
-
-    }
-    document.getElementById("theme-link").href = `theme-${appTheme}.css`;
+  document.getElementById("theme-icon").innerHTML =
+    appTheme === "ivory" ? lightModeIcon : darkModeIcon;
 
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
@@ -1376,7 +1365,7 @@ const darkModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon"
 
 document.getElementById("dark").addEventListener("click", () => {
     appTheme = "dark";
-    document.getElementById("theme-link").href = "theme-dark.css";
+    document.documentElement.setAttribute("data-theme", appTheme);
     localStorage.setItem("theme", appTheme);
     document.getElementById("theme-icon").innerHTML = darkModeIcon;
 
@@ -1385,7 +1374,7 @@ document.getElementById("dark").addEventListener("click", () => {
 
 document.getElementById("ivory").addEventListener("click", () => {
     appTheme = "ivory";
-    document.getElementById("theme-link").href = "theme-ivory.css";
+    document.documentElement.setAttribute("data-theme", appTheme);
     localStorage.setItem("theme", appTheme);
     document.getElementById("theme-icon").innerHTML = lightModeIcon;
 

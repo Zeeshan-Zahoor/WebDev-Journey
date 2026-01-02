@@ -2,6 +2,21 @@
 <html lang="en">
 
 <head>
+    <script>
+        (function () {
+            const theme = localStorage.getItem("theme") || "dark";
+            document.documentElement.setAttribute("data-theme", theme);
+
+            const meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) {
+                meta.setAttribute(
+                    "content",
+                    theme === "ivory" ? "#fbefd5" : "#2d2d2d"
+                );
+            }
+        })();
+    </script>
+
     <link rel="manifest" href="manifest.json">
 
     <meta name="theme-color" content="#2d2d2d" id="theme-color-meta">
@@ -15,6 +30,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
     <title>Sumio - Expense Tracker</title>
+    <link rel="stylesheet" href="theme-dark.css">
+    <link rel="stylesheet" href="theme-ivory.css">
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="edit_amount_window.css">
     <link rel="stylesheet" href="helpers.css">
@@ -33,7 +51,6 @@
     <link rel="stylesheet" href="app_reset_modal.css">
     <link rel="stylesheet" href="toast.css">
     <link rel="stylesheet" href="about.css">
-    <link id="theme-link" rel="stylesheet" href="theme-dark.css">
 
 </head>
 
@@ -49,10 +66,10 @@
             <div class="menu-theme">
                 <div id="theme-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" class="theme-icon" height="24px" viewBox="0 -960 960 960"
-                    width="24px" fill="#EFEFEF">
-                    <path
-                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
-                </svg>
+                        width="24px" fill="#EFEFEF">
+                        <path
+                            d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
+                    </svg>
                 </div>
                 <div class="verticle-line"></div>
                 <div class="hamburger">
