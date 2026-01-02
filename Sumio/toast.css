@@ -1,7 +1,7 @@
 .toast {
     position: fixed;
     position: fixed;
-    top: env(safe-area-inset-top, 16px);
+    top: 2rem;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
