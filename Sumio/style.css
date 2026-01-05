@@ -155,7 +155,7 @@ main {
   width: min(100dvw, 820px);
   margin: auto;
   max-height: calc(99dvh - 10.6rem);
-  overflow-y: auto;
+  overflow: visible;
   overflow-x: hidden;
 
   /* smooth srolling  */

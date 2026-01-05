@@ -121,9 +121,7 @@ window.onload = () => {
 // Show/hide partition modal
 function show_Add_Partition_Modal() {
     partitionModal.classList.remove("hide");
-}
-function hide_partition_modal() {
-    partitionModal.classList.add("hide");
+    lenis.stop();
 }
 
 document.querySelector(".edit-amount-btn").addEventListener("click", () => {
@@ -134,6 +132,7 @@ document.querySelector(".edit-amount-btn").addEventListener("click", () => {
 function show_Edit_Amount_Window() {
     setTimeout(() => {
         editAmount_Win.classList.remove("hide");
+        lenis.stop();
         enteredAmountInput.value = `${(totalBalance)}`
     }, 150)
 }
@@ -141,13 +140,15 @@ function show_Edit_Amount_Window() {
 document.getElementById("entered-amount").addEventListener("keydown", (e) => {
     if (e.key == "Enter") {
         editAmount()
-        editAmount_Win.classList.add("hide")
+        editAmount_Win.classList.add("hide");
+        lenis.start();
     }
 })
 
 document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
     if (e.target.classList.contains("edit-amount-modal")) {
-        editAmount_Win.classList.add("hide")
+        editAmount_Win.classList.add("hide");
+        lenis.start();
     }
     setTimeout(() => {
         if (e.target.classList.contains("enter-btn")) {
@@ -155,6 +156,7 @@ document.querySelector(".edit-amount-modal").addEventListener("click", (e) => {
         }
         if (e.target.classList.contains("cancel-btn")) {
             editAmount_Win.classList.add("hide")
+            lenis.start();
         }
 
     }, 200)
@@ -165,6 +167,7 @@ document.querySelector(".add-amount-icon").addEventListener("click", (e) => {
         const addAmountModal = document.querySelector(".add-modal");
         setTimeout(() => {
             addAmountModal.classList.remove("hide");
+            lenis.stop();
             document.getElementById("adding-amount").value = "";
         }, 200)
     }
@@ -180,11 +183,13 @@ document.querySelector(".add-modal")?.addEventListener("click", (e) => {
     if (e.target.closest(".cancel-add-btn")) {
         setTimeout(() => {
             document.querySelector(".add-modal").classList.add("hide");
+            lenis.start();
         }, 200)
     }
 
     if (e.target.classList.contains("add-modal")) {
         document.querySelector(".add-modal").classList.add("hide");
+        lenis.start();
     }
 
 })
@@ -204,6 +209,7 @@ function addTotalAmount() {
     if (amount == NaN) {
         showToast("❌ Invalid Amount!", "error");
         document.querySelector(".add-modal").classList.add("hide");
+        lenis.start();
         return;
     }
 
@@ -213,6 +219,7 @@ function addTotalAmount() {
 
     //close modal
     document.querySelector(".add-modal").classList.add("hide");
+    lenis.start();
 }
 
 
@@ -231,6 +238,7 @@ const editAmount = () => {
         totalBalance = parseFloat(enteredAmount, 10);
         if (totalBalance > 99999999999) {
             editAmount_Win.classList.add("hide");
+            lenis.start();
             showToast("❌ Invalid Amount!")
             return;
         }
@@ -239,6 +247,7 @@ const editAmount = () => {
         renderTotalBalance()
     }
     editAmount_Win.classList.add("hide");
+    lenis.start();
 };
 
 // Create partition card (renders the partition and its own expenses)
@@ -353,6 +362,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
         setTimeout(() => {
             expenseInput.value = "";
             expenseModal.classList.remove("hide");
+            lenis.stop();
             expenseInput.focus();
         }, 200)
     });
@@ -404,8 +414,10 @@ const renderAllPartitions = () => {
 
     if (partitions.length === 0) { // show initial partitions message
         document.querySelector(".partition-message-outer").classList.remove("hide");
+        lenis.stop();
     } else {
         document.querySelector(".partition-message-outer").classList.add("hide");
+        lenis.start();
     }
 
     partitions.forEach((partitionObj, i) => createPartitionCard(partitionObj, i));
@@ -446,6 +458,7 @@ function addPartition() {
             setTimeout(() => {   //add a delay for button animation
                 partitionModal.classList.add("hide");
             }, 200)
+            lenis.start();
         } else {
             showToast("Opps! No enough balance.", "error");
         }
@@ -467,6 +480,7 @@ partitionModal.addEventListener("click", (e) => {
     if (e.target.classList.contains("cancel-partition-btn")) {
         setTimeout(() => {   //add a delay for button animation
             partitionModal.classList.add("hide");
+            lenis.start();
         }, 200)
     }
 });
@@ -483,6 +497,7 @@ function saveExpense() {
         setTimeout(() => {
             expenseModal.classList.add("hide");
         }, 200)
+        lenis.start();
 
         return;
     }
@@ -509,6 +524,7 @@ function saveExpense() {
         expenseInputAmount.value = "";
         setTimeout(() => {
             expenseModal.classList.add("hide");
+            lenis.start();
         }, 200)
 
     } else {
@@ -532,6 +548,7 @@ cancelExpenseBtn.addEventListener("click", () => {
     setTimeout(() => {
         expenseModal.classList.add("hide");
     }, 200)
+    lenis.start();
     activePartitionIndex = null;
 });
 
@@ -1096,6 +1113,7 @@ function confirmDelete() {
 
         function cleanup() {
             confirmOverlay.classList.add("hide");
+            lenis.start();
             confirmOverlay.removeEventListener("click", onClick);
         }
 
@@ -1159,6 +1177,7 @@ if ("serviceWorker" in navigator) {
 
 function showUpdateBanner() {
     document.getElementById("update-banner")?.classList.remove("hide");
+    lenis.stop();
 }
 
 
@@ -1180,12 +1199,14 @@ function openDrawer() {
     drawerOverlay.classList.remove("hide");
     drawer.classList.remove("close");
     drawer.classList.add("open");
+    lenis.stop();
 }
 
 function closeDrawer() {
     drawer.classList.remove("add");
     drawer.classList.add("close");
     drawerOverlay.classList.add("hide");
+    lenis.start();
     if (document.querySelector(".theme-box").classList.contains("open")) {
         document.querySelector(".theme-box").classList.remove("open");
     }
@@ -1264,6 +1285,7 @@ window.addEventListener("load", () => {
 function clearAllData() {
     const warningModal = document.querySelector(".reset-overlay");
     warningModal.classList.remove("hide");
+    lenis.stop();
     const resetModal = document.querySelector(".reset-modal");
     resetModal.addEventListener("click", (e) => {
         if (e.target.classList.contains("btn-reset")) {
@@ -1273,6 +1295,7 @@ function clearAllData() {
                 localStorage.setItem("partitions", JSON.stringify(partitions));
                 localStorage.setItem("totalBalance", totalBalance);
                 warningModal.classList.add("hide");
+                lenis.start();
                 location.reload();
             }, 100)
         }
@@ -1281,6 +1304,7 @@ function clearAllData() {
             setTimeout(() => {
                 warningModal.classList.add("hide");
             }, 100)
+            lenis.start();
         }
     })
 }
@@ -1321,15 +1345,18 @@ const aboutClose = document.querySelector(".about-close");
 
 document.getElementById("about-btn").addEventListener("click", () => {
     aboutModal.classList.remove("hide");
+    lenis.stop();
 })
 
 aboutClose.addEventListener("click", () => {
     aboutModal.classList.add("hide");
+    lenis.start();
 })
 
 aboutModal.addEventListener("click", (e) => {
     if (e.target === aboutModal) {
         aboutModal.classList.add("hide");
+        lenis.start();
     }
 })
 
@@ -1380,3 +1407,23 @@ document.getElementById("ivory").addEventListener("click", () => {
 
     document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
 });
+
+
+//smooth scrolling lenis
+const container = document.querySelector('.container')
+const content = container.querySelector('.partition-container')
+import Lenis from 'https://unpkg.com/@studio-freight/lenis?module';
+const lenis = new Lenis({
+  wrapper: container,
+  content: content,
+  smooth: true,
+  lerp: 0.08,
+})
+
+function raf(time) {
+  lenis.raf(time)
+  requestAnimationFrame(raf)
+}
+
+requestAnimationFrame(raf)
+
