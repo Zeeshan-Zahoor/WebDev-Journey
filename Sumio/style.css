@@ -5,6 +5,7 @@
   box-sizing: border-box;
   border: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 
 }
 
@@ -90,6 +91,7 @@ input::placeholder {
   border: 1px solid var(--border-soft);
   background-color: var(--bg-menu-btns);
   box-shadow: var(--shadow-soft-I);
+  color: var(--text-primary);
 
 }
 
@@ -150,8 +152,6 @@ main {
 
 /* Container box */
 .container {
-  /* background-color: #f5faff; */
-  /* padding: 0 0.5rem; */
   width: min(100dvw, 820px);
   margin: auto;
   max-height: calc(99dvh - 10.6rem);
@@ -162,6 +162,7 @@ main {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   overscroll-behavior: contain; 
+  will-change: scroll-position;
 
   /* Hide scrollbar for Chrome, Edge, Safari */
   scrollbar-width: none;
@@ -171,8 +172,8 @@ main {
 }
 
 .container::-webkit-scrollbar {
-  display: none;
-  /* Chrome, Safari */
+  width: 0;
+  height: 0;
 }
 
 

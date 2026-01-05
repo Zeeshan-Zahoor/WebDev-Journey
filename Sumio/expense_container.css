@@ -8,16 +8,20 @@
   overflow-y: auto;
   scrollbar-width: none;
   padding-bottom: 10px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
 }
 
 .expense-container::-webkit-slider-thumb {
-  display: none;
+  width: 0;
+  height: 0;
 }
 
 .expense-container .expense-card {
   width: 97%;
   min-height: 70px;
-  background-color: #000ef72e;
   display: flex;
   justify-content: space-between;
   align-items: center;

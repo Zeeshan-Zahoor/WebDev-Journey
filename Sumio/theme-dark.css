@@ -8,7 +8,7 @@
   --bg-elevated-section: #0000002e;
   --bg-surface-section: #6363638a;
   --bg-modal: #3d3d3d;
-  --bg-menu-btns : #3f3e3e8a;
+  --bg-menu-btns: #3f3e3e8a;
   --bg-modal-btns-save: #e5e5e5;
   --bg-modal-btns-cancel: #5f5d5d54;
   --bg-sub-detail: rgb(189, 189, 189);
@@ -32,7 +32,7 @@
   --border-soft: rgba(168, 168, 168, 0.206);
   --border-input: rgba(255, 255, 255, 0.432);
   --shadow-soft: 0 10px 30px rgba(28, 28, 28, 0.105);
-  --shadow-soft-I : 1px 2px 4px 0px #00000047;
+  --shadow-soft-I: 1px 2px 4px 0px #00000047;
   --outline-I: rgba(198, 198, 198, 0.903);
 
 
@@ -45,4 +45,7 @@
   --link-color: #8ab4ff;
 
   --slider-hover: #d1be3e;
+}
+.clear-detail-btn {
+    filter: invert(50%);
 }
