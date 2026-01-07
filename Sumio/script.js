@@ -258,7 +258,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
     //calculate unassingned amount
     let total = 0
     partitionObj.expenses.forEach((expense) => {
-        total += expense.expenseAllocatedAmount
+        total += expense.expenseRemainingAmount
     })
     const unassingned = partitionObj.remainingAmount - total;
 
