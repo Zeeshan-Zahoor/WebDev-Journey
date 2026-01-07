@@ -302,6 +302,16 @@ footer {
   border: 1px solid var(--border-soft);
   box-shadow: var(--shadow-soft);
 }
+.update-banner h6 {
+  
+  font-size: smaller;
+  text-align: center;
+}
+#updated-news {
+  font-weight: 400;
+  font-size: smaller;
+  text-align: center;
+}
 
 .update-banner button {
   background: var(--bg-modal-btns-save);

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+<head>
     <meta name="theme-color" content="#2d2d2d" id="theme-color-meta">
-    
+
     <script>
         (function () {
             const theme = localStorage.getItem("theme") || "dark";
@@ -18,7 +18,7 @@
             }
         })();
     </script>
-    
+
     <link rel="manifest" href="manifest.json">
 
     <meta name="mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@
     <title>Sumio - Expense Tracker</title>
     <link rel="stylesheet" href="theme-ivory.css">
     <link rel="stylesheet" href="theme-dark.css">
-    
+
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="edit_amount_window.css">
     <link rel="stylesheet" href="helpers.css">
@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="app_reset_modal.css">
     <link rel="stylesheet" href="toast.css">
     <link rel="stylesheet" href="about.css">
-    
+
 </head>
 
 <body>
@@ -361,7 +361,8 @@
     <!-- update pop up  -->
     <div id="update-banner" class="update-banner-outer hide">
         <div class="update-banner">
-            <span>New version available</span>
+            <span><strong>New version available</strong></span>
+            <span id="updated-news"><strong>What's new:</strong> Section Un-assigned Calculation Bug fix.</span>
             <button id="update-btn">Update</button>
         </div>
     </div>
@@ -483,7 +484,7 @@
 
         </div>
     </div>
-    
+
 
 
     <footer>
