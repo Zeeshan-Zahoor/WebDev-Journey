@@ -15,8 +15,14 @@
 
 }
 .modal-expense-name {
+    text-align: start;
     width: 55%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: flex-start;
 }
+
 
 #modal-expense-name {
     color: var(--text-primary);
@@ -43,6 +49,7 @@
     display: flex;
     justify-content: center;
     padding: 5px;
+    gap: 5px;
 }
 
 #details-box{
@@ -65,7 +72,36 @@
   width: thin;
 }
 
+.add-from-partition {
+    width: fit-content;
+    height: fit-content;
+    padding: 0.3rem ;
+    padding-right: 0.6rem;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(140deg, var(--bg-elevated-section), var(--bg-surface-section));
+    box-shadow: var(--shadow-soft-I);
+    border: 1px solid var(--border-soft);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+    corner-shape: squircle;
+    border-radius: 15px;
+    font-size: 0.95rem;
+    font-weight: 200;
+    color: var(--text-muted);
+    transition: transform 0.2s ease-in;
+}
+.add-from-partition-btn-plus {
+    fill: var(--text-muted);
+}
 
+.add-from-partition button:active {
+    scale: none;
+}
+.add-from-partition:active {
+    transform: scale(0.96);
+}
 
 .add-sub-detail-btn {
     width: fit-content;
@@ -81,6 +117,7 @@
     bottom: 10dvh;
     right: 5dvw;
 }
+
 
 .add-sub-detail-btn:active {
     scale: 0.9;
