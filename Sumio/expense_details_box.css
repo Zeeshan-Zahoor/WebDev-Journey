@@ -86,9 +86,8 @@
     align-items: center;
     gap: 3px;
     corner-shape: squircle;
-    border-radius: 15px;
-    font-size: 0.85rem;
-    font-weight: 200;
+    border-radius: 17px;
+    font-size: 11px;
     transition: transform 0.2s ease-in;
 }
 
