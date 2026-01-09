@@ -52,6 +52,7 @@
     <link rel="stylesheet" href="app_reset_modal.css">
     <link rel="stylesheet" href="toast.css">
     <link rel="stylesheet" href="about.css">
+    <link rel="stylesheet" href="add_from_partition_modal.css">
 
 </head>
 
@@ -215,9 +216,10 @@
             <div class="modal-expense-name">
                 <h3 id="modal-expense-name" contenteditable="true">Expence Name</h3>
                 <button class="add-from-partition">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="add-from-partition-btn-plus" height="19px"
-                        viewBox="0 -960 960 960" width="19px" fill="#EFEFEF">
-                        <path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z" />
+                    <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px"
+                        class="add-from-partition-btn-plus" fill="#EFEFEF">
+                        <path
+                            d="M549-120 280-400v-80h140q53 0 91.5-34.5T558-600H240v-80h306q-17-35-50.5-57.5T420-760H240v-80h480v80H590q14 17 25 37t17 43h88v80h-81q-8 85-70 142.5T420-400h-29l269 280H549Z" />
                     </svg>
                     add more
                 </button>
@@ -290,6 +292,20 @@
                     <path d="M440-120v-320H120v-80h320v-320h80v320h320v80H520v320h-80Z" />
                 </svg>
             </div>
+
+            <!-- add money from partition modal  -->
+            <div class="add-from-partition-modal-outer hide">
+                <div class="add-from-partition-inner">
+                    <h4>Add money from section balance</h4>
+                    <span id="modal-unassigned">Unassigned Balance: 2000</span>
+                    <input type="number" id="add-from-section-input" placeholder="Add amount">
+                    <div class="add-from-partition-actions">
+                        <button id="add-from-section" class="add-from-section-btns add-from-section">Add</button>
+                        <button id="cancel-add-from-section" class="add-from-section-btns cancel-from-section">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
 
             <!-- add sub detail modal  -->
             <div class="add-sub-detail-modal hide">

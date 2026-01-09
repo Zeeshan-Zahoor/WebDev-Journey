@@ -78,7 +78,7 @@
     padding: 0.3rem ;
     padding-right: 0.6rem;
     margin-bottom: 0.3rem;
-    background: linear-gradient(140deg, var(--bg-elevated-section), var(--bg-surface-section));
+    background: #00AA00;
     box-shadow: var(--shadow-soft-I);
     border: 1px solid var(--border-soft);
     display: flex;
@@ -87,13 +87,9 @@
     gap: 3px;
     corner-shape: squircle;
     border-radius: 15px;
-    font-size: 0.95rem;
+    font-size: 0.7rem;
     font-weight: 200;
-    color: var(--text-muted);
     transition: transform 0.2s ease-in;
-}
-.add-from-partition-btn-plus {
-    fill: var(--text-muted);
 }
 
 .add-from-partition button:active {

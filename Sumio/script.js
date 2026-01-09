@@ -52,8 +52,8 @@ let appTheme;
 window.onload = () => {
     appTheme = localStorage.getItem("theme") || "dark";
 
-  document.getElementById("theme-icon").innerHTML =
-    appTheme === "ivory" ? lightModeIcon : darkModeIcon;
+    document.getElementById("theme-icon").innerHTML =
+        appTheme === "ivory" ? lightModeIcon : darkModeIcon;
 
     const savedBalance = localStorage.getItem("totalBalance");
     if (savedBalance !== null) {
@@ -633,6 +633,9 @@ function closeExpense() {
     }
 }
 
+
+
+
 //close on mobiles back navigation
 window.addEventListener("popstate", (event) => {
     event.preventDefault()
@@ -738,6 +741,7 @@ document.querySelector(".detail").addEventListener("click", (e) => {
         document.querySelector(".credit-modal").classList.remove("hide");
     }
 });
+
 
 function addExpenseEntry() {
     if (
@@ -864,6 +868,68 @@ document.getElementById("cancel-spend-btn").addEventListener("click", () => {
 document.getElementById("cancel-credit-btn").addEventListener("click", () => {
     document.querySelector(".credit-modal").classList.add("hide");
 });
+
+
+// ADD MONEY FROM PARTITION BALANCE 
+let unAssigned = null;
+document.querySelector(".add-from-partition").addEventListener("click", (e) => {
+    setTimeout(() => {
+        document.querySelector(".add-from-partition-modal-outer").classList.remove("hide");
+        unAssigned = partitions[activePartitionIndex].remainingAmount; 
+        partitions[activePartitionIndex].expenses.forEach((expense) => {
+            unAssigned -= expense.expenseRemainingAmount;
+        })
+        document.getElementById("modal-unassigned").innerText = `Unassigned Balance: ₹${unAssigned.toLocaleString('en-IN')}`;
+    }, 100)
+
+})
+
+document.querySelector(".add-from-partition-modal-outer").addEventListener("click", (e) => {
+    if (e.target.classList.contains("cancel-from-section") || e.target.classList.contains("add-from-partition-modal-outer")) {
+        document.querySelector(".add-from-partition-modal-outer").classList.add("hide");
+
+    }
+
+    if (e.target.classList.contains("add-from-section")) {
+        addFromPartitionBalance(unAssigned);
+        unAssigned = null;
+        document.querySelector(".add-from-partition-modal-outer").classList.add("hide");
+    }
+})
+document.querySelector(".add-from-partition-modal-outer").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        console.log("Enter Clicked")
+        addFromPartitionBalance(unAssigned);
+        unAssigned = null;
+        document.querySelector(".add-from-partition-modal-outer").classList.add("hide");
+    }
+})
+
+function addFromPartitionBalance(unassingned) {
+    const amountAdded = Number(document.getElementById("add-from-section-input").value);
+    if (!amountAdded && amountAdded > unassingned) {
+        showToast("Invalid or excessive amount!", "error");
+        return;
+    }
+
+    //update in storage
+    partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount += amountAdded;
+    partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount += amountAdded;
+
+    //update progresion rings
+    allocatedProgressRing.setAttribute('data-total', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount}`);
+    allocatedProgressRing.setAttribute('data-spent', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount}`);
+
+    remainingProgressionRing.setAttribute('data-total', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount}`);
+    remainingProgressionRing.setAttribute('data-spent', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount}`);
+    
+
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+    renderAllPartitions();
+    loadProgressionBars();
+}
+
+
 
 
 // Add-subdetail button
@@ -1414,15 +1480,15 @@ const container = document.querySelector('.container')
 const content = container.querySelector('.partition-container')
 import Lenis from 'https://unpkg.com/@studio-freight/lenis?module';
 const lenis = new Lenis({
-  wrapper: container,
-  content: content,
-  smooth: true,
-  lerp: 0.08,
+    wrapper: container,
+    content: content,
+    smooth: true,
+    lerp: 0.08,
 })
 
 function raf(time) {
-  lenis.raf(time)
-  requestAnimationFrame(raf)
+    lenis.raf(time)
+    requestAnimationFrame(raf)
 }
 
 requestAnimationFrame(raf)
