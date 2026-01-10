@@ -80,7 +80,6 @@
     margin-bottom: 0.3rem;
     background: #00AA00;
     box-shadow: var(--shadow-soft-I);
-    border: 1px solid var(--border-soft);
     display: flex;
     justify-content: center;
     align-items: center;
