@@ -162,10 +162,6 @@
     margin-top: 0.2rem;
 }
 
-#details-box span {
-    font-size: 12px;
-}
-
 .sub-detail {
     display: flex;
     justify-content: space-between;

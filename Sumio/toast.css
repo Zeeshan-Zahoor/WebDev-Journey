@@ -6,7 +6,6 @@
     transform: translateX(-50%);
     z-index: 9999;
     transform: translateX(-50%) translateY(20px);
-    color: #fff;
     border-radius: 10px;
     font-size: 14px;
     width: fit-content;
@@ -24,6 +23,7 @@
 
 #toast-text {
     margin: 0.5rem;
+    color: white;
 }
 
 .toast.show {

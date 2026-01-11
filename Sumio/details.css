@@ -54,6 +54,36 @@
     justify-content: space-between;
     align-items: center;
 }
+.individual-credit-detail {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    background: #00AA00;
+    border-radius: 15px;
+    padding: 3px;
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+}
+.individual-credit-detail.delete {
+    transform: scale(0.6);
+    opacity: 0;
+}
+
+.clear-credit-detail-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.spend-detail-span {
+    font-size: 12px;
+}
+
+.credit-detail-span {
+    color: white;
+    text-align: start;
+    font-size: 1rem;
+    font-weight: 500;
+    margin: 8px;
+}
 
 .sub-detail-title:focus {
     outline: none;

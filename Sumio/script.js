@@ -787,7 +787,7 @@ function addExpenseEntry() {
 
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
-                        <span>-₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
+                        <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
                         <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
                     </div>
                     <div class="line"></div>`
@@ -840,6 +840,43 @@ function addCreditAmount() {
     partitions[activePartitionIndex].allocatedAmount += creditedAmount;
     totalBalance += creditedAmount;
 
+
+    // printing this detail logic
+    if (
+        activePartitionIndex === null ||
+        activeExpenseIndex === null ||
+        activeSubDetailIndex === null
+    ) {
+        showToast("No active sub detail selected", "error");
+        return;
+    }
+
+    const listContainer = activeSubDetailElement.querySelector(".sub-detail-list")
+
+    if (!isNaN(creditedAmount) && creditedAmount > 0) {
+
+        const subDetail = partitions[activePartitionIndex]
+            .expenses[activeExpenseIndex]
+            .expenseDetails[activeSubDetailIndex];
+        subDetail.subDetailList.push(
+            {
+                amount: creditedAmount,
+                remark: `Credited on ${(new Date).toDateString()}`,
+                iscreditAmount: true
+            }
+        )
+
+        listContainer.insertAdjacentHTML(
+            "beforeend", `<div class="individual-credit-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
+                        <span class="credit-detail-span"> ₹${creditedAmount.toLocaleString('en-IN')} <br> Credited on ${(new Date).toDateString()}</span>
+                        <div class="clear-credit-detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg"  height="20px" viewBox="0 -960 960 960" width="20px" fill="#EFEFEF"><path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"/></svg>
+                        </div>
+                    </div>`
+        );
+
+    }
+
     loadProgressionBars()
 
     //save back to storage
@@ -848,6 +885,55 @@ function addCreditAmount() {
 
     document.querySelector(".credit-modal").classList.add("hide");
 }
+
+// delete credit detail amount
+document.querySelector(".detail").addEventListener("click", (e) => {
+    if(e.target.closest(".clear-credit-detail-btn")) {
+
+        const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
+        const currSubListIndex = Number(e.target.parentElement.parentElement.getAttribute('data-spent-index'))
+        const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
+
+        const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
+
+
+        //subtract from partition balance
+        partitions[activePartitionIndex].remainingAmount -= deletableAmount
+        partitions[activePartitionIndex].allocatedAmount -= deletableAmount
+
+        //subtract from active expense balance
+        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount -= deletableAmount;
+        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount -= deletableAmount
+
+        //update progression ring
+        const allocated = Number(remainingProgressionRing.getAttribute('data-total'));
+        const remaining = Number(remainingProgressionRing.getAttribute('data-spent'));
+
+        allocatedProgressRing.setAttribute('data-total', `${allocated-deletableAmount}`);
+        allocatedProgressRing.setAttribute('data-spent', `${allocated-deletableAmount}`);
+
+        remainingProgressionRing.setAttribute('data-total', `${allocated - deletableAmount}`)
+        remainingProgressionRing.setAttribute('data-spent', `${remaining - deletableAmount}`)
+
+        totalBalance -= deletableAmount
+
+        // remove from the list
+        currSubDetail.subDetailList.splice(currSubListIndex, 1)
+
+        //save back to storage
+        localStorage.setItem("partitions", JSON.stringify(partitions))
+        localStorage.setItem("totalBalance", totalBalance)
+
+        document.querySelector(".individual-credit-detail").classList.add("delete");
+
+        setTimeout(() => {
+            loadProgressionBars()
+            renderAllPartitions()
+            renderAllExpenseDetails()
+            renderTotalBalance()
+        }, 200)
+    }
+})
 
 //Add credit amount
 document.getElementById("enter-credit-btn").addEventListener("click", () => {
@@ -875,7 +961,7 @@ let unAssigned = null;
 document.querySelector(".add-from-partition").addEventListener("click", (e) => {
     setTimeout(() => {
         document.querySelector(".add-from-partition-modal-outer").classList.remove("hide");
-        unAssigned = partitions[activePartitionIndex].remainingAmount; 
+        unAssigned = partitions[activePartitionIndex].remainingAmount;
         partitions[activePartitionIndex].expenses.forEach((expense) => {
             unAssigned -= expense.expenseRemainingAmount;
         })
@@ -905,9 +991,10 @@ document.querySelector(".add-from-partition-modal-outer").addEventListener("keyd
     }
 })
 
-function addFromPartitionBalance(unassingned) {
+function addFromPartitionBalance(unassigned) {
     const amountAdded = Number(document.getElementById("add-from-section-input").value);
-    if (!amountAdded && amountAdded > unassingned) {
+
+    if (!amountAdded || amountAdded > unassigned) {
         showToast("Invalid or excessive amount!", "error");
         return;
     }
@@ -922,7 +1009,7 @@ function addFromPartitionBalance(unassingned) {
 
     remainingProgressionRing.setAttribute('data-total', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount}`);
     remainingProgressionRing.setAttribute('data-spent', `${partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount}`);
-    
+
 
     localStorage.setItem("partitions", JSON.stringify(partitions));
     renderAllPartitions();
@@ -989,7 +1076,7 @@ document.getElementById("input-sub-detail-name").addEventListener("keydown", (e)
 })
 
 enterSubDetailName.addEventListener('click', (e) => {
-    saveSubDetail()
+    saveSubDetail();
 })
 
 
@@ -1023,13 +1110,26 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     let idx = 0
 
     subDetailObject.subDetailList.forEach((expenseEntry) => {
-        listContainer.insertAdjacentHTML(
-            "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
-                        <span>-₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
-                        <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
-                    </div> 
-                    <div class="line"></div>`
-        )
+        if (!expenseEntry.iscreditAmount) {
+            listContainer.insertAdjacentHTML(
+                "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
+                <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
+                <img src="delete.svg" class="clear-detail-btn" width="20px" alt="Clear">
+                </div> 
+                <div class="line"></div>`
+            )
+        } else {
+            listContainer.insertAdjacentHTML(
+                "beforeend", `<div class="individual-credit-detail" data-spent-index = "${idx++}">
+                        <span class="credit-detail-span"> ₹${(expenseEntry.amount).toLocaleString('en-IN')} <br> ${expenseEntry.remark}</span>
+                        <div class="clear-credit-detail-btn">
+                            <svg xmlns="http://www.w3.org/2000/svg"  height="20px" viewBox="0 -960 960 960" width="20px" fill="#EFEFEF"><path d="m336-280-56-56 144-144-144-143 56-56 144 144 143-144 56 56-144 143 144 144-56 56-143-144-144 144Z"/></svg>
+                        </div>
+                    </div> `
+
+            )
+        }
+
     })
 
 };
@@ -1095,7 +1195,7 @@ cancelSubDetailName.addEventListener("click", () => {
 // Clear individual expense (event delegation)
 document.querySelector(".detail").addEventListener("click", (e) => {
     if (e.target.classList.contains("clear-detail-btn")) {
-        console.log("press clear")
+
         const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
         const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))
         const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
