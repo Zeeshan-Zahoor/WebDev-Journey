@@ -28,6 +28,14 @@ const enterSubDetailName = document.getElementById('enter-sub-detail-name-btn')
 const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn')
 
 
+window.addEventListener("offline", () => {
+  showToast("You’re offline. Changes will still be saved.", "info");
+});
+
+window.addEventListener("online", () => {
+  showToast("Back online", "success");
+});
+
 
 
 // App state
