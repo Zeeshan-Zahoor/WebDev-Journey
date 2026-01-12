@@ -29,11 +29,11 @@ const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn'
 
 
 window.addEventListener("offline", () => {
-    showToast("You’re offline. Changes will still be saved.", "info");
+  showToast("You’re offline. Changes will still be saved.", "info");
 });
 
 window.addEventListener("online", () => {
-    showToast("Back online", "success");
+  showToast("Back online", "success");
 });
 
 
@@ -750,9 +750,8 @@ document.querySelector(".detail").addEventListener("click", (e) => {
     }
 });
 
-const deleteSVG = `<div class="clear-detail-btn">
-<svg width="22px" height="28px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M667.8 362.1H304V830c0 28.2 23 51 51.3 51h312.4c28.4 0 51.4-22.8 51.4-51V362.2h-51.3z" fill="#0000"></path><path d="M750.3 295.2c0-8.9-7.6-16.1-17-16.1H289.9c-9.4 0-17 7.2-17 16.1v50.9c0 8.9 7.6 16.1 17 16.1h443.4c9.4 0 17-7.2 17-16.1v-50.9z" fill="#0000"></path><path d="M733.3 258.3H626.6V196c0-11.5-9.3-20.8-20.8-20.8H419.1c-11.5 0-20.8 9.3-20.8 20.8v62.3H289.9c-20.8 0-37.7 16.5-37.7 36.8V346c0 18.1 13.5 33.1 31.1 36.2V830c0 39.6 32.3 71.8 72.1 71.8h312.4c39.8 0 72.1-32.2 72.1-71.8V382.2c17.7-3.1 31.1-18.1 31.1-36.2v-50.9c0.1-20.2-16.9-36.8-37.7-36.8z m-293.5-41.5h145.3v41.5H439.8v-41.5z m-146.2 83.1H729.5v41.5H293.6v-41.5z m404.8 530.2c0 16.7-13.7 30.3-30.6 30.3H355.4c-16.9 0-30.6-13.6-30.6-30.3V382.9h373.6v447.2z" fill="#0000211F1E"></path><path d="M511.6 798.9c11.5 0 20.8-9.3 20.8-20.8V466.8c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0 11.4 9.3 20.7 20.8 20.7zM407.8 798.9c11.5 0 20.8-9.3 20.8-20.8V466.8c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0.1 11.4 9.4 20.7 20.8 20.7zM615.4 799.6c11.5 0 20.8-9.3 20.8-20.8V467.4c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0 11.5 9.3 20.8 20.8 20.8z" fill="#0000211F1E"></path></g></svg>
-</div>`
+const deleteSVG = `<svg class="clear-detail-btn" width="22px" height="64px" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M667.8 362.1H304V830c0 28.2 23 51 51.3 51h312.4c28.4 0 51.4-22.8 51.4-51V362.2h-51.3z" fill="#00000000"></path><path d="M750.3 295.2c0-8.9-7.6-16.1-17-16.1H289.9c-9.4 0-17 7.2-17 16.1v50.9c0 8.9 7.6 16.1 17 16.1h443.4c9.4 0 17-7.2 17-16.1v-50.9z" fill="#00000000"></path><path d="M733.3 258.3H626.6V196c0-11.5-9.3-20.8-20.8-20.8H419.1c-11.5 0-20.8 9.3-20.8 20.8v62.3H289.9c-20.8 0-37.7 16.5-37.7 36.8V346c0 18.1 13.5 33.1 31.1 36.2V830c0 39.6 32.3 71.8 72.1 71.8h312.4c39.8 0 72.1-32.2 72.1-71.8V382.2c17.7-3.1 31.1-18.1 31.1-36.2v-50.9c0.1-20.2-16.9-36.8-37.7-36.8z m-293.5-41.5h145.3v41.5H439.8v-41.5z m-146.2 83.1H729.5v41.5H293.6v-41.5z m404.8 530.2c0 16.7-13.7 30.3-30.6 30.3H355.4c-16.9 0-30.6-13.6-30.6-30.3V382.9h373.6v447.2z" fill="#00000000211F1E"></path><path d="M511.6 798.9c11.5 0 20.8-9.3 20.8-20.8V466.8c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0 11.4 9.3 20.7 20.8 20.7zM407.8 798.9c11.5 0 20.8-9.3 20.8-20.8V466.8c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0.1 11.4 9.4 20.7 20.8 20.7zM615.4 799.6c11.5 0 20.8-9.3 20.8-20.8V467.4c0-11.5-9.3-20.8-20.8-20.8s-20.8 9.3-20.8 20.8v311.4c0 11.5 9.3 20.8 20.8 20.8z" fill="#00000000211F1E"></path></g></svg>`
+
 
 function addExpenseEntry() {
     if (
@@ -798,9 +797,7 @@ function addExpenseEntry() {
 
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
-                        <div class="individual-detail-inner">
-                            <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
-                        </div>
+                        <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
                         ${deleteSVG}
                     </div>
                     <div class="line"></div>`
@@ -896,57 +893,77 @@ function addCreditAmount() {
     localStorage.setItem("partitions", JSON.stringify(partitions))
     localStorage.setItem("totalBalance", totalBalance)
 
+    document.getElementById("crediting-amount").value = "";
     document.querySelector(".credit-modal").classList.add("hide");
 }
 
-// delete credit detail amount
+// delete credited detail amount
 document.querySelector(".detail").addEventListener("click", (e) => {
-    if (e.target.closest(".clear-credit-detail-btn")) {
+    const clearBtn = e.target.closest(".clear-credit-detail-btn");
+    if (!clearBtn) return;
 
-        const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
-        const currSubListIndex = Number(e.target.parentElement.parentElement.getAttribute('data-spent-index'))
-        const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
+    const subDetailEl = clearBtn.closest(".sub-details");
+    const creditEl = clearBtn.closest(".individual-credit-detail");
 
-        const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
+    if (!subDetailEl || !creditEl) return;
+
+    const subDetailIndex = Number(subDetailEl.dataset.subIndex);
+    const currSubListIndex = Number(creditEl.dataset.spentIndex);
+
+    const currSubDetail =
+        partitions[activePartitionIndex]
+            ?.expenses[activeExpenseIndex]
+            ?.expenseDetails[subDetailIndex];
+
+    if (!currSubDetail) return;
+
+    const entry = currSubDetail.subDetailList[currSubListIndex];
+    if (!entry || typeof entry.amount !== "number") return;
+
+    const deletableAmount = entry.amount;
 
 
-        //subtract from partition balance
-        partitions[activePartitionIndex].remainingAmount -= deletableAmount
-        partitions[activePartitionIndex].allocatedAmount -= deletableAmount
+    const previousAllocatedAmount = Number(allocatedProgressRing.getAttribute("data-total"))
+    const previousRemainingAmount = Number(remainingProgressionRing.getAttribute("data-spent"))
+    allocatedProgressRing.setAttribute('data-total', `${previousAllocatedAmount - deletableAmount}`)
+    allocatedProgressRing.setAttribute('data-spent', `${previousAllocatedAmount - deletableAmount}`)
 
-        //subtract from active expense balance
-        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount -= deletableAmount;
-        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseAllocatedAmount -= deletableAmount
+    remainingProgressionRing.setAttribute('data-spent', `${previousRemainingAmount - deletableAmount}`)
+    remainingProgressionRing.setAttribute('data-total', `${previousAllocatedAmount - deletableAmount}`)
 
-        //update progression ring
-        const allocated = Number(remainingProgressionRing.getAttribute('data-total'));
-        const remaining = Number(remainingProgressionRing.getAttribute('data-spent'));
 
-        allocatedProgressRing.setAttribute('data-total', `${allocated - deletableAmount}`);
-        allocatedProgressRing.setAttribute('data-spent', `${allocated - deletableAmount}`);
+    //   data updates 
 
-        remainingProgressionRing.setAttribute('data-total', `${allocated - deletableAmount}`)
-        remainingProgressionRing.setAttribute('data-spent', `${remaining - deletableAmount}`)
+    // Partition
+    partitions[activePartitionIndex].AllocatedAmount -= deletableAmount;
+    partitions[activePartitionIndex].remainingAmount -= deletableAmount;
 
-        totalBalance -= deletableAmount
+    // Expense
+    const expense = partitions[activePartitionIndex].expenses[activeExpenseIndex];
+    expense.expenseRemainingAmount -= deletableAmount;
 
-        // remove from the list
-        currSubDetail.subDetailList.splice(currSubListIndex, 1)
+    expense.expenseAllocatedAmount -= deletableAmount;
 
-        //save back to storage
-        localStorage.setItem("partitions", JSON.stringify(partitions))
-        localStorage.setItem("totalBalance", totalBalance)
+    // Total balance
+    totalBalance -= deletableAmount;
 
-        document.querySelector(".individual-credit-detail").classList.add("delete");
+    // Remove entry
+    currSubDetail.subDetailList.splice(currSubListIndex, 1);
 
-        setTimeout(() => {
-            loadProgressionBars()
-            renderAllPartitions()
-            renderAllExpenseDetails()
-            renderTotalBalance()
-        }, 200)
-    }
-})
+
+    // transition
+    creditEl.classList.add("delete");
+
+    setTimeout(() => {
+        localStorage.setItem("partitions", JSON.stringify(partitions));
+        localStorage.setItem("totalBalance", totalBalance);
+
+        loadProgressionBars();
+        renderAllPartitions();
+        renderAllExpenseDetails();
+        renderTotalBalance();
+    }, 200);
+});
 
 //Add credit amount
 document.getElementById("enter-credit-btn").addEventListener("click", () => {
@@ -1126,9 +1143,8 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
         if (!expenseEntry.iscreditAmount) {
             listContainer.insertAdjacentHTML(
                 "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
-                <div class="individual-detail-inner">
-                    <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
-                    ${deleteSVG}
+                <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
+                ${deleteSVG}
                 </div> 
                 <div class="line"></div>`
             )
@@ -1208,7 +1224,7 @@ cancelSubDetailName.addEventListener("click", () => {
 
 // Clear individual expense (event delegation)
 document.querySelector(".detail").addEventListener("click", (e) => {
-    if (e.target.closest(".clear-detail-btn")) {
+    if (e.target.classList.contains("clear-detail-btn")) {
 
         const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
         const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))
@@ -1606,4 +1622,3 @@ function raf(time) {
 }
 
 requestAnimationFrame(raf)
-

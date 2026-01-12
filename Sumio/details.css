@@ -51,7 +51,6 @@
     height: fit-content;
     color: var(--text-muted);
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
 }
@@ -60,7 +59,8 @@
     justify-content: space-between;
     align-items: flex-start;
     background: #00AA00;
-    border-radius: 15px;
+    border-radius: 20px;
+    corner-shape: squircle;
     padding: 3px;
     transition: transform 0.2s ease-in, opacity 0.2s ease-in;
 }
@@ -81,16 +81,9 @@
 .credit-detail-span {
     color: white;
     text-align: start;
-    font-size: 0.78rem;
+    font-size: 0.7rem;
     font-weight: 500;
     margin: 8px;
-}
-
-.individual-detail-inner {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .sub-detail-title:focus {
