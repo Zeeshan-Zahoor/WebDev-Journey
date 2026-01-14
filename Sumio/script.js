@@ -1379,10 +1379,13 @@ function showUpdateBanner() {
 
 // When user clicks Update
 document.getElementById("update-btn")?.addEventListener("click", () => {
-    if (newWorker) {
-        newWorker.postMessage("SKIP_WAITING");
-    }
+    navigator.serviceWorker.getRegistration().then(reg => {
+        if (reg?.waiting) {
+            reg.waiting.postMessage("SKIP_WAITING");
+        }
+    });
 });
+
 
 
 //slide bar (drawer)

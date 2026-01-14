@@ -1,5 +1,6 @@
-const CACHE_NAME = "sumio-dev-v5.2.3";
+const CACHE_NAME = "sumio-dev-v5.2.5";
 
+/* ================= STATIC ASSETS ================= */
 const STATIC_ASSETS = [
   "./",
   "./index.html",
@@ -27,16 +28,16 @@ const STATIC_ASSETS = [
 
 /* ================= INSTALL ================= */
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installing…");
+  console.log("[SW] Installing...");
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(STATIC_ASSETS))
   );
-  // ⚠️ DO NOT skipWaiting here (user controls update)
+  // ❗ DO NOT skipWaiting (user controls update)
 });
 
 /* ================= ACTIVATE ================= */
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activating…");
+  console.log("[SW] Activating...");
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
@@ -49,49 +50,53 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
-  self.clients.claim();
+  self.clients.claim(); // 👈 REQUIRED for navigation control
 });
 
 /* ================= FETCH ================= */
 self.addEventListener("fetch", (event) => {
-  if (event.request.method !== "GET") return;
-
   const request = event.request;
 
-  // 🧠 Handle app navigation (VERY IMPORTANT)
+  if (request.method !== "GET") return;
+
+  /* 🧠 CRITICAL: Handle navigation requests FIRST */
   if (request.mode === "navigate") {
     event.respondWith(
-      caches.match("./index.html").then((cached) => {
-        return cached || fetch(request);
-      })
+      caches.open(CACHE_NAME).then(cache =>
+        cache.match("./index.html").then(cached => {
+          return cached || fetch(request);
+        })
+      )
     );
     return;
   }
 
-  // Assets (JS, CSS, images)
+  /* Static assets: Cache-first + background update */
   event.respondWith(
-    caches.match(request).then((cached) => {
-      return (
-        cached ||
-        fetch(request).then((networkResponse) => {
-          // Cache new assets
+    caches.match(request).then(cached => {
+      if (cached) return cached;
+
+      return fetch(request)
+        .then(networkResponse => {
           if (
             networkResponse &&
             networkResponse.status === 200 &&
             networkResponse.type === "basic"
           ) {
             const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then((cache) =>
+            caches.open(CACHE_NAME).then(cache =>
               cache.put(request, clone)
             );
           }
           return networkResponse;
         })
-      );
+        .catch(() => {
+          // Optional: silent fail for assets
+          return cached;
+        });
     })
   );
 });
-
 
 /* ================= UPDATE APPROVAL ================= */
 self.addEventListener("message", (event) => {
