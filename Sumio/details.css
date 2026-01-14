@@ -74,6 +74,10 @@
     justify-content: center;
     align-items: center;
 }
+.clear-credit-detail-btn svg {
+    fill: var(--bg-modal-btns-cancel);
+}
+
 .spend-detail-span {
     font-size: 12px;
 }

@@ -1224,7 +1224,7 @@ cancelSubDetailName.addEventListener("click", () => {
 
 // Clear individual expense (event delegation)
 document.querySelector(".detail").addEventListener("click", (e) => {
-    if (e.target.classList.contains("clear-detail-btn")) {
+    if (e.target.closest(".clear-detail-btn")) {
 
         const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
         const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))

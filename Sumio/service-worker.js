@@ -54,43 +54,44 @@ self.addEventListener("activate", (event) => {
 
 /* ================= FETCH ================= */
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
   const request = event.request;
 
-  // Only handle GET requests
-  if (request.method !== "GET") return;
+  // 🧠 Handle app navigation (VERY IMPORTANT)
+  if (request.mode === "navigate") {
+    event.respondWith(
+      caches.match("./index.html").then((cached) => {
+        return cached || fetch(request);
+      })
+    );
+    return;
+  }
 
+  // Assets (JS, CSS, images)
   event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      // 1️⃣ Serve from cache immediately if available
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-
-      // 2️⃣ Try network
-      return fetch(request)
-        .then((networkResponse) => {
-          // Cache successful network responses
+    caches.match(request).then((cached) => {
+      return (
+        cached ||
+        fetch(request).then((networkResponse) => {
+          // Cache new assets
           if (
             networkResponse &&
             networkResponse.status === 200 &&
             networkResponse.type === "basic"
           ) {
             const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache =>
+            caches.open(CACHE_NAME).then((cache) =>
               cache.put(request, clone)
             );
           }
           return networkResponse;
         })
-        .catch(() => {
-          // 3️⃣ Fallback for offline / weak network
-          if (request.destination === "document") {
-            return caches.match("./index.html");
-          }
-        });
+      );
     })
   );
 });
+
 
 /* ================= UPDATE APPROVAL ================= */
 self.addEventListener("message", (event) => {
