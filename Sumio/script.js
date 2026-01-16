@@ -1226,8 +1226,8 @@ cancelSubDetailName.addEventListener("click", () => {
 document.querySelector(".detail").addEventListener("click", (e) => {
     if (e.target.closest(".clear-detail-btn")) {
 
-        const subDetailIndex = Number(e.target.parentElement.parentElement.parentElement.getAttribute('data-sub-index'))
-        const currSubListIndex = Number(e.target.parentElement.getAttribute('data-spent-index'))
+        const subDetailIndex = Number(e.target.closest('[data-sub-index]').dataset.subIndex);
+        const currSubListIndex = Number(e.target.closest('[data-spent-index]').dataset.spentIndex);
         const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
 
         const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
