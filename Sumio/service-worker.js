@@ -1,4 +1,4 @@
-const CACHE_NAME = "sumio-dev-v5.2.6";
+const CACHE_NAME = "sumio-dev-v5.2.7";
 
 /* ================= STATIC ASSETS ================= */
 const STATIC_ASSETS = [
