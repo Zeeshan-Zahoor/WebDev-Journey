@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="toast.css">
     <link rel="stylesheet" href="about.css">
     <link rel="stylesheet" href="add_from_partition_modal.css">
+    <link rel="stylesheet" href="update_progress.css">
 
 </head>
 
@@ -410,10 +411,27 @@
     <div id="update-banner" class="update-banner-outer hide">
         <div class="update-banner">
             <span><strong>New version available</strong></span>
-            <span id="updated-news"><strong>What's new: </strong>UI fixes and Delete expense entry warning.</span>
+            <span id="updated-news"><strong>What's new: <br></strong><strong>1.</strong> UI fixes. <br><strong>2.</strong> You will get a warning on deleting an <strong>Expense Entry</strong></span>
             <button id="update-btn">Update</button>
         </div>
     </div>
+
+    <!-- update progress-bar (dummy)  -->
+    <div class="update-progress-outer hide">
+        <div id="update-progress" class="update-container ">
+            <h2>UPDATING...</h2>
+
+            <div class="progress-wrapper">
+                <div id="progress-bar">
+                </div>
+                <div class="progress-text">
+                    <span id="progress-text">0%</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 
 
     <!-- slide bar (drawer)  -->

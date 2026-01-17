@@ -308,9 +308,10 @@ footer {
   text-align: center;
 }
 #updated-news {
-  font-weight: 400;
-  font-size: smaller;
-  text-align: center;
+    font-weight: 400;
+    font-size: smaller;
+    text-align: start;
+    margin: 0 1rem;
 }
 
 .update-banner button {

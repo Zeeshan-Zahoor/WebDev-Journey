@@ -1375,55 +1375,51 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-let newWorker;
+const newVersion = "v5.2.7";
 
-if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/service-worker.js").then(reg => {
+const storedVersion = localStorage.getItem("currentVersion") || "v5.2.7";
 
-        // FORCE update check
-        reg.update();
-
-        // If there's already a waiting SW on load
-        if (reg.waiting) {
-            newWorker = reg.waiting;
-            showUpdateBanner();
-        }
-
-        reg.addEventListener("updatefound", () => {
-            newWorker = reg.installing;
-
-            newWorker.addEventListener("statechange", () => {
-                if (
-                    newWorker.state === "installed" &&
-                    navigator.serviceWorker.controller
-                ) {
-                    showUpdateBanner();
-                }
-            });
-        });
-    });
-
-    // important
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-        console.log("New SW controlling page → reloading");
-        window.location.reload();
-    });
-}
-
-function showUpdateBanner() {
+if (storedVersion !== newVersion) {
     document.getElementById("update-banner")?.classList.remove("hide");
-    lenis.stop();
 }
 
-
-// When user clicks Update
 document.getElementById("update-btn")?.addEventListener("click", () => {
-    navigator.serviceWorker.getRegistration().then(reg => {
-        if (reg?.waiting) {
-            reg.waiting.postMessage("SKIP_WAITING");
+    document.getElementById("update-banner")?.classList.add("hide");
+    document.querySelector(".update-progress-outer").classList.remove("hide");
+
+    const bar = document.getElementById("progress-bar");
+    const text = document.getElementById("progress-text");
+    let progress = 0;
+
+    const interval = setInterval(() => {
+        progress += Math.random() * 10 + 3;
+        progress = Math.min(progress, 100);
+
+        bar.style.width = progress + "%";
+        text.textContent = `${Math.round(progress)}%`;
+
+        if (progress >= 100) {
+            clearInterval(interval);
+
+            text.textContent = "100%";
+
+            localStorage.setItem("currentVersion", newVersion);
+            localStorage.setItem("showUpdateToast", "true");
+            document.getElementById("update-banner")?.classList.add("hide");
+            setTimeout(() => {
+                location.reload();
+            }, 500);
         }
-    });
+    }, 300);
 });
+
+// toast after reload
+if (localStorage.getItem("showUpdateToast")) {
+    localStorage.removeItem("showUpdateToast");
+    setTimeout(() => {
+        showToast("Updated Successfully!", "success");
+    }, 200);
+}
 
 
 

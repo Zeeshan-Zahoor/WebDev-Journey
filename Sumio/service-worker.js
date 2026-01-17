@@ -16,6 +16,7 @@ const STATIC_ASSETS = [
   "./initial_messages.css",
   "./theme-dark.css",
   "./theme-ivory.css",
+  "./update_progress.css", 
 
   // JS
   "./script.js",
@@ -96,12 +97,4 @@ self.addEventListener("fetch", (event) => {
         });
     })
   );
-});
-
-/* ================= UPDATE APPROVAL ================= */
-self.addEventListener("message", (event) => {
-  if (event.data === "SKIP_WAITING") {
-    console.log("[SW] Skip waiting approved");
-    self.skipWaiting();
-  }
 });
