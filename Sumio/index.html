@@ -47,6 +47,7 @@
     <link rel="stylesheet" href="details.css">
     <link rel="stylesheet" href="add_subdetail_modal.css">
     <link rel="stylesheet" href="delete_confirmation.css">
+    <link rel="stylesheet" href="delete_overlay.css">
     <link rel="stylesheet" href="initial_messages.css">
     <link rel="stylesheet" href="slider.css">
     <link rel="stylesheet" href="app_reset_modal.css">
@@ -301,7 +302,8 @@
                     <input type="number" id="add-from-section-input" placeholder="Add amount">
                     <div class="add-from-partition-actions">
                         <button id="add-from-section" class="add-from-section-btns add-from-section">Add</button>
-                        <button id="cancel-add-from-section" class="add-from-section-btns cancel-from-section">Cancel</button>
+                        <button id="cancel-add-from-section"
+                            class="add-from-section-btns cancel-from-section">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -376,6 +378,26 @@
         </div>
     </div>
 
+
+    <!-- delete individual expense warning modal  -->
+    <div class="delete-overlay hide">
+        <div class="delete-modal">
+            <h4>Delete entry?</h4>
+
+            <p class="delete-info">
+                <strong>₹200</strong> from <strong>Gym Add On</strong><br>
+                <span>(first)</span>
+            </p>
+
+            <div class="delete-actions">
+                <button class="btn-cancel-delete-entry">Cancel</button>
+                <button class="btn-delete-delete-entry">Delete</button>
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- initial messages     -->
     <div class="partition-message-outer hide">
         <div class="partition-message-inner">
@@ -388,7 +410,7 @@
     <div id="update-banner" class="update-banner-outer hide">
         <div class="update-banner">
             <span><strong>New version available</strong></span>
-            <span id="updated-news"><strong>What's new: </strong>Bug fixes.</span>
+            <span id="updated-news"><strong>What's new: </strong>UI fixes and Delete expense entry warning.</span>
             <button id="update-btn">Update</button>
         </div>
     </div>
@@ -510,8 +532,6 @@
 
         </div>
     </div>
-
-
 
     <footer>
         Made with ❤️ by Zeeshan

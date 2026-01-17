@@ -75,10 +75,6 @@
     transition: transform 0.15s ease;
 }
 
-.btn-cancel:hover {
-    background: #3b3f8c;
-}
-
 .btn-delete {
     flex: 1;
     background: var(--accent-danger);

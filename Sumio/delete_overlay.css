@@ -1,0 +1,72 @@
+.delete-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.delete-modal {
+  width: min(70%, 320px);
+  background: var(--bg-surface);
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  animation: scaleIn 0.15s ease;
+}
+
+.delete-modal h4 {
+  margin: 0 0 0.6rem;
+  color: var(--text-primary);
+}
+
+.delete-info {
+  font-size: 0.95rem;
+  margin-bottom: 0.6rem;
+  color: var(--text-primary);
+}
+
+.delete-info span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.delete-warning {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.delete-actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+}
+
+.btn-cancel-delete-entry {
+  background: transparent;
+  border: 1px solid var(--border-soft);
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+.btn-delete-delete-entry {
+  background: var(--accent-danger);
+  border: none;
+  padding: 0.45rem 0.8rem;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.hide {
+  display: none;
+}

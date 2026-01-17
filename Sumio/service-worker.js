@@ -50,7 +50,7 @@ self.addEventListener("activate", (event) => {
       )
     )
   );
-  self.clients.claim(); // 👈 REQUIRED for navigation control
+  self.clients.claim(); // REQUIRED for navigation control
 });
 
 /* ================= FETCH ================= */
@@ -59,7 +59,7 @@ self.addEventListener("fetch", (event) => {
 
   if (request.method !== "GET") return;
 
-  /* 🧠 CRITICAL: Handle navigation requests FIRST */
+  /* CRITICAL: Handle navigation requests FIRST */
   if (request.mode === "navigate") {
     event.respondWith(
       caches.open(CACHE_NAME).then(cache =>

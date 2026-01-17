@@ -29,11 +29,11 @@ const cancelSubDetailName = document.getElementById('cancel-sub-detail-name-btn'
 
 
 window.addEventListener("offline", () => {
-  showToast("You’re offline. Changes will still be saved.", "info");
+    showToast("You’re offline. Changes will still be saved.", "info");
 });
 
 window.addEventListener("online", () => {
-  showToast("Back online", "success");
+    showToast("Back online", "success");
 });
 
 
@@ -298,11 +298,15 @@ const createPartitionCard = (partitionObj, partIndex) => {
                 e.preventDefault();
                 e.target.blur();
                 updatePartitionTitle(partitionCard, partIndex);
+                showToast("Edited section name", "info");
             }
 
             if (evt == "blur") {
                 updatePartitionTitle(partitionCard, partIndex);
+                showToast("Edited section name", "info");
             }
+
+
         })
     })
 
@@ -588,11 +592,13 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
     //make the name editable
     document.getElementById("modal-expense-name").addEventListener("blur", () => {
         updateExpenseTitle(expenseIndex);
+        showToast("Edited expense name", "info");
     }, true)
     document.getElementById("modal-expense-name").addEventListener("keydown", (e) => {
         if (e.key == "Enter") {
             e.preventDefault();
             updateExpenseTitle(expenseIndex);
+            showToast("Edited expense name", "info");
             e.target.blur();
         }
     }, true)
@@ -796,8 +802,8 @@ function addExpenseEntry() {
         )
 
         listContainer.insertAdjacentHTML(
-            "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}">
-                        <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span>
+            "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}" tabindex="0">
+                        <div class="spend-detail-span-box"><span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span></div>
                         ${deleteSVG}
                     </div>
                     <div class="line"></div>`
@@ -1142,8 +1148,8 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     subDetailObject.subDetailList.forEach((expenseEntry) => {
         if (!expenseEntry.iscreditAmount) {
             listContainer.insertAdjacentHTML(
-                "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}">
-                <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span>
+                "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}" tabindex="0">
+                <div class="spend-detail-span-box"><span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span></div>
                 ${deleteSVG}
                 </div> 
                 <div class="line"></div>`
@@ -1186,6 +1192,7 @@ function updateSubDetailTitle(e) {
 document.querySelector(".detail").addEventListener("blur", (e) => {
     if (!e.target.classList.contains("sub-detail-title")) return;
     updateSubDetailTitle(e);
+    showToast("Edited sub-detail name", "info");
 }, true);// for blur
 
 document.querySelector(".detail").addEventListener("keydown", (e) => {
@@ -1194,6 +1201,7 @@ document.querySelector(".detail").addEventListener("keydown", (e) => {
         e.preventDefault();
         updateSubDetailTitle(e);
         e.target.blur(); //remve focus
+        showToast("Edited sub-detail name", "info");
     }
 })
 
@@ -1221,46 +1229,74 @@ cancelSubDetailName.addEventListener("click", () => {
     }, 200);
 })
 
+document.querySelector(".btn-delete-delete-entry")?.addEventListener("click", () => {
+    if (!pendingDelete) return;
 
-// Clear individual expense (event delegation)
+    const { currSubDetail, deletableAmount, currSubListIndex } = pendingDelete;
+    //subtract from sub detail total
+    currSubDetail.subDetailTotal -= deletableAmount
+
+    //add to partition balance
+    partitions[activePartitionIndex].remainingAmount += deletableAmount
+
+    //add to active expense balance
+    partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount += deletableAmount
+
+    //update progression ring
+    const remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
+    remainingProgressionRing.setAttribute('data-spent', `${remaining + deletableAmount}`)
+
+    totalBalance += deletableAmount
+
+    // remove from the list
+    currSubDetail.subDetailList.splice(currSubListIndex, 1)
+
+    //save back to storage
+    localStorage.setItem("partitions", JSON.stringify(partitions))
+    localStorage.setItem("totalBalance", totalBalance)
+
+    document.querySelector(".delete-overlay").classList.add("hide");
+
+    showToast("Entry deleted 🗑️", "info");
+
+    setTimeout(() => {
+        loadProgressionBars()
+        renderAllPartitions()
+        renderAllExpenseDetails()
+        renderTotalBalance()
+    }, 200)
+})
+
+// Clear individual expense
+let pendingDelete = null;
+
+function openDeleteModal({ currSubDetail, deletableAmount, currSubListIndex }) {
+    pendingDelete = { currSubDetail, deletableAmount, currSubListIndex };
+
+    document.querySelector(".delete-info").innerHTML = `
+      <strong>₹${deletableAmount}</strong> from 
+      <strong>${currSubDetail.subDetailName}</strong><br>
+      <span>(${currSubDetail.subDetailList[currSubListIndex].remark})</span>
+    `;
+
+    document.querySelector(".delete-overlay").classList.remove("hide");
+}
+
+
+document.querySelector(".delete-overlay")?.addEventListener("click", (e) => {
+    if (e.target.classList.contains("delete-overlay") || e.target.classList.contains("btn-cancel-delete-entry")) {
+        document.querySelector(".delete-overlay").classList.add("hide");
+    }
+})
+
 document.querySelector(".detail").addEventListener("click", (e) => {
     if (e.target.closest(".clear-detail-btn")) {
-
         const subDetailIndex = Number(e.target.closest('[data-sub-index]').dataset.subIndex);
         const currSubListIndex = Number(e.target.closest('[data-spent-index]').dataset.spentIndex);
         const currSubDetail = partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetails[subDetailIndex]
 
-        const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount
-
-        //subtract from sub detail total
-        currSubDetail.subDetailTotal -= deletableAmount
-
-        //add to partition balance
-        partitions[activePartitionIndex].remainingAmount += deletableAmount
-
-        //add to active expense balance
-        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseRemainingAmount += deletableAmount
-
-        //update progression ring
-        const remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
-        remainingProgressionRing.setAttribute('data-spent', `${remaining + deletableAmount}`)
-
-        totalBalance += deletableAmount
-
-        // remove from the list
-        currSubDetail.subDetailList.splice(currSubListIndex, 1)
-
-        //save back to storage
-        localStorage.setItem("partitions", JSON.stringify(partitions))
-        localStorage.setItem("totalBalance", totalBalance)
-
-        setTimeout(() => {
-            loadProgressionBars()
-            renderAllPartitions()
-            renderAllExpenseDetails()
-            renderTotalBalance()
-        }, 200)
-
+        const deletableAmount = currSubDetail.subDetailList[currSubListIndex].amount;
+        openDeleteModal({ currSubDetail, deletableAmount, currSubListIndex });
     }
 });
 
@@ -1343,6 +1379,9 @@ let newWorker;
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/service-worker.js").then(reg => {
+
+        // FORCE update check
+        reg.update();
 
         // If there's already a waiting SW on load
         if (reg.waiting) {

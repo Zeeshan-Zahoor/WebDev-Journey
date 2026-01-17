@@ -54,6 +54,10 @@
     justify-content: space-between;
     align-items: center;
 }
+.individual-detail:focus {
+    transition: 0.2s ease-in;
+    background-color: var(--individual-detail-focus);
+}
 .individual-credit-detail {
     display: flex;
     justify-content: space-between;
@@ -80,6 +84,15 @@
 
 .spend-detail-span {
     font-size: 12px;
+    text-align: start;
+}
+
+.spend-detail-span-box {
+    max-width: calc(100% - 25px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 .credit-detail-span {

@@ -14,6 +14,7 @@
 .add-sub-detail-modal-inner {
     height: fit-content;
     width: 80%;
+    max-width: 360px;
     padding: 30px;
     background-color: var(--bg-modal);
     border-radius: 13px;

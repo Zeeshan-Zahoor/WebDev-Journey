@@ -43,6 +43,8 @@
 
   --outline-I: rgba(0, 0, 0, 0.25);
 
+  --individual-detail-focus: var(--text-muted-I);
+
   /* Radius*/
   --radius-lg: 18px;
   --radius-md: 14px;
