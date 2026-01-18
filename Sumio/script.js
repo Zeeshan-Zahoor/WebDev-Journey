@@ -321,12 +321,12 @@ const createPartitionCard = (partitionObj, partIndex) => {
             if (evt === "keydown" && e.key == "Enter") {
                 e.preventDefault();
                 e.target.blur();
-                updatePartitionTitle(partitionCard, partIndex);
+                if(!updatePartitionTitle(partitionCard, partIndex)) return;
                 showToast("Edited section name", "info");
             }
 
             if (evt == "blur") {
-                updatePartitionTitle(partitionCard, partIndex);
+                if(!updatePartitionTitle(partitionCard, partIndex)) return;
                 showToast("Edited section name", "info");
             }
 
@@ -425,8 +425,10 @@ function updatePartitionTitle(partitionCard, partIndex) {
     const newName = partitionCard.querySelector(".partition-title").innerText.trim();
 
     //update data
+    if(partitions[partIndex].name === newName) return false;
     partitions[partIndex].name = newName;
     localStorage.setItem("partitions", JSON.stringify(partitions));
+    return true;
 }
 
 
@@ -613,13 +615,16 @@ const openExpense = (expenseName, partitionIndex, expenseIndex) => {
 
     //make the name editable
     document.getElementById("modal-expense-name").addEventListener("blur", () => {
-        updateExpenseTitle(expenseIndex);
+        if(!updateExpenseTitle(expenseIndex)) return;
         showToast("Edited expense name", "info");
     }, true)
     document.getElementById("modal-expense-name").addEventListener("keydown", (e) => {
         if (e.key == "Enter") {
             e.preventDefault();
-            updateExpenseTitle(expenseIndex);
+            if(!updateExpenseTitle(expenseIndex))  {
+                e.target.blur();
+                return;
+            }
             showToast("Edited expense name", "info");
             e.target.blur();
         }
@@ -647,9 +652,11 @@ function updateExpenseTitle(expenseIndex) {
     const newName = document.getElementById("modal-expense-name").innerText.trim();
 
     //update in memory
+    if(partitions[activePartitionIndex].expenses[expenseIndex].expenseName === newName) return false;
     partitions[activePartitionIndex].expenses[expenseIndex].expenseName = newName;
 
     localStorage.setItem("partitions", JSON.stringify(partitions));
+    return true;
 }
 
 
@@ -820,11 +827,16 @@ function addExpenseEntry() {
         )
 
         listContainer.insertAdjacentHTML(
-            "beforeend", `<div class="individual-detail" data-spent-index = "${(subDetail.subDetailList.length) - 1}" tabindex="0">
-                        <div class="spend-detail-span-box"><span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')} (${remarks})</span></div>
-                        ${deleteSVG}
-                    </div>
-                    <div class="line"></div>`
+            "beforeend", `<div class="individual-detail" data-spent-index="${(subDetail.subDetailList.length) - 1}" tabindex="0">
+                                <div class="spend-detail-span-box">
+                                    <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')}</span> 
+                                    <span class="spend-detail-span remark-parentheses-open">(</span> 
+                                    <span class="spend-detail-span remark-span" contenteditable="true"> ${remarks}</span> 
+                                    <span class="spend-detail-span remark-parentheses-close">)</span>
+                                </div>
+                                ${deleteSVG}
+                            </div>
+                            <div class="line"></div>`
         );
 
         //update
@@ -1166,11 +1178,16 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
     subDetailObject.subDetailList.forEach((expenseEntry) => {
         if (!expenseEntry.iscreditAmount) {
             listContainer.insertAdjacentHTML(
-                "beforeend", `<div class="individual-detail" data-spent-index = "${idx++}" tabindex="0">
-                <div class="spend-detail-span-box"><span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} (${expenseEntry.remark})</span></div>
-                ${deleteSVG}
-                </div> 
-                <div class="line"></div>`
+                "beforeend", `<div class="individual-detail" data-spent-index="${idx++}" tabindex="0">
+                                    <div class="spend-detail-span-box">
+                                        <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} </span> 
+                                        <span class="spend-detail-span remark-parentheses-open">(</span> 
+                                        <span class="spend-detail-span remark-span" contenteditable="true"> ${expenseEntry.remark}</span>
+                                        <span class="spend-detail-span remark-parentheses-close">)</span>
+                                    </div>
+                                    ${deleteSVG}
+                                </div>
+                                <div class="line"></div>`
             )
         } else {
             listContainer.insertAdjacentHTML(
@@ -1198,29 +1215,78 @@ function updateSubDetailTitle(e) {
     const subIndex = Number(subDetailEl.dataset.subIndex);
 
     // Update data
-    partitions[activePartitionIndex]
+    const subDetailName = partitions[activePartitionIndex]
         .expenses[activeExpenseIndex]
         .expenseDetails[subIndex]
-        .subDetailName = newName;
+        .subDetailName;
+    
+    if(subDetailName === newName) return false;
 
+    subDetailName = newName;
 
     localStorage.setItem("partitions", JSON.stringify(partitions));
+    return true;
+}
+
+function updateEntryRemark(e) {
+    const newRemark = e.target.innerText.trim();
+    const subDetailEl = e.target.closest(".sub-details");
+    if (!subDetailEl) return;
+
+    const subIndex = Number(subDetailEl.dataset.subIndex);
+
+    const subList = partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex]
+        .expenseDetails[subIndex].subDetailList;
+
+    const remarkIndex = Number(e.target.closest(".individual-detail").dataset.spentIndex);
+
+    //update in storage
+    if(subList[remarkIndex].remark === newRemark) {
+        return false;
+    } 
+    subList[remarkIndex].remark = newRemark;
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+    return true;
 }
 
 document.querySelector(".detail").addEventListener("blur", (e) => {
-    if (!e.target.classList.contains("sub-detail-title")) return;
-    updateSubDetailTitle(e);
-    showToast("Edited sub-detail name", "info");
+    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span")) {
+        return;
+    }
+    else if (e.target.classList.contains("sub-detail-title")) {
+        if(!updateSubDetailTitle(e)) return;
+        showToast("Edited sub-detail name", "info");
+    } else {
+        if(!updateEntryRemark(e)) return;
+        showToast("Edited remark", "info");
+    }
+
 }, true);// for blur
 
 document.querySelector(".detail").addEventListener("keydown", (e) => {
-    if (!e.target.classList.contains("sub-detail-title")) return;
+    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span")) {
+        return;
+    }
+
     if (e.key == "Enter") {
         e.preventDefault();
-        updateSubDetailTitle(e);
+        if (e.target.classList.contains("sub-detail-title")) {
+            if(!updateSubDetailTitle(e)) {
+                e.target.blur(); //remve focus
+                return;
+            }
+            showToast("Edited sub-detail name", "info");
+        } else {
+            if(!updateEntryRemark(e)) {
+                e.target.blur(); //remve focus
+                return;
+            }
+            showToast("Edited remark", "info")
+        }
         e.target.blur(); //remve focus
-        showToast("Edited sub-detail name", "info");
     }
+
 })
 
 

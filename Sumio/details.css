@@ -87,10 +87,29 @@
     text-align: start;
 }
 
+.remark-parentheses-open {
+    margin-left: 4px;
+    padding: 0 1px;
+}
+.remark-parentheses-close {
+    padding: 0 1px;
+}
+.remark-span {
+    /* padding: 0 2px 2px 2px;
+    margin: 2px; */
+    transition: transform 0.2s ease-in, margin 0.2s ease-in;
+}
+.remark-span:focus {
+    outline: 1px solid var(--text-muted);
+    border-radius: 3px;
+    margin: 3px;
+    padding: 0 3px;
+}
+
 .spend-detail-span-box {
     max-width: calc(100% - 25px);
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
