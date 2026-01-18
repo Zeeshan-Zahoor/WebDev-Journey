@@ -1393,7 +1393,7 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.2.8";
+const newVersion = "v5.2.9";
 
 const storedVersion = localStorage.getItem("currentVersion") || "v5.2.7";
 
