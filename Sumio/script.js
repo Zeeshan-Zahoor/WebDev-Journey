@@ -36,6 +36,22 @@ window.addEventListener("online", () => {
     showToast("Back online", "success");
 });
 
+//smooth scrolling lenis
+const container = document.querySelector('.container')
+const content = container.querySelector('.partition-container')
+import Lenis from 'https://unpkg.com/@studio-freight/lenis?module';
+const lenis = new Lenis({
+    wrapper: container,
+    content: content,
+    smooth: true,
+    lerp: 0.08,
+})
+
+function raf(time) {
+    lenis.raf(time)
+    requestAnimationFrame(raf)
+}
+requestAnimationFrame(raf)
 
 
 // App state
@@ -55,6 +71,14 @@ let activeExpenseIndex = null;
 
 let unSectionedBalance;
 let appTheme;
+
+const lightModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon"height="24px" viewBox="0 -960 960 960" width="24px" fill="#EFEFEF"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"/></svg>`;
+
+const darkModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon" height="24px" viewBox="0 -960 960 960"
+                    width="24px" fill="#EFEFEF">
+                    <path
+                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
+                </svg>`;
 
 // Load data on page load
 window.onload = () => {
@@ -232,7 +256,7 @@ function addTotalAmount() {
 
 
 
-document.querySelector(".add-partition-section").addEventListener("click", (e) => {
+document.querySelector(".add-partition-section")?.addEventListener("click", (e) => {
     if (e.target.closest(".add-partition-btn")) {
         setTimeout(() => {
             show_Add_Partition_Modal()
@@ -361,8 +385,6 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
         });
 
-
-
         myExpenseContainer.appendChild(card);
 
     });
@@ -429,7 +451,7 @@ const renderAllPartitions = () => {
         lenis.stop();
     } else {
         document.querySelector(".partition-message-outer").classList.add("hide");
-        lenis.start();
+        lenis?.start();
     }
 
     partitions.forEach((partitionObj, i) => createPartitionCard(partitionObj, i));
@@ -470,7 +492,7 @@ function addPartition() {
             setTimeout(() => {   //add a delay for button animation
                 partitionModal.classList.add("hide");
             }, 200)
-            lenis.start();
+            lenis?.start();
         } else {
             showToast("Opps! No enough balance.", "error");
         }
@@ -492,7 +514,7 @@ partitionModal.addEventListener("click", (e) => {
     if (e.target.classList.contains("cancel-partition-btn")) {
         setTimeout(() => {   //add a delay for button animation
             partitionModal.classList.add("hide");
-            lenis.start();
+            lenis?.start();
         }, 200)
     }
 });
@@ -509,7 +531,7 @@ function saveExpense() {
         setTimeout(() => {
             expenseModal.classList.add("hide");
         }, 200)
-        lenis.start();
+        lenis?.start();
 
         return;
     }
@@ -556,7 +578,7 @@ document.querySelector(".modal-content").addEventListener("keydown", (e) => {
 
 
 // Cancel expense modal
-cancelExpenseBtn.addEventListener("click", () => {
+cancelExpenseBtn?.addEventListener("click", () => {
     setTimeout(() => {
         expenseModal.classList.add("hide");
     }, 200)
@@ -667,11 +689,7 @@ if (closeModalBtn) {
     });
 }
 
-
-
-
 // Expense Datails Model 
-
 // circular progress bar 
 const loadProgressionBars = () => {
     document.querySelectorAll(".progress-ring").forEach((ring, index) => {
@@ -1407,7 +1425,7 @@ document.getElementById("update-btn")?.addEventListener("click", () => {
             localStorage.setItem("showUpdateToast", "true");
             document.getElementById("update-banner")?.classList.add("hide");
             setTimeout(() => {
-                location.reload();
+                window.location.reload(true);
             }, 500);
         }
     }, 300);
@@ -1496,7 +1514,7 @@ document.getElementById("import-btn").addEventListener("click", () => {
                 // flag for toast after reload
                 localStorage.setItem("importSuccess", "true");
 
-                location.reload();
+                window.location.reload(true);
             } catch (err) {
                 showToast("Invalid file format ❌");
             }
@@ -1529,8 +1547,8 @@ function clearAllData() {
                 localStorage.setItem("partitions", JSON.stringify(partitions));
                 localStorage.setItem("totalBalance", totalBalance);
                 warningModal.classList.add("hide");
-                lenis.start();
-                location.reload();
+                window.location.reload();
+                lenis?.start();
             }, 100)
         }
 
@@ -1538,7 +1556,7 @@ function clearAllData() {
             setTimeout(() => {
                 warningModal.classList.add("hide");
             }, 100)
-            lenis.start();
+            lenis?.start();
         }
     })
 }
@@ -1615,14 +1633,6 @@ drawerItem?.addEventListener("click", () => {
     }
 });
 
-const lightModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon"height="24px" viewBox="0 -960 960 960" width="24px" fill="#EFEFEF"><path d="M480-360q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm0 80q-83 0-141.5-58.5T280-480q0-83 58.5-141.5T480-680q83 0 141.5 58.5T680-480q0 83-58.5 141.5T480-280ZM200-440H40v-80h160v80Zm720 0H760v-80h160v80ZM440-760v-160h80v160h-80Zm0 720v-160h80v160h-80ZM256-650l-101-97 57-59 96 100-52 56Zm492 496-97-101 53-55 101 97-57 59Zm-98-550 97-101 59 57-100 96-56-52ZM154-212l101-97 55 53-97 101-59-57Zm326-268Z"/></svg>`;
-
-const darkModeIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="theme-icon" height="24px" viewBox="0 -960 960 960"
-                    width="24px" fill="#EFEFEF">
-                    <path
-                        d="M600-640 480-760l120-120 120 120-120 120Zm200 120-80-80 80-80 80 80-80 80ZM483-80q-84 0-157.5-32t-128-86.5Q143-253 111-326.5T79-484q0-146 93-257.5T409-880q-18 99 11 193.5T520-521q71 71 165.5 100T879-410q-26 144-138 237T483-80Zm0-80q88 0 163-44t118-121q-86-8-163-43.5T463-465q-61-61-97-138t-43-163q-77 43-120.5 118.5T159-484q0 135 94.5 229.5T483-160Zm-20-305Z" />
-                </svg>`;
-
 
 document.getElementById("dark").addEventListener("click", () => {
     appTheme = "dark";
@@ -1643,20 +1653,4 @@ document.getElementById("ivory").addEventListener("click", () => {
 });
 
 
-//smooth scrolling lenis
-const container = document.querySelector('.container')
-const content = container.querySelector('.partition-container')
-import Lenis from 'https://unpkg.com/@studio-freight/lenis?module';
-const lenis = new Lenis({
-    wrapper: container,
-    content: content,
-    smooth: true,
-    lerp: 0.08,
-})
 
-function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-}
-
-requestAnimationFrame(raf)
