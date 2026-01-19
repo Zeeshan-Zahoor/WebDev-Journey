@@ -1459,9 +1459,9 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.3.0";
+const newVersion = "v5.3.1";
 
-const storedVersion = localStorage.getItem("currentVersion");
+const storedVersion = localStorage.getItem("currentVersion") || "v5.3.0";
 
 if (storedVersion !== newVersion) {
     document.getElementById("update-banner")?.classList.remove("hide");
