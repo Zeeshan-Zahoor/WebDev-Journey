@@ -1459,9 +1459,9 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.2.9";
+const newVersion = "v5.3.0";
 
-const storedVersion = localStorage.getItem("currentVersion") || "v5.2.7";
+const storedVersion = localStorage.getItem("currentVersion");
 
 if (storedVersion !== newVersion) {
     document.getElementById("update-banner")?.classList.remove("hide");
@@ -1717,6 +1717,3 @@ document.getElementById("ivory").addEventListener("click", () => {
 
     document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
 });
-
-
-
