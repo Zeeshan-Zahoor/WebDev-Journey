@@ -97,11 +97,21 @@
 .remark-span {
     /* padding: 0 2px 2px 2px;
     margin: 2px; */
-    transition: transform 0.2s ease-in, margin 0.2s ease-in;
+    transition: transform 0.12s ease-in, margin 0.12s ease-in;
 }
 .remark-span:focus {
     outline: 1px solid var(--text-muted);
     border-radius: 3px;
+    margin: 3px;
+    padding: 0 3px;
+}
+.amount-span {
+    transition: transform 0.12s ease-in, margin 0.12s ease-in;
+}
+.amount-span:focus {
+    outline: 1px solid var(--text-muted);
+    border-radius: 3px;
+    transform: scale(1.23);
     margin: 3px;
     padding: 0 3px;
 }

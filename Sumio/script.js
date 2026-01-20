@@ -829,7 +829,7 @@ function addExpenseEntry() {
         listContainer.insertAdjacentHTML(
             "beforeend", `<div class="individual-detail" data-spent-index="${(subDetail.subDetailList.length) - 1}" tabindex="0">
                                 <div class="spend-detail-span-box">
-                                    <span class="spend-detail-span">- ₹${spendingAmount.toLocaleString('en-IN')}</span> 
+                                    <span class="spend-detail-span">- ₹</span><span class="spend-detail-span amount-span" contenteditable="true">${spendingAmount.toLocaleString('en-IN')}</span> 
                                     <span class="spend-detail-span remark-parentheses-open">(</span> 
                                     <span class="spend-detail-span remark-span" contenteditable="true"> ${remarks}</span> 
                                     <span class="spend-detail-span remark-parentheses-close">)</span>
@@ -1180,7 +1180,7 @@ const createSubExpense = (subDetailObject, subDetailIndex, container) => {
             listContainer.insertAdjacentHTML(
                 "beforeend", `<div class="individual-detail" data-spent-index="${idx++}" tabindex="0">
                                     <div class="spend-detail-span-box">
-                                        <span class="spend-detail-span">- ₹${(expenseEntry.amount).toLocaleString('en-IN')} </span> 
+                                        <span class="spend-detail-span">- ₹</span><span class="spend-detail-span amount-span" contenteditable="true">${(expenseEntry.amount).toLocaleString('en-IN')} </span> 
                                         <span class="spend-detail-span remark-parentheses-open">(</span> 
                                         <span class="spend-detail-span remark-span" contenteditable="true"> ${expenseEntry.remark}</span>
                                         <span class="spend-detail-span remark-parentheses-close">)</span>
@@ -1250,22 +1250,82 @@ function updateEntryRemark(e) {
     return true;
 }
 
+function updateEntryAmount(e) {
+    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
+    const subDetailEl = e.target.closest(".sub-details");
+    if (!subDetailEl) return;
+
+    const subIndex = Number(subDetailEl.dataset.subIndex);
+
+    const subList = partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex]
+        .expenseDetails[subIndex].subDetailList;
+    
+    const amountIndex = Number(e.target.closest(".individual-detail").dataset.spentIndex);
+    const previousAmount = subList[amountIndex].amount;
+    const newAmount = Number(e.target.innerText.trim());
+
+    if (!isNaN(newAmount) && newAmount >= 0 && newAmount <= remaining) {
+        if(previousAmount === newAmount) return false;         
+        remaining += previousAmount - newAmount;
+
+        //update storage
+        subList[amountIndex].amount = newAmount;
+    
+        partitions[activePartitionIndex]
+            .expenses[activeExpenseIndex]
+            .expenseDetails[subIndex].subDetailTotal +=  newAmount - previousAmount;
+
+        // subtract from total of expense details
+        partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetailsTotal += newAmount - previousAmount;    
+
+        //add to partition remaining amount
+        partitions[activePartitionIndex].remainingAmount += previousAmount - newAmount;
+
+        //add to totalBalance
+        totalBalance += previousAmount - newAmount;
+
+
+        
+        
+
+        
+
+        partitions[activePartitionIndex]
+            .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
+        remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
+        
+        loadProgressionBars();
+    }
+    
+    localStorage.setItem("partitions", JSON.stringify(partitions));
+    localStorage.setItem("totalBalance", totalBalance);
+    renderAllPartitions();
+    renderAllExpenseDetails();
+    renderTotalBalance();
+    
+    return true;
+}
+
 document.querySelector(".detail").addEventListener("blur", (e) => {
-    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span")) {
+    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span") && !e.target.classList.contains("amount-span")) {
         return;
     }
     else if (e.target.classList.contains("sub-detail-title")) {
         if(!updateSubDetailTitle(e)) return;
         showToast("Edited sub-detail name", "info");
-    } else {
+    } else if(e.target.classList.contains("remark-span")){
         if(!updateEntryRemark(e)) return;
         showToast("Edited remark", "info");
+    } else {
+        if(!updateEntryAmount(e)) return;
+        showToast("Edited amount", "info");
     }
 
 }, true);// for blur
 
 document.querySelector(".detail").addEventListener("keydown", (e) => {
-    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span")) {
+    if (!e.target.classList.contains("sub-detail-title") && !e.target.classList.contains("remark-span") && !e.target.classList.contains("amount-span")) {
         return;
     }
 
@@ -1277,12 +1337,18 @@ document.querySelector(".detail").addEventListener("keydown", (e) => {
                 return;
             }
             showToast("Edited sub-detail name", "info");
-        } else {
+        } else if(e.target.classList.contains("remark-span")){
             if(!updateEntryRemark(e)) {
                 e.target.blur(); //remve focus
                 return;
             }
-            showToast("Edited remark", "info")
+            showToast("Edited remark", "info");
+        } else {
+            if(!updateEntryAmount(e)) {
+                e.target.blur(); //remve focus
+                return;
+            }
+            showToast("Edited amount", "info");
         }
         e.target.blur(); //remve focus
     }
@@ -1317,8 +1383,9 @@ document.querySelector(".btn-delete-delete-entry")?.addEventListener("click", ()
     if (!pendingDelete) return;
 
     const { currSubDetail, deletableAmount, currSubListIndex } = pendingDelete;
-    //subtract from sub detail total
+    //subtract from sub detail total and expense total
     currSubDetail.subDetailTotal -= deletableAmount
+    partitions[activePartitionIndex].expenses[activeExpenseIndex].expenseDetailsTotal -= deletableAmount;
 
     //add to partition balance
     partitions[activePartitionIndex].remainingAmount += deletableAmount
@@ -1358,7 +1425,7 @@ function openDeleteModal({ currSubDetail, deletableAmount, currSubListIndex }) {
     pendingDelete = { currSubDetail, deletableAmount, currSubListIndex };
 
     document.querySelector(".delete-info").innerHTML = `
-      <strong>₹${deletableAmount}</strong> from 
+      <strong>₹${deletableAmount.toLocaleString('en-IN')}</strong> from 
       <strong>${currSubDetail.subDetailName}</strong><br>
       <span>(${currSubDetail.subDetailList[currSubListIndex].remark})</span>
     `;
@@ -1459,9 +1526,9 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.3.1";
+const newVersion = "v5.3.2";
 
-const storedVersion = localStorage.getItem("currentVersion") || "v5.3.0";
+const storedVersion = localStorage.getItem("currentVersion") || newVersion;
 
 if (storedVersion !== newVersion) {
     document.getElementById("update-banner")?.classList.remove("hide");
