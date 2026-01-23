@@ -296,7 +296,7 @@ const createPartitionCard = (partitionObj, partIndex) => {
 
 
     partitionCard.innerHTML = `
-        <div  class="partition-details">
+        <div class="partition-details">
             <h3 class="partition-title" contenteditable="true" >${partitionObj.name}</h3>
             <div class="partition-details-inner">
                 <h4>Balance: ₹${(partitionObj.remainingAmount).toLocaleString('en-IN')}</h4>
@@ -1215,7 +1215,7 @@ function updateSubDetailTitle(e) {
     const subIndex = Number(subDetailEl.dataset.subIndex);
 
     // Update data
-    const subDetailName = partitions[activePartitionIndex]
+    let subDetailName = partitions[activePartitionIndex]
         .expenses[activeExpenseIndex]
         .expenseDetails[subIndex]
         .subDetailName;
@@ -1251,7 +1251,7 @@ function updateEntryRemark(e) {
 }
 
 function updateEntryAmount(e) {
-    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'))
+    let remaining = Number(remainingProgressionRing.getAttribute('data-spent'));
     const subDetailEl = e.target.closest(".sub-details");
     if (!subDetailEl) return;
 
@@ -1263,11 +1263,13 @@ function updateEntryAmount(e) {
     
     const amountIndex = Number(e.target.closest(".individual-detail").dataset.spentIndex);
     const previousAmount = subList[amountIndex].amount;
-    const newAmount = Number(e.target.innerText.trim());
+
+    remaining += previousAmount;
+    const newAmount = Number((e.target.innerText.trim()).replace(",", ""));
 
     if (!isNaN(newAmount) && newAmount >= 0 && newAmount <= remaining) {
         if(previousAmount === newAmount) return false;         
-        remaining += previousAmount - newAmount;
+        remaining -= newAmount;
 
         //update storage
         subList[amountIndex].amount = newAmount;
@@ -1285,25 +1287,20 @@ function updateEntryAmount(e) {
         //add to totalBalance
         totalBalance += previousAmount - newAmount;
 
-
-        
-        
-
-        
-
         partitions[activePartitionIndex]
             .expenses[activeExpenseIndex].expenseRemainingAmount = remaining
         remainingProgressionRing.setAttribute('data-spent', `${remaining}`);
         
         loadProgressionBars();
+    } else {
+        showToast("Invalid or execessive amount", "error");
+        return;
     }
     
     localStorage.setItem("partitions", JSON.stringify(partitions));
     localStorage.setItem("totalBalance", totalBalance);
     renderAllPartitions();
     renderAllExpenseDetails();
-    renderTotalBalance();
-    
     return true;
 }
 
@@ -1364,12 +1361,26 @@ const renderAllExpenseDetails = () => {
         .expenses[activeExpenseIndex]
         .expenseDetails
 
+    //re calculate thee expenseDetailsTotal
+    let currExpenseDetailsTotal = 0;
+    expenseDetails.forEach((subDetail) =>  {
+        currExpenseDetailsTotal += subDetail.subDetailTotal;
+    })
+
+    //update in memory
+    partitions[activePartitionIndex]
+        .expenses[activeExpenseIndex].expenseDetailsTotal = currExpenseDetailsTotal;
+
     if (expenseDetails) {
         expenseDetails.forEach((subDetailObject, i) => {
             createSubExpense(subDetailObject, i, detailContainer);
         });
     }
+
+
+
     loadProgressionBars()
+    localStorage.setItem("partitions", JSON.stringify(partitions));
 };
 
 
@@ -1526,7 +1537,7 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.3.2";
+const newVersion = "v5.3.3";
 
 const storedVersion = localStorage.getItem("currentVersion") || newVersion;
 
