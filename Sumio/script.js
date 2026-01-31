@@ -524,7 +524,7 @@ partitionModal.addEventListener("click", (e) => {
 // Save expense inside the active partition
 function saveExpense() {
     const expenseName = expenseInput.value.trim();
-    const expenseAmount = Number(expenseInputAmount.value)
+    const expenseAmount = Number(expenseInputAmount.value.trim());
 
     if (activePartitionIndex === null || activePartitionIndex < 0 || activePartitionIndex >= partitions.length) {
         // No valid target partition selected
@@ -540,9 +540,9 @@ function saveExpense() {
     //check if the allocation exceeds the partition amount
     let total = 0;
     partitions[activePartitionIndex].expenses.forEach((expense) => {
-        total += expense.expenseAllocatedAmount
+        total += expense.expenseRemainingAmount
     })
-    if (total + expenseAmount <= partitions[activePartitionIndex].allocatedAmount) {
+    if (total + expenseAmount <= partitions[activePartitionIndex].remainingAmount) {
         if (expenseName && expenseAmount >= 0) {  //intentionally allowed 0 amount allocation
             partitions[activePartitionIndex].expenses.push({
                 expenseName: expenseName,
@@ -1537,7 +1537,7 @@ document.getElementById("install-btn").addEventListener("click", async () => {
 
 
 //update version pop up
-const newVersion = "v5.3.3";
+const newVersion = "v5.3.4";
 
 const storedVersion = localStorage.getItem("currentVersion") || newVersion;
 
