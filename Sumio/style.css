@@ -33,7 +33,7 @@ header {
   text-align: center;
   position: relative;
   padding: 10px 0 20px;
-  width: min(100dvw, 820px);
+  width: min(100dvw, 520px);
   margin: auto;
   height: 3.2rem;
   display: flex;
@@ -152,7 +152,7 @@ main {
 
 /* Container box */
 .container {
-  width: min(100dvw, 820px);
+  width: min(100dvw, 520px);
   margin: auto;
   max-height: calc(99dvh - 10.6rem);
   overflow: visible;
@@ -179,7 +179,7 @@ main {
 
 .top-shadow {
   position: relative;
-  width: min(100dvw, 820px);
+  width: min(100dvw, 520px);
   margin: auto;
   height: 6.5rem;
   display: block;

@@ -6,7 +6,6 @@ const totalBalanceDisplay = document.getElementById("total-balance");
 const unSectionedBalanceDisplay = document.getElementById("un-sectioned");
 const enteredAmountInput = document.getElementById("entered-amount");
 const partitionContainer = document.getElementsByClassName("partition-container")[0]; // this is the wrapper that holds partition cards
-const addPartitionBtn = document.getElementById("add-partition-btn");
 
 // Modal Elements
 const expenseModal = document.getElementById("expense-modal");
@@ -144,8 +143,6 @@ window.onload = () => {
             expenses
         };
     });
-
-
 
     renderAllPartitions();
 };
@@ -1795,3 +1792,5 @@ document.getElementById("ivory").addEventListener("click", () => {
 
     document.getElementById("theme-color-meta").setAttribute('content', '#fbefd5');
 });
+
+
